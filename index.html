@@ -105,23 +105,33 @@ footer a span{font-size:15.4px}
 <style>
 html,body{max-width:100%;overflow-x:hidden} .app-shell{width:100%;max-width:430px} .deals-shell{overflow:hidden} .deal-table{font-size:12px} .deal-table thead{display:table-header-group} .photo-cell a.fallback{display:flex!important;align-items:center;justify-content:center;background:#eef8fc} .photo-cell a.fallback::before{content:attr(data-fallback)!important;font-size:33.6px!important} .photo-cell img{background:white} .product-cell{overflow-wrap:anywhere} .discount-cell,.old-cell,.new-cell{font-size:11px} .new-cell{font-size:12px} @media(max-width:390px){.col-photo{width:52px}.col-discount{width:40px}.col-old{width:42px}.col-new{width:44px}.photo-cell a,.photo-cell img{width:46px;height:46px}.deal-table tbody td,.deal-table thead th{padding-left:2px;padding-right:2px}.product-cell a{font-size:12px}.product-cell span{font-size:10px}}
 </style>
-</head>
-<body>
-  <div class="app-shell" id="top">
-    <header class="site-header">
-      <img src="assets/gugu-basel-logo.png" alt="Gugu Basel — all about family, weekend plans and deals" class="brand-logo" width="1206" height="1206" />
-    </header>
+<header class="site-header">
+  <div class="top-hero-row">
 
-    <main>
-      <section class="hero">
-        <p class="eyebrow">GUGU BASEL</p>
-        <h1>Family Deals</h1>
-        <div class="hero-tags">
-          <span class="hero-tag">💙 All about family: Product deals</span>
-          <span class="hero-tag">👛 Spend smarter</span>
-          <span class="hero-tag">📍 Switzerland</span>
-        </div>
-      </section>
+    <!-- LEFT: Family Deals -->
+    <section class="hero">
+      <p class="eyebrow">GUGU BASEL</p>
+      <h1>Family Deals</h1>
+
+      <div class="hero-tags">
+        <span class="hero-tag">👛 Spend smarter</span>
+        <span class="hero-tag">📍 Switzerland</span>
+      </div>
+    </section>
+
+    <!-- RIGHT: Gugu Basel logo -->
+    <img
+      src="assets/gugu-basel-logo.png"
+      alt="Gugu Basel — all about family, weekend plans and deals"
+      class="brand-logo"
+      width="1206"
+      height="1206"
+    />
+
+  </div>
+</header>
+
+<main>
 
       <section class="deals-shell">
         <div class="week-head">
