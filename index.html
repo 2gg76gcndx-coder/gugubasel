@@ -1,14 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#f8fcff" />
-  <title>Gugu Basel — Family Deals</title>
-  <meta name="description" content="Gugu Basel family deals for Basel & around." />
-  <link rel="icon" type="image/png" href="assets/gugu-basel-logo.png" />
-  <link rel="apple-touch-icon" href="assets/gugu-basel-logo.png" />
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#f8fcff" name="theme-color"/>
+<title>Gugu Basel — Family Deals</title>
+<meta content="Gugu Basel family deals for Basel &amp; around." name="description"/>
+<link href="assets/gugu-basel-logo.png" rel="icon" type="image/png"/>
+<link href="assets/gugu-basel-logo.png" rel="apple-touch-icon"/>
+<style>
 
 :root{
   --ink:#073b52;
@@ -101,271 +102,2449 @@ footer a span{font-size:15.4px}
 }
 
 </style>
-
 <style>
 html,body{max-width:100%;overflow-x:hidden} .app-shell{width:100%;max-width:430px} .deals-shell{overflow:hidden} .deal-table{font-size:12px} .deal-table thead{display:table-header-group} .photo-cell a.fallback{display:flex!important;align-items:center;justify-content:center;background:#eef8fc} .photo-cell a.fallback::before{content:attr(data-fallback)!important;font-size:33.6px!important} .photo-cell img{background:white} .product-cell{overflow-wrap:anywhere} .discount-cell,.old-cell,.new-cell{font-size:11px} .new-cell{font-size:12px} @media(max-width:390px){.col-photo{width:52px}.col-discount{width:40px}.col-old{width:42px}.col-new{width:44px}.photo-cell a,.photo-cell img{width:46px;height:46px}.deal-table tbody td,.deal-table thead th{padding-left:2px;padding-right:2px}.product-cell a{font-size:12px}.product-cell span{font-size:10px}}
 </style>
+<style>
+/* ================= GUGU TABS + WEEKEND PLANS ================= */
+.gugu-main-tabs,.weekend-day-tabs{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 14px;
+}
+.gugu-main-tabs{margin-top:0}
+.gugu-tab,.weekend-day-tab{
+  appearance:none;-webkit-appearance:none;border:1px solid var(--line);
+  background:#fff;color:var(--ink);border-radius:14px;padding:12px 10px;
+  font:inherit;font-size:13px;font-weight:900;cursor:pointer;
+  box-shadow:0 4px 12px rgba(7,59,82,.04);
+}
+.gugu-tab[aria-selected="true"],.weekend-day-tab[aria-selected="true"]{
+  background:var(--ink);color:#fff;border-color:var(--ink);
+}
+.gugu-tab-panel[hidden],.weekend-day-panel[hidden]{display:none!important}
+.weekend-shell{
+  background:#fff;border:1px solid var(--line);border-radius:24px;
+  padding:16px 12px 14px;box-shadow:0 8px 20px rgba(7,59,82,.05);
+}
+.weekend-date{
+  margin:4px 3px 16px;font-size:24px;line-height:1.05;
+  letter-spacing:-.03em;color:var(--ink);
+}
+.weekend-category{margin:0 0 18px}
+.weekend-category h3{
+  margin:0 3px 8px;font-size:15px;line-height:1.25;
+  padding:8px 10px;background:#eef8fc;border-radius:12px;
+}
+.weekend-table-wrap{
+  overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#fff;
+}
+.weekend-table{width:100%;border-collapse:collapse;table-layout:fixed}
+.weekend-event-row+ .weekend-event-row td{border-top:1px solid var(--line)}
+.weekend-event-row td{vertical-align:top;padding:11px 10px}
+.weekend-event-title{width:38%}
+.weekend-event-title a{
+  display:block;text-decoration:none;font-weight:900;font-size:13px;line-height:1.3;
+}
+.weekend-event-title a::after{content:" ↗";color:var(--blue);font-weight:900}
+.weekend-event-details{width:62%}
+.weekend-event-details div{
+  display:grid;grid-template-columns:52px 1fr;gap:6px;align-items:start;
+  margin:0 0 4px;font-size:11px;line-height:1.35;
+}
+.weekend-event-details div:last-child{margin-bottom:0}
+.weekend-event-details span{color:var(--muted);font-weight:800}
+.weekend-event-details strong{font-weight:750;overflow-wrap:anywhere}
+.weekend-empty{
+  margin:0;padding:12px;border:1px dashed var(--line);border-radius:12px;
+  color:var(--muted);font-size:12px;font-weight:750;background:#fbfdfe;
+}
+@media(max-width:390px){
+  .gugu-tab,.weekend-day-tab{font-size:12px;padding:10px 7px}
+  .weekend-date{font-size:21px}
+  .weekend-category h3{font-size:13px}
+  .weekend-event-row{display:block}
+  .weekend-event-row td{display:block;width:100%}
+  .weekend-event-title{padding-bottom:4px!important}
+  .weekend-event-details{padding-top:4px!important}
+  .weekend-event-title a{font-size:12px}
+  .weekend-event-details div{font-size:10px;grid-template-columns:50px 1fr}
+}
+/* ============================================================ */
+</style>
+<style>
+/* Native CSS-only tab navigation: no JavaScript dependency */
+.gugu-tab-radio{
+  position:absolute !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+  width:1px !important;
+  height:1px !important;
+}
+
+.gugu-main-tabs,
+.weekend-day-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:0 0 14px;
+}
+
+.gugu-tab,
+.weekend-day-tab{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  border-radius:14px;
+  padding:12px 10px;
+  font-size:13px;
+  font-weight:900;
+  cursor:pointer;
+  user-select:none;
+  -webkit-user-select:none;
+  box-shadow:0 4px 12px rgba(7,59,82,.04);
+}
+
+#main-tab-weekend:checked ~ .gugu-main-tabs label[for="main-tab-weekend"],
+#main-tab-family:checked ~ .gugu-main-tabs label[for="main-tab-family"],
+#weekend-day-saturday:checked ~ .weekend-day-tabs label[for="weekend-day-saturday"],
+#weekend-day-sunday:checked ~ .weekend-day-tabs label[for="weekend-day-sunday"]{
+  background:var(--ink);
+  color:#fff;
+  border-color:var(--ink);
+}
+
+.gugu-main-panels > .gugu-tab-panel{
+  display:none !important;
+}
+
+#main-tab-weekend:checked ~ .gugu-main-panels > #weekend-plans-panel{
+  display:block !important;
+}
+
+#main-tab-family:checked ~ .gugu-main-panels > #family-deals-panel{
+  display:block !important;
+}
+
+.weekend-day-panel{
+  display:none !important;
+}
+
+#weekend-day-saturday:checked ~ #saturday-panel{
+  display:block !important;
+}
+
+#weekend-day-sunday:checked ~ #sunday-panel{
+  display:block !important;
+}
+
+@media(max-width:390px){
+  .gugu-tab,
+  .weekend-day-tab{
+    font-size:12px;
+    padding:10px 7px;
+  }
+}
+</style>
+<style>
+/* Tagline: larger, still one line on iPhone-width screens */
+.hero-tags{
+  flex-wrap:nowrap !important;
+  gap:6px !important;
+}
+.hero-tag{
+  flex:1 1 0;
+  min-width:0;
+  white-space:nowrap;
+  font-size:14px !important;
+  padding:9px 8px !important;
+}
+@media(max-width:390px){
+  .hero-tag{
+    font-size:12.5px !important;
+    padding:8px 6px !important;
+  }
+}
+</style>
+<style>
+/* Basel Events visual hierarchy: darkest at main tab, then day tabs, then event first column */
+#main-tab-weekend:checked ~ .gugu-main-tabs label[for="main-tab-weekend"]{
+  background:#073b52 !important;
+  color:#fff !important;
+  border-color:#073b52 !important;
+}
+
+#weekend-day-saturday:checked ~ .weekend-day-tabs label[for="weekend-day-saturday"],
+#weekend-day-sunday:checked ~ .weekend-day-tabs label[for="weekend-day-sunday"]{
+  background:#0b5f7a !important;
+  color:#fff !important;
+  border-color:#0b5f7a !important;
+}
+
+.weekend-table-wrap,
+.weekend-table{
+  background:#eef8fc;
+}
+
+.weekend-event-row td{
+  background:#f4fbff;
+}
+
+.weekend-event-title{
+  background:#2f7f9f !important;
+  color:#fff !important;
+}
+
+.weekend-event-title a{
+  color:#fff !important;
+  font-size:18.2px !important;
+  line-height:1.28 !important;
+}
+
+.weekend-event-title a::after{
+  color:#d5f1fb !important;
+}
+
+.weekend-event-details{
+  background:#f4fbff !important;
+}
+
+@media(max-width:390px){
+  .weekend-event-title a{
+    font-size:16.8px !important;
+  }
+}
+</style>
+<style>
+/* Requested typography + Family Deals date styling */
+
+/* Basel Events detail fields: +30% */
+.weekend-event-details div{
+  font-size:14.3px !important; /* 11px × 1.30 */
+}
+@media(max-width:390px){
+  .weekend-event-details div{
+    font-size:13px !important; /* 10px × 1.30 */
+  }
+}
+
+/* Family Deals week/date headline with coordinated gradient fill */
+#family-deals-panel .week-head h2{
+  display:inline-block;
+  padding:7px 11px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#dff4fb 0%,#bfe7f5 100%);
+  color:#073b52;
+}
+</style>
+<style>
+/* Swiss Deals category gradient hierarchy */
+#family-deals-panel .deal-category:nth-of-type(1) h3{
+  background:linear-gradient(135deg,#0d5d7a 0%,#247f9f 100%);
+  color:#fff;
+}
+#family-deals-panel .deal-category:nth-of-type(2) h3{
+  background:linear-gradient(135deg,#247f9f 0%,#4f9fba 100%);
+  color:#fff;
+}
+#family-deals-panel .deal-category:nth-of-type(3) h3{
+  background:linear-gradient(135deg,#4f9fba 0%,#82bfd2 100%);
+  color:#073b52;
+}
+#family-deals-panel .deal-category:nth-of-type(4) h3{
+  background:linear-gradient(135deg,#82bfd2 0%,#b7deea 100%);
+  color:#073b52;
+}
+
+#family-deals-panel .deal-category h3{
+  padding:8px 10px;
+  border-radius:12px;
+}
+
+/* Product column: dark, high-contrast fill */
+#family-deals-panel .deal-table tbody .product-cell{
+  background:#0b4f6c !important;
+  color:#fff !important;
+  border-radius:10px;
+}
+#family-deals-panel .deal-table tbody .product-cell a,
+#family-deals-panel .deal-table tbody .product-cell strong,
+#family-deals-panel .deal-table tbody .product-cell span{
+  color:#fff !important;
+}
+#family-deals-panel .deal-table tbody .product-cell a::after{
+  color:#bfe7f5 !important;
+}
+
+/* Basel Events event-name column: allow wrapping cleanly */
+.weekend-event-title,
+.weekend-event-title a{
+  white-space:normal !important;
+  overflow-wrap:anywhere !important;
+  word-break:normal !important;
+  hyphens:auto;
+}
+</style>
+<style>
+/* Swiss Deals mirrors Basel Events formatting; only palette differs (anthracite). */
+
+/* Section heading/date styling analogous to Basel Events date headline */
+#family-deals-panel .week-head{
+  display:block;
+  padding:0;
+  border-bottom:0;
+  margin-bottom:14px;
+}
+#family-deals-panel .week-head > div{
+  display:block;
+}
+#family-deals-panel .week-head .eyebrow{
+  margin:0 0 6px;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:.08em;
+  color:#5a5f66;
+}
+#family-deals-panel .week-head h2{
+  margin:0 0 12px;
+  padding:8px 10px;
+  border-radius:12px;
+  font-size:24px;
+  line-height:1.05;
+  letter-spacing:-.03em;
+  background:linear-gradient(135deg,#3f444b 0%,#6a7078 100%);
+  color:#fff;
+}
+#family-deals-panel .week-chip{
+  display:inline-flex;
+  margin:0 0 10px;
+  background:#8a9098;
+  color:#fff;
+  border-radius:12px;
+  padding:8px 10px;
+  font-size:13px;
+  font-weight:900;
+}
+
+/* Category headers mirror Basel Events category blocks */
+#family-deals-panel .deal-category h3{
+  margin:0 3px 8px;
+  padding:8px 10px;
+  border-radius:12px;
+  font-size:15px;
+  line-height:1.25;
+  font-weight:900;
+}
+
+/* Degrade anthracite from top to bottom */
+#family-deals-panel .deal-category:nth-of-type(1) h3{
+  background:linear-gradient(135deg,#34383e 0%,#4a4f56 100%);
+  color:#fff;
+}
+#family-deals-panel .deal-category:nth-of-type(2) h3{
+  background:linear-gradient(135deg,#4a4f56 0%,#666c74 100%);
+  color:#fff;
+}
+#family-deals-panel .deal-category:nth-of-type(3) h3{
+  background:linear-gradient(135deg,#666c74 0%,#8a9098 100%);
+  color:#fff;
+}
+#family-deals-panel .deal-category:nth-of-type(4) h3{
+  background:linear-gradient(135deg,#8a9098 0%,#b2b6bc 100%);
+  color:#22262b;
+}
+
+/* Table shell mirrors Basel Events filled-table look */
+#family-deals-panel .deal-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0 8px;
+  table-layout:fixed;
+  background:#eef0f2;
+  border-radius:14px;
+}
+#family-deals-panel .deal-table thead th{
+  font-size:14px !important;
+  text-transform:none;
+  letter-spacing:0;
+  color:#5f656c;
+  font-weight:900;
+  padding:0 4px 4px;
+}
+#family-deals-panel .deal-table tbody td{
+  vertical-align:top;
+  padding:11px 10px;
+  background:#f5f6f7;
+}
+
+/* Product column mirrors Basel Events first column typography/fill */
+#family-deals-panel .deal-table tbody .product-cell{
+  background:#3d4248 !important;
+  color:#fff !important;
+  border-radius:10px;
+}
+#family-deals-panel .deal-table tbody .product-cell a{
+  color:#fff !important;
+  font-size:18.2px !important;
+  line-height:1.28 !important;
+  font-weight:900;
+  white-space:normal !important;
+  overflow-wrap:anywhere !important;
+  word-break:normal !important;
+  hyphens:auto;
+}
+#family-deals-panel .deal-table tbody .product-cell strong{
+  color:#fff !important;
+  font-weight:900;
+}
+#family-deals-panel .deal-table tbody .product-cell span{
+  color:#e5e7e9 !important;
+  font-size:14.3px !important;
+  line-height:1.35;
+  font-weight:750;
+}
+#family-deals-panel .deal-table tbody .product-cell a::after{
+  color:#d7dadd !important;
+}
+
+/* Supporting deal data typography mirrors Basel Events detail sizing */
+#family-deals-panel .discount-cell,
+#family-deals-panel .old-cell,
+#family-deals-panel .new-cell{
+  font-size:14.3px !important;
+  line-height:1.35 !important;
+  color:#2b2f34;
+}
+#family-deals-panel .discount-cell{
+  font-weight:900;
+}
+#family-deals-panel .old-cell{
+  color:#737980;
+  text-decoration:line-through;
+}
+#family-deals-panel .new-cell{
+  font-weight:900;
+}
+
+/* Keep photo cell neutral, analogous to detail side of Basel Events */
+#family-deals-panel .photo-cell{
+  background:#f5f6f7 !important;
+}
+
+@media(max-width:390px){
+  #family-deals-panel .week-head h2{
+    font-size:21px;
+  }
+  #family-deals-panel .deal-category h3{
+    font-size:13px;
+  }
+  #family-deals-panel .deal-table thead th{
+    font-size:12px !important;
+  }
+  #family-deals-panel .deal-table tbody .product-cell a{
+    font-size:16.8px !important;
+  }
+  #family-deals-panel .deal-table tbody .product-cell span,
+  #family-deals-panel .discount-cell,
+  #family-deals-panel .old-cell,
+  #family-deals-panel .new-cell{
+    font-size:13px !important;
+  }
+}
+</style>
+<style>
+/* Swiss Deals table = Basel Events table format, anthracite palette only */
+
+#family-deals-panel .deal-table{
+  width:100%;
+  border-collapse:collapse !important;
+  table-layout:fixed;
+  background:#eef0f2 !important;
+  border:1px solid #d6d9dd;
+  border-radius:14px;
+  overflow:hidden;
+}
+
+#family-deals-panel .deal-table thead{
+  display:table-header-group;
+}
+
+#family-deals-panel .deal-table thead th{
+  background:#e3e5e8 !important;
+  color:#565b61 !important;
+  font-size:14px !important;
+  line-height:1.25 !important;
+  text-transform:none !important;
+  letter-spacing:0 !important;
+  font-weight:900 !important;
+  padding:8px 10px !important;
+  border:0 !important;
+}
+
+#family-deals-panel .deal-table tbody tr + tr td{
+  border-top:1px solid #d6d9dd !important;
+}
+
+#family-deals-panel .deal-table tbody td{
+  vertical-align:top !important;
+  padding:11px 10px !important;
+  border:0 !important;
+  background:#f5f6f7 !important;
+}
+
+/* First information column: same visual role as Basel Events event-name column */
+#family-deals-panel .deal-table tbody .product-cell{
+  width:auto !important;
+  background:#3d4248 !important;
+  color:#fff !important;
+  border-radius:0 !important;
+}
+
+#family-deals-panel .deal-table tbody .product-cell a{
+  display:block;
+  color:#fff !important;
+  text-decoration:none !important;
+  font-size:18.2px !important;
+  line-height:1.28 !important;
+  font-weight:900 !important;
+  white-space:normal !important;
+  overflow-wrap:anywhere !important;
+  word-break:normal !important;
+  hyphens:auto;
+}
+
+#family-deals-panel .deal-table tbody .product-cell span{
+  display:block;
+  color:#e7e9eb !important;
+  font-size:14.3px !important;
+  line-height:1.35 !important;
+  font-weight:750 !important;
+  margin-top:4px !important;
+}
+
+#family-deals-panel .deal-table tbody .product-cell a::after{
+  color:#d7dadd !important;
+}
+
+/* Detail cells: same light-fill role as Basel Events detail column */
+#family-deals-panel .discount-cell,
+#family-deals-panel .old-cell,
+#family-deals-panel .new-cell,
+#family-deals-panel .photo-cell{
+  background:#f5f6f7 !important;
+  font-size:14.3px !important;
+  line-height:1.35 !important;
+  color:#2b2f34 !important;
+}
+
+#family-deals-panel .discount-cell{
+  font-weight:900 !important;
+}
+#family-deals-panel .old-cell{
+  color:#737980 !important;
+  text-decoration:line-through !important;
+}
+#family-deals-panel .new-cell{
+  font-weight:900 !important;
+}
+
+/* Product photos retain current size but sit in same filled table system */
+#family-deals-panel .photo-cell a{
+  margin:auto;
+}
+
+/* Mobile: stack Swiss Deals rows like Basel Events rows */
+@media(max-width:390px){
+  #family-deals-panel .deal-table,
+  #family-deals-panel .deal-table tbody,
+  #family-deals-panel .deal-table tr,
+  #family-deals-panel .deal-table td{
+    display:block;
+    width:100% !important;
+  }
+
+  #family-deals-panel .deal-table thead{
+    display:none !important;
+  }
+
+  #family-deals-panel .deal-table tbody tr{
+    display:grid !important;
+    grid-template-columns:52px 1fr;
+    background:#f5f6f7;
+  }
+
+  #family-deals-panel .photo-cell{
+    grid-column:1;
+    grid-row:1 / span 4;
+    padding:10px 4px !important;
+  }
+
+  #family-deals-panel .product-cell{
+    grid-column:2;
+    padding:10px !important;
+  }
+
+  #family-deals-panel .discount-cell,
+  #family-deals-panel .old-cell,
+  #family-deals-panel .new-cell{
+    grid-column:2;
+    padding:4px 10px !important;
+  }
+
+  #family-deals-panel .new-cell{
+    padding-bottom:10px !important;
+  }
+
+  #family-deals-panel .deal-table tbody .product-cell a{
+    font-size:16.8px !important;
+  }
+
+  #family-deals-panel .deal-table tbody .product-cell span,
+  #family-deals-panel .discount-cell,
+  #family-deals-panel .old-cell,
+  #family-deals-panel .new-cell{
+    font-size:13px !important;
+  }
+}
+</style>
+<style>
+/* Swiss Deals page mirrors Basel Events page format, with anthracite palette */
+
+/* Overall section shell */
+#family-deals-panel .deals-shell{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:16px 12px 14px;
+  box-shadow:0 8px 20px rgba(7,59,82,.05);
+}
+
+/* Header/date area mirrors Basel Events */
+#family-deals-panel .week-head{
+  display:block !important;
+  padding:0 !important;
+  border-bottom:0 !important;
+  margin:0 0 16px !important;
+}
+#family-deals-panel .week-head .eyebrow{
+  margin:0 3px 6px !important;
+  font-size:14px !important;
+  font-weight:900 !important;
+  letter-spacing:.08em !important;
+  color:#5d6268 !important;
+}
+#family-deals-panel .week-head h2{
+  margin:0 3px 10px !important;
+  padding:8px 10px !important;
+  border-radius:12px !important;
+  font-size:24px !important;
+  line-height:1.05 !important;
+  letter-spacing:-.03em !important;
+  background:linear-gradient(135deg,#34383e 0%,#5c6269 100%) !important;
+  color:#fff !important;
+}
+#family-deals-panel .week-chip{
+  display:inline-flex !important;
+  margin:0 3px 4px !important;
+  padding:8px 10px !important;
+  border-radius:12px !important;
+  background:#6d737a !important;
+  color:#fff !important;
+  font-size:13px !important;
+  font-weight:900 !important;
+}
+
+/* Category headers mirror Basel Events category cards */
+#family-deals-panel .deal-category{
+  margin:0 0 18px !important;
+}
+#family-deals-panel .deal-category h3{
+  margin:0 3px 8px !important;
+  padding:8px 10px !important;
+  border-radius:12px !important;
+  font-size:15px !important;
+  line-height:1.25 !important;
+  font-weight:900 !important;
+}
+
+/* Anthracite degradation top-to-bottom */
+#family-deals-panel .deal-category:nth-of-type(1) h3{
+  background:#3a3f45 !important;
+  color:#fff !important;
+}
+#family-deals-panel .deal-category:nth-of-type(2) h3{
+  background:#555b62 !important;
+  color:#fff !important;
+}
+#family-deals-panel .deal-category:nth-of-type(3) h3{
+  background:#737980 !important;
+  color:#fff !important;
+}
+#family-deals-panel .deal-category:nth-of-type(4) h3{
+  background:#a0a5ab !important;
+  color:#222 !important;
+}
+
+/* Table shell = Basel Events style */
+#family-deals-panel .deal-table{
+  width:100% !important;
+  border-collapse:collapse !important;
+  table-layout:fixed !important;
+  background:#eef0f2 !important;
+  border:1px solid #d6d9dd !important;
+  border-radius:14px !important;
+  overflow:hidden !important;
+}
+#family-deals-panel .deal-table thead th{
+  background:#e3e5e8 !important;
+  color:#5b6066 !important;
+  font-size:14px !important;
+  line-height:1.25 !important;
+  text-transform:none !important;
+  letter-spacing:0 !important;
+  font-weight:900 !important;
+  padding:8px 10px !important;
+}
+
+/* Product name = first column */
+#family-deals-panel .col-product{width:52% !important}
+#family-deals-panel .col-discount{width:16% !important}
+#family-deals-panel .col-old{width:16% !important}
+#family-deals-panel .col-new{width:16% !important}
+
+#family-deals-panel .deal-table tbody td{
+  vertical-align:top !important;
+  padding:11px 10px !important;
+  border:0 !important;
+  background:#f5f6f7 !important;
+}
+#family-deals-panel .deal-table tbody tr + tr td{
+  border-top:1px solid #d6d9dd !important;
+}
+
+/* First column mirrors Basel Events first column */
+#family-deals-panel .product-cell{
+  background:#3d4248 !important;
+  color:#fff !important;
+}
+#family-deals-panel .product-cell a{
+  display:block !important;
+  color:#fff !important;
+  text-decoration:none !important;
+  font-size:18.2px !important;
+  line-height:1.28 !important;
+  font-weight:900 !important;
+  white-space:normal !important;
+  overflow-wrap:anywhere !important;
+  word-break:normal !important;
+}
+#family-deals-panel .product-cell span{
+  display:block !important;
+  color:#e7e9eb !important;
+  font-size:14.3px !important;
+  line-height:1.35 !important;
+  font-weight:750 !important;
+  margin-top:4px !important;
+}
+
+/* Detail columns mirror Basel Events details side */
+#family-deals-panel .discount-cell,
+#family-deals-panel .old-cell,
+#family-deals-panel .new-cell{
+  background:#f5f6f7 !important;
+  font-size:14.3px !important;
+  line-height:1.35 !important;
+  color:#2b2f34 !important;
+}
+#family-deals-panel .discount-cell{font-weight:900 !important}
+#family-deals-panel .old-cell{
+  color:#737980 !important;
+  text-decoration:line-through !important;
+}
+#family-deals-panel .new-cell{font-weight:900 !important}
+
+/* Mobile layout mirrors Basel Events stacked cards */
+@media(max-width:390px){
+  #family-deals-panel .week-head h2{font-size:21px !important}
+  #family-deals-panel .deal-category h3{font-size:13px !important}
+
+  #family-deals-panel .deal-table,
+  #family-deals-panel .deal-table tbody,
+  #family-deals-panel .deal-table tr,
+  #family-deals-panel .deal-table td{
+    display:block !important;
+    width:100% !important;
+  }
+
+  #family-deals-panel .deal-table thead{
+    display:none !important;
+  }
+
+  #family-deals-panel .deal-table tbody tr{
+    border:1px solid #d6d9dd;
+    border-radius:14px;
+    overflow:hidden;
+    margin-bottom:8px;
+    background:#f5f6f7;
+  }
+
+  #family-deals-panel .product-cell{
+    padding:10px !important;
+  }
+
+  #family-deals-panel .discount-cell,
+  #family-deals-panel .old-cell,
+  #family-deals-panel .new-cell{
+    padding:7px 10px !important;
+  }
+
+  #family-deals-panel .product-cell a{
+    font-size:16.8px !important;
+  }
+
+  #family-deals-panel .product-cell span,
+  #family-deals-panel .discount-cell,
+  #family-deals-panel .old-cell,
+  #family-deals-panel .new-cell{
+    font-size:13px !important;
+  }
+}
+</style>
+<style>
+/* Swiss Deals week line matches Basel Events date-headline format */
+#family-deals-panel .week-head h2{
+  margin:4px 3px 16px !important;
+  padding:0 !important;
+  border-radius:0 !important;
+  background:none !important;
+  color:#073b52 !important;
+  font-size:24px !important;
+  line-height:1.05 !important;
+  letter-spacing:-.03em !important;
+  font-weight:900 !important;
+}
+@media(max-width:390px){
+  #family-deals-panel .week-head h2{
+    font-size:21px !important;
+  }
+}
+</style>
+<style>
+/* Swiss Deals week line matches Basel Events date-headline format */
+#family-deals-panel .week-head h2{
+  margin:4px 3px 16px !important;
+  padding:0 !important;
+  border-radius:0 !important;
+  background:none !important;
+  color:#073b52 !important;
+  font-size:24px !important;
+  line-height:1.05 !important;
+  letter-spacing:-.03em !important;
+  font-weight:900 !important;
+}
+@media(max-width:390px){
+  #family-deals-panel .week-head h2{
+    font-size:21px !important;
+  }
+}
+</style>
+<style>
+/* Swiss Deals date line mirrors Basel Events date headline */
+#family-deals-panel .week-head{
+  margin:0 !important;
+  padding:0 !important;
+  border-bottom:0 !important;
+}
+#family-deals-panel .week-head > div{
+  display:block !important;
+}
+#family-deals-panel .week-head h2{
+  margin:4px 3px 16px !important;
+  padding:0 !important;
+  background:none !important;
+  border-radius:0 !important;
+  color:#073b52 !important;
+  font-size:24px !important;
+  line-height:1.05 !important;
+  letter-spacing:-.03em !important;
+  font-weight:900 !important;
+}
+@media(max-width:390px){
+  #family-deals-panel .week-head h2{
+    font-size:21px !important;
+  }
+}
+</style>
+<style>
+/* Swiss Deals date line mirrors Basel Events date headline */
+#family-deals-panel .week-head{
+  display:block !important;
+  margin:0 !important;
+  padding:0 !important;
+  border-bottom:0 !important;
+}
+#family-deals-panel .week-head > div{
+  display:block !important;
+}
+#family-deals-panel .week-head h2{
+  margin:4px 3px 16px !important;
+  padding:0 !important;
+  background:none !important;
+  border-radius:0 !important;
+  color:#073b52 !important;
+  font-size:24px !important;
+  line-height:1.05 !important;
+  letter-spacing:-.03em !important;
+  font-weight:900 !important;
+}
+@media(max-width:390px){
+  #family-deals-panel .week-head h2{
+    font-size:21px !important;
+  }
+}
+</style>
+<style>
+/* =========================================================
+   SWISS DEALS = SAME FORMAT AS BASEL EVENTS
+   Only the colour family differs.
+   ========================================================= */
+
+/* Date: same unfilled headline treatment as Basel Events */
+#family-deals-panel .week-head{
+  display:block !important;
+  margin:0 !important;
+  padding:0 !important;
+  border-bottom:0 !important;
+}
+#family-deals-panel .week-head > div{
+  display:block !important;
+}
+#family-deals-panel .week-head h2{
+  margin:4px 3px 16px !important;
+  padding:0 !important;
+  background:none !important;
+  border-radius:0 !important;
+  color:#173f67 !important;
+  font-size:24px !important;
+  line-height:1.05 !important;
+  letter-spacing:-.03em !important;
+  font-weight:900 !important;
+}
+
+/* Category bars: same shape/spacing as Basel Events */
+#family-deals-panel .deal-category{
+  margin:0 0 18px !important;
+}
+#family-deals-panel .deal-category h3{
+  margin:0 3px 8px !important;
+  padding:8px 10px !important;
+  border-radius:12px !important;
+  font-size:15px !important;
+  line-height:1.25 !important;
+  font-weight:900 !important;
+}
+
+/* Alternate dark-blue gradient, degrading top -> bottom */
+#family-deals-panel .deal-category:nth-of-type(1) h3{
+  background:#173f67 !important;
+  color:#fff !important;
+}
+#family-deals-panel .deal-category:nth-of-type(2) h3{
+  background:#2b5a83 !important;
+  color:#fff !important;
+}
+#family-deals-panel .deal-category:nth-of-type(3) h3{
+  background:#4f789d !important;
+  color:#fff !important;
+}
+#family-deals-panel .deal-category:nth-of-type(4) h3{
+  background:#86a4bf !important;
+  color:#102b45 !important;
+}
+
+/* Table shell: same visual system as Basel Events */
+#family-deals-panel .deal-table{
+  width:100% !important;
+  border-collapse:collapse !important;
+  table-layout:fixed !important;
+  background:#eef6fb !important;
+  border:1px solid #cfe0ec !important;
+  border-radius:14px !important;
+  overflow:hidden !important;
+}
+#family-deals-panel .deal-table thead th{
+  background:#e6eff6 !important;
+  color:#49657d !important;
+  font-size:14px !important;
+  line-height:1.25 !important;
+  text-transform:none !important;
+  letter-spacing:0 !important;
+  font-weight:900 !important;
+  padding:8px 10px !important;
+}
+#family-deals-panel .deal-table tbody td{
+  vertical-align:top !important;
+  padding:11px 10px !important;
+  border:0 !important;
+  background:#f4f9fc !important;
+}
+#family-deals-panel .deal-table tbody tr + tr td{
+  border-top:1px solid #cfe0ec !important;
+}
+
+/* First column mirrors Basel Events first column,
+   with per-category blue degradation */
+#family-deals-panel .deal-category:nth-of-type(1) .product-cell{
+  background:#214b73 !important;
+}
+#family-deals-panel .deal-category:nth-of-type(2) .product-cell{
+  background:#37658d !important;
+}
+#family-deals-panel .deal-category:nth-of-type(3) .product-cell{
+  background:#5a80a2 !important;
+}
+#family-deals-panel .deal-category:nth-of-type(4) .product-cell{
+  background:#789ab7 !important;
+}
+
+#family-deals-panel .product-cell{
+  color:#fff !important;
+}
+#family-deals-panel .product-cell a{
+  display:block !important;
+  color:#fff !important;
+  text-decoration:none !important;
+  font-size:18.2px !important;
+  line-height:1.28 !important;
+  font-weight:900 !important;
+  white-space:normal !important;
+  overflow-wrap:anywhere !important;
+  word-break:normal !important;
+}
+#family-deals-panel .product-cell a::after{
+  color:#d9ecf8 !important;
+}
+#family-deals-panel .product-cell span{
+  display:block !important;
+  color:#eef7fc !important;
+  font-size:14.3px !important;
+  line-height:1.35 !important;
+  font-weight:750 !important;
+  margin-top:4px !important;
+}
+
+/* Deal details side = Basel Events detail-side look */
+#family-deals-panel .discount-cell,
+#family-deals-panel .old-cell,
+#family-deals-panel .new-cell{
+  background:#f4f9fc !important;
+  font-size:14.3px !important;
+  line-height:1.35 !important;
+  color:#173f67 !important;
+}
+#family-deals-panel .discount-cell{
+  font-weight:900 !important;
+}
+#family-deals-panel .old-cell{
+  color:#6f8495 !important;
+  text-decoration:line-through !important;
+}
+#family-deals-panel .new-cell{
+  font-weight:900 !important;
+}
+
+/* Mobile: preserve same stacked visual logic */
+@media(max-width:390px){
+  #family-deals-panel .week-head h2{
+    font-size:21px !important;
+  }
+  #family-deals-panel .deal-category h3{
+    font-size:13px !important;
+  }
+  #family-deals-panel .product-cell a{
+    font-size:16.8px !important;
+  }
+  #family-deals-panel .product-cell span,
+  #family-deals-panel .discount-cell,
+  #family-deals-panel .old-cell,
+  #family-deals-panel .new-cell{
+    font-size:13px !important;
+  }
+}
+</style>
+<style>
+#family-deals-panel .week-head h2{
+  font-size:24px !important;
+  line-height:1.05 !important;
+  letter-spacing:-.03em !important;
+  font-weight:900 !important;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Arial,sans-serif !important;
+}
+@media(max-width:390px){
+  #family-deals-panel .week-head h2{
+    font-size:21px !important;
+  }
+}
+</style>
+<style>
+/* Swiss Deals: one consistent colour per hierarchy level.
+   Degradation only from tab -> category bars -> product-name cells. */
+
+/* Level 1 — Swiss Deals main tab: darkest */
+#main-tab-family:checked ~ .gugu-main-tabs label[for="main-tab-family"]{
+  background:#173f67 !important;
+  color:#fff !important;
+  border-color:#173f67 !important;
+}
+
+/* Level 2 — ALL Swiss Deals category bars: same medium blue */
+#family-deals-panel .deal-category h3,
+#family-deals-panel .deal-category:nth-of-type(1) h3,
+#family-deals-panel .deal-category:nth-of-type(2) h3,
+#family-deals-panel .deal-category:nth-of-type(3) h3,
+#family-deals-panel .deal-category:nth-of-type(4) h3{
+  background:#35658f !important;
+  color:#fff !important;
+}
+
+/* Level 3 — ALL product-name cells: same lighter blue */
+#family-deals-panel .product-cell,
+#family-deals-panel .deal-category:nth-of-type(1) .product-cell,
+#family-deals-panel .deal-category:nth-of-type(2) .product-cell,
+#family-deals-panel .deal-category:nth-of-type(3) .product-cell,
+#family-deals-panel .deal-category:nth-of-type(4) .product-cell{
+  background:#5f88aa !important;
+  color:#fff !important;
+}
+
+#family-deals-panel .product-cell a,
+#family-deals-panel .product-cell strong{
+  color:#fff !important;
+}
+#family-deals-panel .product-cell span{
+  color:#f2f8fc !important;
+}
+#family-deals-panel .product-cell a::after{
+  color:#e0f0fa !important;
+}
+</style>
+<style>
+/* Swiss Deals discount column: consistent signed percentages */
+#family-deals-panel .discount-cell,
+#family-deals-panel .deal-table thead th:nth-child(2){
+  text-align:center !important;
+  white-space:nowrap !important;
+}
+</style>
+<style>
+/* Main tab labels +30% */
+.gugu-main-tabs .gugu-tab{
+  font-size:16.9px !important; /* 13px × 1.30 */
+}
+@media(max-width:390px){
+  .gugu-main-tabs .gugu-tab{
+    font-size:15.6px !important; /* 12px × 1.30 */
+  }
+}
+</style>
+<style>
+/* Swiss Deals hierarchy: stronger contrast, still degrading top -> bottom */
+
+/* Level 1 — main Swiss Deals tab: darkest */
+#main-tab-family:checked ~ .gugu-main-tabs label[for="main-tab-family"]{
+  background:#102a43 !important;
+  color:#fff !important;
+  border-color:#102a43 !important;
+}
+
+/* Level 2 — all product-category bars: very dark, but lighter than tab */
+#family-deals-panel .deal-category h3,
+#family-deals-panel .deal-category:nth-of-type(1) h3,
+#family-deals-panel .deal-category:nth-of-type(2) h3,
+#family-deals-panel .deal-category:nth-of-type(3) h3,
+#family-deals-panel .deal-category:nth-of-type(4) h3{
+  background:#1f4a6e !important;
+  color:#fff !important;
+}
+
+/* Level 3 — all product-name cells: darker than before, but lighter than category bars */
+#family-deals-panel .product-cell,
+#family-deals-panel .deal-category:nth-of-type(1) .product-cell,
+#family-deals-panel .deal-category:nth-of-type(2) .product-cell,
+#family-deals-panel .deal-category:nth-of-type(3) .product-cell,
+#family-deals-panel .deal-category:nth-of-type(4) .product-cell{
+  background:#2f628a !important;
+  color:#fff !important;
+}
+
+#family-deals-panel .product-cell a,
+#family-deals-panel .product-cell strong{
+  color:#fff !important;
+}
+#family-deals-panel .product-cell span{
+  color:#eef6fb !important;
+}
+#family-deals-panel .product-cell a::after{
+  color:#d9ebf7 !important;
+}
+</style>
+<style>
+/* Compact top layout: remove redundant vertical spacing marked in mobile view */
+.site-header{
+  padding:4px 0 4px !important;
+}
+.brand-logo{
+  margin:0 auto 5px !important;
+}
+.hero{
+  padding:10px 14px !important;
+  margin-bottom:5px !important;
+}
+.hero h1{
+  margin:0 !important;
+}
+.hero-tags:empty{
+  display:none !important;
+}
+.gugu-main-tabs{
+  margin:0 0 6px !important;
+}
+.weekend-shell{
+  padding:8px 12px 14px !important;
+}
+.weekend-day-tabs{
+  margin:0 0 8px !important;
+}
+.gugu-main-panels{
+  margin:0 !important;
+  padding:0 !important;
+}
+#weekend-plans-panel,
+#family-deals-panel{
+  margin-top:0 !important;
+  padding-top:0 !important;
+}
+@media(max-width:390px){
+  .site-header{
+    padding:2px 0 3px !important;
+  }
+  .brand-logo{
+    margin-bottom:3px !important;
+  }
+  .hero{
+    padding:8px 12px !important;
+    margin-bottom:4px !important;
+  }
+  .gugu-main-tabs{
+    margin-bottom:5px !important;
+  }
+  .weekend-shell{
+    padding-top:7px !important;
+  }
+  .weekend-day-tabs{
+    margin-bottom:7px !important;
+  }
+}
+</style>
+<style>
+/* Modern Gugu Basel footer */
+.site-footer{
+  margin-top:16px;
+  padding:0 0 14px;
+  color:var(--ink);
+}
+.footer-social,
+.contact-card,
+.legal-copy{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:0 8px 20px rgba(7,59,82,.04);
+}
+.footer-social{
+  margin-bottom:10px;
+  overflow:hidden;
+}
+.instagram-link{
+  display:grid;
+  grid-template-columns:42px 1fr auto;
+  gap:10px;
+  align-items:center;
+  padding:14px;
+  text-decoration:none;
+}
+.instagram-icon{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);
+}
+.instagram-icon svg{
+  width:22px;
+  height:22px;
+  fill:none;
+  stroke:#fff;
+  stroke-width:1.8;
+}
+.instagram-link strong{
+  display:block;
+  font-size:16px;
+  line-height:1.1;
+}
+.instagram-link small{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+}
+.footer-arrow{
+  font-size:18px;
+  font-weight:900;
+  color:var(--blue);
+}
+
+.contact-card{
+  padding:16px 14px;
+  margin-bottom:10px;
+}
+.footer-section-head{
+  margin-bottom:12px;
+}
+.footer-kicker{
+  margin:0 0 4px;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.12em;
+  color:#5f7f8f;
+}
+.footer-section-head h2{
+  margin:0 0 6px;
+  font-size:22px;
+  letter-spacing:-.025em;
+}
+.footer-section-head p:last-child{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.45;
+}
+.contact-form{
+  display:grid;
+  gap:10px;
+}
+.contact-form label{
+  display:grid;
+  gap:5px;
+}
+.contact-form label > span{
+  font-size:12px;
+  font-weight:900;
+  color:#4f6773;
+}
+.contact-form input,
+.contact-form textarea{
+  width:100%;
+  border:1px solid var(--line);
+  background:#f8fcfe;
+  color:var(--ink);
+  border-radius:12px;
+  padding:11px 12px;
+  font:inherit;
+  font-size:14px;
+  outline:none;
+}
+.contact-form input:focus,
+.contact-form textarea:focus{
+  border-color:#7dc9eb;
+  box-shadow:0 0 0 3px rgba(18,165,232,.10);
+}
+.contact-form textarea{
+  resize:vertical;
+}
+.contact-form button{
+  border:0;
+  border-radius:12px;
+  padding:12px 14px;
+  background:#073b52;
+  color:#fff;
+  font:inherit;
+  font-size:14px;
+  font-weight:900;
+  cursor:pointer;
+}
+.contact-note{
+  margin:0;
+  padding:9px 10px;
+  border-radius:10px;
+  background:#eef8fc;
+  color:#4b6674;
+  font-size:11px;
+  line-height:1.4;
+}
+
+.legal-links{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:7px;
+  padding:12px 4px 8px;
+  font-size:13px;
+  font-weight:800;
+  color:#667983;
+}
+.legal-links a{
+  color:inherit;
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+
+.legal-copy{
+  padding:5px 12px;
+  margin-bottom:10px;
+}
+.legal-copy details{
+  border-bottom:1px solid #e8f1f5;
+}
+.legal-copy details:last-child{
+  border-bottom:0;
+}
+.legal-copy summary{
+  cursor:pointer;
+  padding:11px 2px;
+  font-size:13px;
+  font-weight:900;
+}
+.legal-copy details div{
+  padding:0 2px 11px;
+}
+.legal-copy details p{
+  margin:0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+
+.footer-copyright{
+  margin:10px 0 0;
+  text-align:center;
+  color:#7f8f97;
+  font-size:12px;
+  line-height:1.4;
+}
+
+@media(max-width:390px){
+  .instagram-link strong{font-size:15px}
+  .footer-section-head h2{font-size:20px}
+  .contact-form input,
+  .contact-form textarea{font-size:13px}
+  .legal-links{font-size:12px}
+}
+</style>
+<style>
+.legal-copy details div p + p{
+  margin-top:9px;
+}
+</style>
+<style>
+/* Footer contact + legal accordion refinements */
+.footer-contact{
+  margin-bottom:10px;
+}
+.footer-contact .instagram-link{
+  grid-template-columns:42px 1fr auto;
+}
+.footer-contact .instagram-copy strong{
+  display:block;
+  font-size:16px;
+  line-height:1.15;
+}
+.footer-contact .instagram-copy small{
+  display:block;
+  margin-top:4px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.35;
+  font-weight:750;
+}
+.legal-copy{
+  padding:0 12px !important;
+}
+.legal-copy details{
+  border-bottom:1px solid #e8f1f5;
+}
+.legal-copy details:last-child{
+  border-bottom:0;
+}
+.legal-copy summary{
+  list-style:none;
+  cursor:pointer;
+  position:relative;
+  padding:14px 28px 14px 2px;
+  font-size:14px;
+  font-weight:900;
+  color:var(--ink);
+}
+.legal-copy summary::-webkit-details-marker{
+  display:none;
+}
+.legal-copy summary::after{
+  content:"+";
+  position:absolute;
+  right:2px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:20px;
+  line-height:1;
+  font-weight:700;
+  color:var(--muted);
+}
+.legal-copy details[open] summary::after{
+  content:"−";
+}
+.legal-copy details > div{
+  padding:0 2px 14px;
+}
+.legal-copy details p{
+  margin:0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.55;
+}
+.legal-copy details p + p{
+  margin-top:9px;
+}
+@media(max-width:390px){
+  .footer-contact .instagram-copy strong{font-size:15px}
+  .footer-contact .instagram-copy small{font-size:11px}
+  .legal-copy summary{font-size:13px}
+}
+</style>
+<style>
+/* Mini Gugu Basel logo inside the contact row */
+.footer-contact .instagram-link{
+  grid-template-columns:42px 34px 1fr auto !important;
+}
+.footer-mini-logo{
+  width:34px;
+  height:34px;
+  object-fit:cover;
+  border-radius:10px;
+  display:block;
+  box-shadow:0 3px 10px rgba(7,59,82,.10);
+}
+@media(max-width:390px){
+  .footer-contact .instagram-link{
+    grid-template-columns:38px 30px 1fr auto !important;
+    gap:8px !important;
+  }
+  .footer-mini-logo{
+    width:30px;
+    height:30px;
+    border-radius:9px;
+  }
+}
+</style>
+<style>
+/* Commercial disclosure labels — apply beside relevant content when applicable */
+.commercial-disclosure{
+  display:inline-flex;
+  align-items:center;
+  padding:4px 7px;
+  border-radius:8px;
+  background:#eef4f8;
+  color:#36576b;
+  font-size:10px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+</style><style>
+/* Basel Events hierarchy:
+   active day tab (darkest) -> category bars -> event-name cells (lightest) */
+
+#weekend-day-saturday:checked ~ .weekend-day-tabs label[for="weekend-day-saturday"],
+#weekend-day-sunday:checked ~ .weekend-day-tabs label[for="weekend-day-sunday"]{
+  background:#0b5f7a !important;
+  color:#fff !important;
+  border-color:#0b5f7a !important;
+}
+
+/* All event category bars: one consistent intermediate tone */
+#weekend-plans-panel .weekend-category h3{
+  background:#1f6f8d !important;
+  color:#fff !important;
+}
+
+/* All event-name cells: lighter than category bars */
+#weekend-plans-panel .weekend-event-title{
+  background:#3a86a3 !important;
+  color:#fff !important;
+}
+#weekend-plans-panel .weekend-event-title a{
+  color:#fff !important;
+}
+</style>
+<style>
+/* =========================================================
+   FINAL SERVICE PALETTES
+   Basel Events = blue family
+   Swiss Deals = darker navy / anthracite-blue family
+   ========================================================= */
+
+/* -------------------------
+   BASEL EVENTS — BLUE FAMILY
+   hierarchy: main tab -> day tabs -> category bars -> event cells
+   ------------------------- */
+
+/* Main tab */
+#main-tab-weekend:checked ~ .gugu-main-tabs label[for="main-tab-weekend"]{
+  background:#0B4F6C !important;
+  color:#fff !important;
+  border-color:#0B4F6C !important;
+}
+
+/* Saturday / Sunday active tab */
+#weekend-day-saturday:checked ~ .weekend-day-tabs label[for="weekend-day-saturday"],
+#weekend-day-sunday:checked ~ .weekend-day-tabs label[for="weekend-day-sunday"]{
+  background:#146C8A !important;
+  color:#fff !important;
+  border-color:#146C8A !important;
+}
+
+/* Event category bars */
+#weekend-plans-panel .weekend-category h3{
+  background:#217F9E !important;
+  color:#fff !important;
+}
+
+/* Event-name cells */
+#weekend-plans-panel .weekend-event-title{
+  background:#3A91AD !important;
+  color:#fff !important;
+}
+#weekend-plans-panel .weekend-event-title a{
+  color:#fff !important;
+}
+#weekend-plans-panel .weekend-event-title a::after{
+  color:#DDF4FB !important;
+}
+
+/* -------------------------
+   SWISS DEALS — DARKER NAVY / ANTHRACITE-BLUE FAMILY
+   hierarchy: main tab -> category bars -> product cells
+   ------------------------- */
+
+/* Main tab */
+#main-tab-family:checked ~ .gugu-main-tabs label[for="main-tab-family"]{
+  background:#1E2A35 !important;
+  color:#fff !important;
+  border-color:#1E2A35 !important;
+}
+
+/* Product category bars */
+#family-deals-panel .deal-category h3,
+#family-deals-panel .deal-category:nth-of-type(1) h3,
+#family-deals-panel .deal-category:nth-of-type(2) h3,
+#family-deals-panel .deal-category:nth-of-type(3) h3,
+#family-deals-panel .deal-category:nth-of-type(4) h3{
+  background:#2E4152 !important;
+  color:#fff !important;
+}
+
+/* Product-name cells */
+#family-deals-panel .product-cell,
+#family-deals-panel .deal-category:nth-of-type(1) .product-cell,
+#family-deals-panel .deal-category:nth-of-type(2) .product-cell,
+#family-deals-panel .deal-category:nth-of-type(3) .product-cell,
+#family-deals-panel .deal-category:nth-of-type(4) .product-cell{
+  background:#415A6B !important;
+  color:#fff !important;
+}
+#family-deals-panel .product-cell a,
+#family-deals-panel .product-cell strong{
+  color:#fff !important;
+}
+#family-deals-panel .product-cell span{
+  color:#EEF3F6 !important;
+}
+#family-deals-panel .product-cell a::after{
+  color:#DCE7ED !important;
+}
+
+/* Swiss Deals supporting fills */
+#family-deals-panel .deal-table{
+  background:#EEF2F4 !important;
+  border-color:#D5DDE2 !important;
+}
+#family-deals-panel .deal-table tbody td,
+#family-deals-panel .discount-cell,
+#family-deals-panel .old-cell,
+#family-deals-panel .new-cell{
+  background:#F5F7F8 !important;
+}
+</style>
+<style>
+/* FINAL SWISS DEALS PALETTE — NAVY FAMILY */
+
+/* Swiss Deals main tab — deepest navy */
+#main-tab-family:checked ~ .gugu-main-tabs label[for="main-tab-family"]{
+  background:#102A43 !important;
+  color:#fff !important;
+  border-color:#102A43 !important;
+}
+
+/* All product category bars — medium-deep navy */
+#family-deals-panel .deal-category h3,
+#family-deals-panel .deal-category:nth-of-type(1) h3,
+#family-deals-panel .deal-category:nth-of-type(2) h3,
+#family-deals-panel .deal-category:nth-of-type(3) h3,
+#family-deals-panel .deal-category:nth-of-type(4) h3{
+  background:#243F5A !important;
+  color:#fff !important;
+}
+
+/* All product-name cells — lighter navy */
+#family-deals-panel .product-cell,
+#family-deals-panel .deal-category:nth-of-type(1) .product-cell,
+#family-deals-panel .deal-category:nth-of-type(2) .product-cell,
+#family-deals-panel .deal-category:nth-of-type(3) .product-cell,
+#family-deals-panel .deal-category:nth-of-type(4) .product-cell{
+  background:#365B7A !important;
+  color:#fff !important;
+}
+
+#family-deals-panel .product-cell a,
+#family-deals-panel .product-cell strong{
+  color:#fff !important;
+}
+#family-deals-panel .product-cell span{
+  color:#EEF5FA !important;
+}
+#family-deals-panel .product-cell a::after{
+  color:#D9E8F2 !important;
+}
+
+/* Supporting table fills — subtle navy-tinted neutrals */
+#family-deals-panel .deal-table{
+  background:#EDF3F7 !important;
+  border-color:#D2DFE8 !important;
+}
+#family-deals-panel .deal-table tbody td,
+#family-deals-panel .discount-cell,
+#family-deals-panel .old-cell,
+#family-deals-panel .new-cell{
+  background:#F4F7F9 !important;
+}
+#family-deals-panel .discount-cell,
+#family-deals-panel .new-cell{
+  color:#102A43 !important;
+}
+#family-deals-panel .old-cell{
+  color:#6C8191 !important;
+}
+</style>
+<style>
+/* Playful Gugu Basel decorative elements inspired by the family artwork */
+.hero{
+  position:relative;
+  overflow:hidden;
+}
+.hero > *:not(.gugu-hero-decor){
+  position:relative;
+  z-index:2;
+}
+.gugu-hero-decor{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+}
+.gugu-hero-decor .decor{
+  position:absolute;
+  display:block;
+  opacity:.95;
+}
+.decor-plane{
+  width:34px;
+  height:34px;
+  left:12px;
+  top:8px;
+  color:#0B4F6C;
+  transform:rotate(-8deg);
+}
+.decor-heart{
+  width:28px;
+  height:28px;
+  right:18px;
+  top:12px;
+  color:#ff6670;
+  transform:rotate(8deg);
+}
+.decor-sun{
+  width:42px;
+  height:42px;
+  right:8px;
+  bottom:8px;
+  color:#f5b61b;
+}
+.decor-waves{
+  width:76px;
+  height:28px;
+  left:10px;
+  bottom:8px;
+  color:#28a9e0;
+}
+.decor-boat{
+  width:30px;
+  height:26px;
+  left:94px;
+  bottom:9px;
+  color:#0B4F6C;
+}
+.gugu-mini-doodles{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  height:20px;
+  margin:-1px 0 3px;
+  font-weight:900;
+  line-height:1;
+  pointer-events:none;
+}
+.gugu-mini-doodles span:nth-child(1){color:#ff6670;font-size:19px}
+.gugu-mini-doodles span:nth-child(2){color:#f5b61b;font-size:15px}
+.gugu-mini-doodles span:nth-child(3){color:#28a9e0;font-size:22px}
+
+@media(max-width:390px){
+  .decor-plane{width:30px;height:30px;left:8px;top:6px}
+  .decor-heart{width:25px;height:25px;right:10px;top:8px}
+  .decor-sun{width:36px;height:36px;right:4px;bottom:4px}
+  .decor-waves{width:64px;left:6px;bottom:5px}
+  .decor-boat{width:26px;height:22px;left:76px;bottom:6px}
+}
+</style>
+<style>
+/* Refine top hero decorations + sky background */
+.site-header{
+  background:linear-gradient(180deg,#dff4ff 0%,#edf9ff 70%,rgba(237,249,255,0) 100%);
+  border-radius:0 0 28px 28px;
+  padding-left:8px !important;
+  padding-right:8px !important;
+}
+
+.hero{
+  background:rgba(255,255,255,.92) !important;
+}
+
+/* Keep decorative elements away from the headline text */
+.decor-plane{
+  left:8px !important;
+  top:6px !important;
+  width:28px !important;
+  height:28px !important;
+}
+.decor-heart{
+  right:10px !important;
+  top:6px !important;
+  width:22px !important;
+  height:22px !important;
+}
+.decor-sun{
+  right:4px !important;
+  bottom:4px !important;
+  width:30px !important;
+  height:30px !important;
+}
+.decor-waves{
+  left:4px !important;
+  bottom:4px !important;
+  width:52px !important;
+  height:20px !important;
+}
+.decor-boat{
+  left:60px !important;
+  bottom:5px !important;
+  width:22px !important;
+  height:18px !important;
+}
+
+/* Add safe breathing room around headline */
+.hero h1{
+  padding:0 34px 0 34px !important;
+}
+
+@media(max-width:390px){
+  .hero h1{
+    padding:0 30px !important;
+  }
+  .decor-plane{
+    left:5px !important;
+    top:5px !important;
+    width:24px !important;
+    height:24px !important;
+  }
+  .decor-heart{
+    right:6px !important;
+    top:5px !important;
+    width:19px !important;
+    height:19px !important;
+  }
+  .decor-sun{
+    right:3px !important;
+    bottom:3px !important;
+    width:26px !important;
+    height:26px !important;
+  }
+  .decor-waves{
+    left:3px !important;
+    bottom:3px !important;
+    width:46px !important;
+  }
+  .decor-boat{
+    left:52px !important;
+    bottom:4px !important;
+    width:19px !important;
+    height:16px !important;
+  }
+}
+</style>
+
+</head>
+<body>
+<div class="app-shell">
 <header class="site-header">
-  <div class="top-hero-row">
-
-        <!-- RIGHT: Gugu Basel logo -->
-    <img
-      src="assets/gugu-basel-logo.png"
-      alt="Gugu Basel — All about family, weekend plans and deals"
-      class="brand-logo"
-      width="1200"
-      height="1200"
-    />
-    <!-- LEFT: Family Deals -->
-    <section class="hero">
-      <h1>Family Deals</h1>
-
-      <div class="hero-tags">
-        <span class="hero-tag">👛 Spend smarter</span>
-        <span class="hero-tag">📍 Switzerland</span>
+<div class="top-hero-row">
+<!-- RIGHT: Gugu Basel logo -->
+<img alt="Gugu Basel — All about family, weekend plans and deals" class="brand-logo" height="1200" src="assets/gugu-basel-logo.png" width="1200"/>
+<!-- LEFT: Family Deals -->
+<section class="hero"><div aria-hidden="true" class="gugu-hero-decor">
+<svg class="decor decor-plane" viewbox="0 0 64 64">
+<path d="M7 24 56 8 40 55 30 34 7 24Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="4"></path>
+<path d="M30 34 56 8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<svg class="decor decor-heart" viewbox="0 0 64 64">
+<path d="M32 53S8 38 8 21c0-8 6-14 14-14 5 0 9 3 10 7 2-4 6-7 11-7 8 0 13 6 13 14 0 17-24 32-24 32Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="4"></path>
+</svg>
+<svg class="decor decor-sun" viewbox="0 0 72 72">
+<circle cx="36" cy="36" fill="none" r="13" stroke="currentColor" stroke-width="4"></circle>
+<path d="M36 4v10M36 58v10M4 36h10M58 36h10M13 13l7 7M52 52l7 7M59 13l-7 7M20 52l-7 7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<svg class="decor decor-waves" viewbox="0 0 110 40">
+<path d="M3 10c10 12 20 12 30 0s20-12 30 0 20 12 30 0M3 27c10 12 20 12 30 0s20-12 30 0 20 12 30 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="5"></path>
+</svg>
+<svg class="decor decor-boat" viewbox="0 0 80 64">
+<path d="M19 33h42l-8 14H27L19 33Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="4"></path>
+<path d="M40 33V12M40 13l15 7-15 7" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="4"></path>
+</svg>
+</div>
+<h1>Weekend plans &amp; Family deals</h1>
+<div class="hero-tags">
+</div>
+</section>
+</div>
 </header>
+<div class="gugu-tabs-root">
+<input checked="" class="gugu-tab-radio" id="main-tab-weekend" name="gugu-main-tab" type="radio"/>
+<input class="gugu-tab-radio" id="main-tab-family" name="gugu-main-tab" type="radio"/>
+<div aria-hidden="true" class="gugu-mini-doodles">
+<span>♡</span><span>✦</span><span>⌁</span>
+</div><nav aria-label="Gugu Basel sections" class="gugu-main-tabs">
+<label class="gugu-tab" for="main-tab-weekend">📅 Basel Events</label>
+<label class="gugu-tab" for="main-tab-family">👛 Swiss Deals</label>
+</nav>
+<div class="gugu-main-panels">
+<div class="gugu-tab-panel" id="weekend-plans-panel" role="tabpanel">
+<section class="weekend-shell">
+<input checked="" class="gugu-tab-radio" id="weekend-day-saturday" name="gugu-weekend-day" type="radio"/>
+<input class="gugu-tab-radio" id="weekend-day-sunday" name="gugu-weekend-day" type="radio"/>
+<div aria-label="Weekend days" class="weekend-day-tabs">
+<label class="weekend-day-tab" for="weekend-day-saturday">Saturday</label>
+<label class="weekend-day-tab" for="weekend-day-sunday">Sunday</label>
+</div>
+<!-- ====================================================== -->
+<!-- WEEKEND PLANS: SATURDAY START — REPLACE WEEKLY BELOW -->
+<!-- ====================================================== -->
+<div aria-labelledby="saturday-tab" class="weekend-day-panel" id="saturday-panel" role="tabpanel">
+<h2 class="weekend-date">SATURDAY, 19.Sep.2026</h2>
+<section class="weekend-category" data-weekly-category="1 🎨 🛠️ HANDS-ON FUN">
+<h3>1 🎨 🛠️ HANDS-ON FUN</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="BasGame 2026">
+<td class="weekend-event-title"><a href="https://www.basgame.ch/de" rel="noopener" target="_blank">BasGame 2026</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Klybeck 610, Gärtnerstrasse 2, 4057 Basel</strong></div><div><span>Time</span><strong>10:00–21:00</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="weekend-category" data-weekly-category="2 🎭 THEATRE &amp; FESTIVALS">
+<h3>2 🎭 THEATRE &amp; FESTIVALS</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="Mondfest Basel">
+<td class="weekend-event-title"><a href="https://www.bs.ch/veranstaltungen/mondfest-basel" rel="noopener" target="_blank">Mondfest Basel</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Münsterplatz, 4001 Basel</strong></div><div><span>Time</span><strong>Ganztags</strong></div><div><span>Remark</span><strong>FREE</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Quartierapéro 2026">
+<td class="weekend-event-title"><a href="https://www.sicht-bar.ch/post/quartierap%C3%A9ro-2026-ein-fest-f%C3%BCr-s-quartier-1" rel="noopener" target="_blank">Quartierapéro 2026</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Gärtnerhuus im Schwarzpark, Gellertstrasse 133, 4052 Basel</strong></div><div><span>Time</span><strong>11:00–17:00</strong></div><div><span>Remark</span><strong>FREE / Kollekte</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Glaini Häggs Dintegläggs">
+<td class="weekend-event-title"><a href="https://theater-arlecchino.ch/glaini-haeggs-dinteglaeggs/" rel="noopener" target="_blank">Glaini Häggs Dintegläggs</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Theater Arlecchino, Basel</strong></div><div><span>Time</span><strong>14:30</strong></div><div><span>Age</span><strong>Recommended 4+</strong></div><div><span>Remark</span><strong>Children CHF 20 / Adults CHF 25</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="weekend-category" data-weekly-category="3 ⚽ SPORTS &amp; OUTDOOR">
+<h3>3 ⚽ SPORTS &amp; OUTDOOR</h3>
+<div class="weekend-empty">No verified picks.</div>
+</section>
+<section class="weekend-category" data-weekly-category="4 🎨 ART &amp; CREATIVITY">
+<h3>4 🎨 ART &amp; CREATIVITY</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="Kreativbox mit Betreuung">
+<td class="weekend-event-title"><a href="https://shop.mkb.ch/de/veranstaltungen/kalender.html" rel="noopener" target="_blank">Kreativbox mit Betreuung</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Museum der Kulturen Basel, Münsterplatz 20, 4051 Basel</strong></div><div><span>Time</span><strong>13:00–17:00</strong></div><div><span>Remark</span><strong>Museum admission applies</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Teddy – Bastel-Werkstatt">
+<td class="weekend-event-title"><a href="https://www.spielzeug-welten-museum-basel.ch/de/ausstellungen/2026/teddy-von-legende-bis-lifestyle.html" rel="noopener" target="_blank">Teddy – Bastel-Werkstatt</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Spielzeug Welten Museum Basel, Steinenvorstadt 1, 4051 Basel</strong></div><div><span>Time</span><strong>13:30–17:00</strong></div><div><span>Remark</span><strong>Bastelwerkstatt every Wednesday, Saturday &amp; Sunday during the exhibition</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="weekend-category" data-weekly-category="5 🎵 MUSIC">
+<h3>5 🎵 MUSIC</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="Konzert für Babys">
+<td class="weekend-event-title"><a href="https://www.bethesda-spital.ch/de/medizinisches-angebot/beratungsangebote/seelsorge/mgnlevent/detail/5baacf36-367d-49d4-840b-677bc813a24c.html?date=19-09-2026-10-30" rel="noopener" target="_blank">Konzert für Babys</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Aula, Bethesda Spital, Gellertstrasse 144, 4052 Basel</strong></div><div><span>Time</span><strong>10:30–11:15</strong></div><div><span>Age</span><strong>0–2.5 years</strong></div><div><span>Remark</span><strong>CHF 20</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="weekend-category" data-weekly-category="6 🎬 CINEMA">
+<h3>6 🎬 CINEMA</h3>
+<div class="weekend-empty">No verified picks.</div>
+</section>
+<section class="weekend-category" data-weekly-category="7 📚 STORIES">
+<h3>7 📚 STORIES</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="Geschichtenbaum auf Spanisch und Deutsch / Español y alemán">
+<td class="weekend-event-title"><a href="https://www.stadtbibliothekbasel.ch/de/geschichtenbaum-_content—1–1007–978.html" rel="noopener" target="_blank">Geschichtenbaum auf Spanisch und Deutsch / Español y alemán</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>GGG Bibliothek St. Johann JUKIBU, Basel</strong></div><div><span>Time</span><strong>10:30–12:00</strong></div><div><span>Age</span><strong>4+</strong></div><div><span>Remark</span><strong>FREE; no registration required</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Schenk mir eine Geschichte: Spanisch – Regálame un cuento">
+<td class="weekend-event-title"><a href="https://www.stadtbibliothekbasel.ch/de/schenk-mir-eine-geschichte-_content—1–1007–66.html" rel="noopener" target="_blank">Schenk mir eine Geschichte: Spanisch – Regálame un cuento</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>GGG Bibliothek Bläsi, Basel</strong></div><div><span>Time</span><strong>10:30–12:00</strong></div><div><span>Age</span><strong>2–6 years</strong></div><div><span>Remark</span><strong>FREE</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="weekend-category" data-weekly-category="8 🧺 FLOHMI">
+<h3>8 🧺 FLOHMI</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="Herbst Kinderkleiderbörse">
+<td class="weekend-event-title"><a href="https://basarlino.de/CU21" rel="noopener" target="_blank">Herbst Kinderkleiderbörse</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Zwinglihaus, Grosser Saal, Gundeldingerstrasse 370, 4053 Basel</strong></div><div><span>Time</span><strong>10:00–13:00</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Quartierflohmi Wettstein">
+<td class="weekend-event-title"><a href="https://www.qtp-basel.ch/events/gemeinschaftststandort-am-quartierflohmi-wettstein/" rel="noopener" target="_blank">Quartierflohmi Wettstein</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Wettsteinquartier, Basel</strong></div><div><span>Time</span><strong>11:00–17:00</strong></div><div><span>Remark</span><strong>Flohmarkt throughout the Wettsteinquartier; community location at BURG, Burgweg 7</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="weekend-category" data-weekly-category="9 👨‍👩‍👧‍👦 ANYTIME FAMILY FUN">
+<h3>9 👨‍👩‍👧‍👦 ANYTIME FAMILY FUN</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="Zoo Basel">
+<td class="weekend-event-title"><a href="https://www.zoobasel.ch/de/zoobesuch/r/1/oeffnungszeiten/" rel="noopener" target="_blank">Zoo Basel</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Zoo Basel, Binningerstrasse 40, 4054 Basel</strong></div><div><span>Time</span><strong>08:00–18:00</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="weekend-category" data-weekly-category="10 🐥 GUGU PICKS">
+<h3>10 🐥 GUGU PICKS</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="Mondfest Basel">
+<td class="weekend-event-title"><a href="https://www.bs.ch/veranstaltungen/mondfest-basel" rel="noopener" target="_blank">Mondfest Basel</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Münsterplatz, 4001 Basel</strong></div><div><span>Time</span><strong>Ganztags</strong></div><div><span>Remark</span><strong>FREE</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="BasGame 2026">
+<td class="weekend-event-title"><a href="https://www.basgame.ch/de" rel="noopener" target="_blank">BasGame 2026</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Klybeck 610, Gärtnerstrasse 2, 4057 Basel</strong></div><div><span>Time</span><strong>10:00–21:00</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Quartierapéro 2026">
+<td class="weekend-event-title"><a href="https://www.sicht-bar.ch/post/quartierap%C3%A9ro-2026-ein-fest-f%C3%BCr-s-quartier-1" rel="noopener" target="_blank">Quartierapéro 2026</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Gärtnerhuus im Schwarzpark, Gellertstrasse 133, 4052 Basel</strong></div><div><span>Time</span><strong>11:00–17:00</strong></div><div><span>Remark</span><strong>FREE / Kollekte</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Geschichtenbaum auf Spanisch und Deutsch / Español y alemán">
+<td class="weekend-event-title"><a href="https://www.stadtbibliothekbasel.ch/de/geschichtenbaum-_content—1–1007–978.html" rel="noopener" target="_blank">Geschichtenbaum auf Spanisch und Deutsch / Español y alemán</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>GGG Bibliothek St. Johann JUKIBU, Basel</strong></div><div><span>Time</span><strong>10:30–12:00</strong></div><div><span>Age</span><strong>4+</strong></div><div><span>Remark</span><strong>FREE; no registration required</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Kreativbox mit Betreuung">
+<td class="weekend-event-title"><a href="https://shop.mkb.ch/de/veranstaltungen/kalender.html" rel="noopener" target="_blank">Kreativbox mit Betreuung</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Museum der Kulturen Basel, Münsterplatz 20, 4051 Basel</strong></div><div><span>Time</span><strong>13:00–17:00</strong></div><div><span>Remark</span><strong>Museum admission applies</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- ==================================================== -->
+<!-- WEEKEND PLANS: SATURDAY END — REPLACE WEEKLY ABOVE -->
+<!-- ==================================================== -->
+<!-- ==================================================== -->
+<!-- WEEKEND PLANS: SUNDAY START — REPLACE WEEKLY BELOW -->
+<!-- ==================================================== -->
+<div aria-labelledby="sunday-tab" class="weekend-day-panel" id="sunday-panel" role="tabpanel">
+<h2 class="weekend-date">SUNDAY, 20.Sep.2026</h2>
+<section class="weekend-category" data-weekly-category="1 🎨 🛠️ HANDS-ON FUN">
+<h3>1 🎨 🛠️ HANDS-ON FUN</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="BasGame 2026">
+<td class="weekend-event-title"><a href="https://www.basgame.ch/de" rel="noopener" target="_blank">BasGame 2026</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Klybeck 610, Gärtnerstrasse 2, 4057 Basel</strong></div><div><span>Time</span><strong>10:00–21:00</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="weekend-category" data-weekly-category="2 🎭 THEATRE &amp; FESTIVALS">
+<h3>2 🎭 THEATRE &amp; FESTIVALS</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="Mondfest Basel">
+<td class="weekend-event-title"><a href="https://www.bs.ch/veranstaltungen/mondfest-basel" rel="noopener" target="_blank">Mondfest Basel</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Münsterplatz, 4001 Basel</strong></div><div><span>Time</span><strong>Ganztags</strong></div><div><span>Remark</span><strong>FREE</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Quartierapéro 2026">
+<td class="weekend-event-title"><a href="https://www.sicht-bar.ch/post/quartierap%C3%A9ro-2026-ein-fest-f%C3%BCr-s-quartier-1" rel="noopener" target="_blank">Quartierapéro 2026</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Gärtnerhuus im Schwarzpark, Gellertstrasse 133, 4052 Basel</strong></div><div><span>Time</span><strong>11:00–17:00</strong></div><div><span>Remark</span><strong>FREE / Kollekte</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Glaini Häggs Dintegläggs">
+<td class="weekend-event-title"><a href="https://theater-arlecchino.ch/glaini-haeggs-dinteglaeggs/" rel="noopener" target="_blank">Glaini Häggs Dintegläggs</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Theater Arlecchino, Basel</strong></div><div><span>Time</span><strong>14:30</strong></div><div><span>Age</span><strong>Recommended 4+</strong></div><div><span>Remark</span><strong>Children CHF 20 / Adults CHF 25</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="weekend-category" data-weekly-category="3 ⚽ SPORTS &amp; OUTDOOR">
+<h3>3 ⚽ SPORTS &amp; OUTDOOR</h3>
+<div class="weekend-empty">No verified picks.</div>
+</section>
+<section class="weekend-category" data-weekly-category="4 🎨 ART &amp; CREATIVITY">
+<h3>4 🎨 ART &amp; CREATIVITY</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="Kreativbox mit Betreuung">
+<td class="weekend-event-title"><a href="https://shop.mkb.ch/de/veranstaltungen/kalender.html" rel="noopener" target="_blank">Kreativbox mit Betreuung</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Museum der Kulturen Basel, Münsterplatz 20, 4051 Basel</strong></div><div><span>Time</span><strong>13:00–17:00</strong></div><div><span>Remark</span><strong>Museum admission applies</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Teddy – Bastel-Werkstatt">
+<td class="weekend-event-title"><a href="https://www.spielzeug-welten-museum-basel.ch/de/ausstellungen/2026/teddy-von-legende-bis-lifestyle.html" rel="noopener" target="_blank">Teddy – Bastel-Werkstatt</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Spielzeug Welten Museum Basel, Steinenvorstadt 1, 4051 Basel</strong></div><div><span>Time</span><strong>13:30–17:00</strong></div><div><span>Remark</span><strong>Bastelwerkstatt every Wednesday, Saturday &amp; Sunday during the exhibition</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="weekend-category" data-weekly-category="5 🎵 MUSIC">
+<h3>5 🎵 MUSIC</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="Konzert für Babys">
+<td class="weekend-event-title"><a href="https://www.bethesda-spital.ch/de/medizinisches-angebot/beratungsangebote/seelsorge/mgnlevent/detail/5baacf36-367d-49d4-840b-677bc813a24c.html?date=19-09-2026-10-30" rel="noopener" target="_blank">Konzert für Babys</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Aula, Bethesda Spital, Gellertstrasse 144, 4052 Basel</strong></div><div><span>Time</span><strong>10:30–11:15</strong></div><div><span>Age</span><strong>0–2.5 years</strong></div><div><span>Remark</span><strong>CHF 20</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="weekend-category" data-weekly-category="6 🎬 CINEMA">
+<h3>6 🎬 CINEMA</h3>
+<div class="weekend-empty">No verified picks.</div>
+</section>
+<section class="weekend-category" data-weekly-category="7 📚 STORIES">
+<h3>7 📚 STORIES</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="Geschichtenbaum auf Spanisch und Deutsch / Español y alemán">
+<td class="weekend-event-title"><a href="https://www.stadtbibliothekbasel.ch/de/geschichtenbaum-_content—1–1007–978.html" rel="noopener" target="_blank">Geschichtenbaum auf Spanisch und Deutsch / Español y alemán</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>GGG Bibliothek St. Johann JUKIBU, Basel</strong></div><div><span>Time</span><strong>10:30–12:00</strong></div><div><span>Age</span><strong>4+</strong></div><div><span>Remark</span><strong>FREE; no registration required</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Schenk mir eine Geschichte: Spanisch – Regálame un cuento">
+<td class="weekend-event-title"><a href="https://www.stadtbibliothekbasel.ch/de/schenk-mir-eine-geschichte-_content—1–1007–66.html" rel="noopener" target="_blank">Schenk mir eine Geschichte: Spanisch – Regálame un cuento</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>GGG Bibliothek Bläsi, Basel</strong></div><div><span>Time</span><strong>10:30–12:00</strong></div><div><span>Age</span><strong>2–6 years</strong></div><div><span>Remark</span><strong>FREE</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="weekend-category" data-weekly-category="8 🧺 FLOHMI">
+<h3>8 🧺 FLOHMI</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="Herbst Kinderkleiderbörse">
+<td class="weekend-event-title"><a href="https://basarlino.de/CU21" rel="noopener" target="_blank">Herbst Kinderkleiderbörse</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Zwinglihaus, Grosser Saal, Gundeldingerstrasse 370, 4053 Basel</strong></div><div><span>Time</span><strong>10:00–13:00</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Quartierflohmi Wettstein">
+<td class="weekend-event-title"><a href="https://www.qtp-basel.ch/events/gemeinschaftststandort-am-quartierflohmi-wettstein/" rel="noopener" target="_blank">Quartierflohmi Wettstein</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Wettsteinquartier, Basel</strong></div><div><span>Time</span><strong>11:00–17:00</strong></div><div><span>Remark</span><strong>Flohmarkt throughout the Wettsteinquartier; community location at BURG, Burgweg 7</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="weekend-category" data-weekly-category="9 👨‍👩‍👧‍👦 ANYTIME FAMILY FUN">
+<h3>9 👨‍👩‍👧‍👦 ANYTIME FAMILY FUN</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="Zoo Basel">
+<td class="weekend-event-title"><a href="https://www.zoobasel.ch/de/zoobesuch/r/1/oeffnungszeiten/" rel="noopener" target="_blank">Zoo Basel</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Zoo Basel, Binningerstrasse 40, 4054 Basel</strong></div><div><span>Time</span><strong>08:00–18:00</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="weekend-category" data-weekly-category="10 🐥 GUGU PICKS">
+<h3>10 🐥 GUGU PICKS</h3>
+<div class="weekend-table-wrap">
+<table class="weekend-table">
+<tbody>
+<tr class="weekend-event-row" data-weekly-event="Mondfest Basel">
+<td class="weekend-event-title"><a href="https://www.bs.ch/veranstaltungen/mondfest-basel" rel="noopener" target="_blank">Mondfest Basel</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Münsterplatz, 4001 Basel</strong></div><div><span>Time</span><strong>Ganztags</strong></div><div><span>Remark</span><strong>FREE</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="BasGame 2026">
+<td class="weekend-event-title"><a href="https://www.basgame.ch/de" rel="noopener" target="_blank">BasGame 2026</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Klybeck 610, Gärtnerstrasse 2, 4057 Basel</strong></div><div><span>Time</span><strong>10:00–21:00</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Quartierapéro 2026">
+<td class="weekend-event-title"><a href="https://www.sicht-bar.ch/post/quartierap%C3%A9ro-2026-ein-fest-f%C3%BCr-s-quartier-1" rel="noopener" target="_blank">Quartierapéro 2026</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Gärtnerhuus im Schwarzpark, Gellertstrasse 133, 4052 Basel</strong></div><div><span>Time</span><strong>11:00–17:00</strong></div><div><span>Remark</span><strong>FREE / Kollekte</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Geschichtenbaum auf Spanisch und Deutsch / Español y alemán">
+<td class="weekend-event-title"><a href="https://www.stadtbibliothekbasel.ch/de/geschichtenbaum-_content—1–1007–978.html" rel="noopener" target="_blank">Geschichtenbaum auf Spanisch und Deutsch / Español y alemán</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>GGG Bibliothek St. Johann JUKIBU, Basel</strong></div><div><span>Time</span><strong>10:30–12:00</strong></div><div><span>Age</span><strong>4+</strong></div><div><span>Remark</span><strong>FREE; no registration required</strong></div></td>
+</tr><tr class="weekend-event-row" data-weekly-event="Kreativbox mit Betreuung">
+<td class="weekend-event-title"><a href="https://shop.mkb.ch/de/veranstaltungen/kalender.html" rel="noopener" target="_blank">Kreativbox mit Betreuung</a></td>
+<td class="weekend-event-details"><div><span>Venue</span><strong>Museum der Kulturen Basel, Münsterplatz 20, 4051 Basel</strong></div><div><span>Time</span><strong>13:00–17:00</strong></div><div><span>Remark</span><strong>Museum admission applies</strong></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- ================================================== -->
+<!-- WEEKEND PLANS: SUNDAY END — REPLACE WEEKLY ABOVE -->
+<!-- ================================================== -->
+</section>
+</div>
+<div aria-labelledby="family-deals-tab" class="gugu-tab-panel" id="family-deals-panel" role="tabpanel">
 <main>
-
-       <section class="deals-shell">
- <div class="week-head">
-          <div>
-            <p class="eyebrow">THIS WEEK</p>
-            <h2>14 - 20.09.2026</h2>
-          </div>
-          <span class="week-chip">9 deals</span>
-        </div>
-
-        <p class="top-note">Tap the product name or photo to open the retailer page.</p>
-
-        <section class="deal-category">
-          <h3>👶 BABY GEAR</h3>
-          <table class="deal-table" aria-label="👶 BABY GEAR">
-            <colgroup>
-              <col class="col-photo" />
-              <col class="col-product" />
-              <col class="col-discount" />
-              <col class="col-old" />
-              <col class="col-new" />
-            </colgroup>
-            <thead>
-              <tr>
-                <th></th>
-                <th>Product</th>
-                <th>Off</th>
-                <th>Was</th>
-                <th>Now</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr>
-                  <td class="photo-cell">
-                    <a href="https://www.babyone.ch/babyone/joie/i-spin-360-onyx/2000589093507.html" target="_blank" rel="noopener" aria-label="Open Rotating car seat — Joie i-Spin 360">
-                      <img src="assets/products/joie-ispin360.svg" alt="Rotating car seat — Joie i-Spin 360" loading="lazy" />
-                    </a>
-                  </td>
-                  <td class="product-cell">
-                    <a href="https://www.babyone.ch/babyone/joie/i-spin-360-onyx/2000589093507.html" target="_blank" rel="noopener"><strong>Rotating car seat — Joie i-Spin 360</strong></a>
-                    <span>@ BabyOne</span>
-                  </td>
-                  <td class="discount-cell">51% OFF</td>
-                  <td class="old-cell">409 CHF</td>
-                  <td class="new-cell">199 CHF</td>
-                </tr>
-                <tr>
-                  <td class="photo-cell">
-                    <a href="https://www.babyone.ch/mobiles/sterntaler/mobile-ben/2000579720505.html" target="_blank" rel="noopener" aria-label="Open Mobile — Sterntaler Mobile Ben" class="fallback" data-fallback="🎠">
-
-                    </a>
-                  </td>
-                  <td class="product-cell">
-                    <a href="https://www.babyone.ch/mobiles/sterntaler/mobile-ben/2000579720505.html" target="_blank" rel="noopener"><strong>Mobile — Sterntaler Mobile Ben</strong></a>
-                    <span>@ BabyOne</span>
-                  </td>
-                  <td class="discount-cell">50% OFF</td>
-                  <td class="old-cell">46 CHF</td>
-                  <td class="new-cell">23 CHF</td>
-                </tr>
-            </tbody>
-          </table>
-        </section>
-        <section class="deal-category">
-          <h3>👕 BABY &amp; TODDLER CLOTHES</h3>
-          <table class="deal-table" aria-label="👕 BABY &amp; TODDLER CLOTHES">
-            <colgroup>
-              <col class="col-photo" />
-              <col class="col-product" />
-              <col class="col-discount" />
-              <col class="col-old" />
-              <col class="col-new" />
-            </colgroup>
-            <thead>
-              <tr>
-                <th></th>
-                <th>Product</th>
-                <th>Off</th>
-                <th>Was</th>
-                <th>Now</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr>
-                  <td class="photo-cell">
-                    <a href="https://www2.hm.com/de_ch/productpage.1143149013.html" target="_blank" rel="noopener" aria-label="Open Baby pyjama — H&amp;M Bedruckter Baumwollpyjama" class="fallback" data-fallback="👕">
-
-                    </a>
-                  </td>
-                  <td class="product-cell">
-                    <a href="https://www2.hm.com/de_ch/productpage.1143149013.html" target="_blank" rel="noopener"><strong>Baby pyjama — H&amp;M Bedruckter Baumwollpyjama</strong></a>
-                    <span>@ H&amp;M Switzerland</span>
-                  </td>
-                  <td class="discount-cell">46% OFF</td>
-                  <td class="old-cell">13 CHF</td>
-                  <td class="new-cell">7 CHF</td>
-                </tr>
-            </tbody>
-          </table>
-        </section>
-        <section class="deal-category">
-          <h3>🧸 TOYS</h3>
-          <table class="deal-table" aria-label="🧸 TOYS">
-            <colgroup>
-              <col class="col-photo" />
-              <col class="col-product" />
-              <col class="col-discount" />
-              <col class="col-old" />
-              <col class="col-new" />
-            </colgroup>
-            <thead>
-              <tr>
-                <th></th>
-                <th>Product</th>
-                <th>Off</th>
-                <th>Was</th>
-                <th>Now</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr>
-                  <td class="photo-cell">
-                    <a href="https://www.babyone.ch/baby-knisterspielzeug/baby-einstein/neptune-s-sensory-sidekick-activity-plush-toy/2000585474201.html" target="_blank" rel="noopener" aria-label="Open Activity plush — Baby Einstein Neptune’s Sensory Sidekick" class="fallback" data-fallback="🧸">
-
-                    </a>
-                  </td>
-                  <td class="product-cell">
-                    <a href="https://www.babyone.ch/baby-knisterspielzeug/baby-einstein/neptune-s-sensory-sidekick-activity-plush-toy/2000585474201.html" target="_blank" rel="noopener"><strong>Activity plush — Baby Einstein Neptune’s Sensory Sidekick</strong></a>
-                    <span>@ BabyOne</span>
-                  </td>
-                  <td class="discount-cell">40% OFF</td>
-                  <td class="old-cell">15 CHF</td>
-                  <td class="new-cell">9 CHF</td>
-                </tr>
-                <tr>
-                  <td class="photo-cell">
-                    <a href="https://www.babyone.ch/rasseln-greiflinge/haba/haengefigur-waldfreunde/2000584688005.html" target="_blank" rel="noopener" aria-label="Open Baby hanging toy — HABA Hängefigur Waldfreunde" class="fallback" data-fallback="🪁">
-
-                    </a>
-                  </td>
-                  <td class="product-cell">
-                    <a href="https://www.babyone.ch/rasseln-greiflinge/haba/haengefigur-waldfreunde/2000584688005.html" target="_blank" rel="noopener"><strong>Baby hanging toy — HABA Hängefigur Waldfreunde</strong></a>
-                    <span>@ BabyOne</span>
-                  </td>
-                  <td class="discount-cell">34% OFF</td>
-                  <td class="old-cell">15 CHF</td>
-                  <td class="new-cell">10 CHF</td>
-                </tr>
-                <tr>
-                  <td class="photo-cell">
-                    <a href="https://www.babyone.ch/rasseln-greiflinge/baby-einstein/roxy-s-bright-flight-musical-toy/2000587260109.html" target="_blank" rel="noopener" aria-label="Open Musical toy — Baby Einstein Roxy’s Bright Flight" class="fallback" data-fallback="🎵">
-
-                    </a>
-                  </td>
-                  <td class="product-cell">
-                    <a href="https://www.babyone.ch/rasseln-greiflinge/baby-einstein/roxy-s-bright-flight-musical-toy/2000587260109.html" target="_blank" rel="noopener"><strong>Musical toy — Baby Einstein Roxy’s Bright Flight</strong></a>
-                    <span>@ BabyOne</span>
-                  </td>
-                  <td class="discount-cell">31% OFF</td>
-                  <td class="old-cell">13 CHF</td>
-                  <td class="new-cell">9 CHF</td>
-                </tr>
-            </tbody>
-          </table>
-        </section>
-        <section class="deal-category">
-          <h3>🚲 OUTDOOR PLAY</h3>
-          <table class="deal-table" aria-label="🚲 OUTDOOR PLAY">
-            <colgroup>
-              <col class="col-photo" />
-              <col class="col-product" />
-              <col class="col-discount" />
-              <col class="col-old" />
-              <col class="col-new" />
-            </colgroup>
-            <thead>
-              <tr>
-                <th></th>
-                <th>Product</th>
-                <th>Off</th>
-                <th>Was</th>
-                <th>Now</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr>
-                  <td class="photo-cell">
-                    <a href="https://www.babyone.ch/wasserspielzeug/aquaplay/mountain-lake/2000573710106.html" target="_blank" rel="noopener" aria-label="Open Water-play system — AquaPlay Mountain Lake" class="fallback" data-fallback="⛵">
-
-                    </a>
-                  </td>
-                  <td class="product-cell">
-                    <a href="https://www.babyone.ch/wasserspielzeug/aquaplay/mountain-lake/2000573710106.html" target="_blank" rel="noopener"><strong>Water-play system — AquaPlay Mountain Lake</strong></a>
-                    <span>@ BabyOne</span>
-                  </td>
-                  <td class="discount-cell">33% OFF</td>
-                  <td class="old-cell">85 CHF</td>
-                  <td class="new-cell">57 CHF</td>
-                </tr>
-                <tr>
-                  <td class="photo-cell">
-                    <a href="https://www.babyone.ch/sandspielzeug/outdoor-active/schubkarre-/2000589376907.html" target="_blank" rel="noopener" aria-label="Open Garden wheelbarrow — Outdoor Active Schubkarre" class="fallback" data-fallback="🛒">
-
-                    </a>
-                  </td>
-                  <td class="product-cell">
-                    <a href="https://www.babyone.ch/sandspielzeug/outdoor-active/schubkarre-/2000589376907.html" target="_blank" rel="noopener"><strong>Garden wheelbarrow — Outdoor Active Schubkarre</strong></a>
-                    <span>@ BabyOne</span>
-                  </td>
-                  <td class="discount-cell">37% OFF</td>
-                  <td class="old-cell">30 CHF</td>
-                  <td class="new-cell">19 CHF</td>
-                </tr>
-                <tr>
-                  <td class="photo-cell">
-                    <a href="https://www.babyone.ch/wasserspielzeug/aquaplay/wassersprinkler-aquanauti/2000589379908.html" target="_blank" rel="noopener" aria-label="Open Water sprinkler — AquaPlay AquaNauti" class="fallback" data-fallback="💦">
-
-                    </a>
-                  </td>
-                  <td class="product-cell">
-                    <a href="https://www.babyone.ch/wasserspielzeug/aquaplay/wassersprinkler-aquanauti/2000589379908.html" target="_blank" rel="noopener"><strong>Water sprinkler — AquaPlay AquaNauti</strong></a>
-                    <span>@ BabyOne</span>
-                  </td>
-                  <td class="discount-cell">36% OFF</td>
-                  <td class="old-cell">25 CHF</td>
-                  <td class="new-cell">16 CHF</td>
-                </tr>
-            </tbody>
-          </table>
-        </section>
-        <p class="deal-note">Prices and availability can change quickly.</p>
-      </section>
-    </main>
-
-    <footer>
-      <a href="https://www.instagram.com/gugubasel" target="_blank" rel="noopener">Instagram <span>@gugubasel</span></a>
-      <a href="mailto:gugubasel@hotmail.com">Contact us <span>gugubasel@hotmail.com</span></a>
-      <p class="copyright">© 2026 Gugu Basel</p>
-    </footer>
-  </div>
-  <script>
+<section class="deals-shell">
+<div class="week-head">
+<div>
+<h2>WEEK 14-20.Sep.2026</h2>
+</div>
+</div>
+<p class="top-note">Tap the product name to open the retailer page.</p>
+<section class="deal-category">
+<h3>BABY GEAR</h3>
+<table aria-label="👶 BABY GEAR" class="deal-table">
+<colgroup>
+<col class="col-product"/>
+<col class="col-discount"/>
+<col class="col-old"/>
+<col class="col-new"/>
+</colgroup>
+<tbody>
+<tr>
+<td class="product-cell">
+<a href="https://www.babyone.ch/babyone/joie/i-spin-360-onyx/2000589093507.html" rel="noopener" target="_blank"><strong>Rotating car seat — Joie i-Spin 360</strong></a>
+<span>@ BabyOne</span>
+</td>
+<td class="discount-cell">-51%</td>
+<td class="old-cell">409.-</td>
+<td class="new-cell">199.-</td>
+</tr>
+<tr>
+<td class="product-cell">
+<a href="https://www.babyone.ch/mobiles/sterntaler/mobile-ben/2000579720505.html" rel="noopener" target="_blank"><strong>Mobile — Sterntaler Mobile Ben</strong></a>
+<span>@ BabyOne</span>
+</td>
+<td class="discount-cell">-50%</td>
+<td class="old-cell">46.-</td>
+<td class="new-cell">23.-</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="deal-category">
+<h3>BABY &amp; TODDLER CLOTHES</h3>
+<table aria-label="👕 BABY &amp; TODDLER CLOTHES" class="deal-table">
+<colgroup>
+<col class="col-product"/>
+<col class="col-discount"/>
+<col class="col-old"/>
+<col class="col-new"/>
+</colgroup>
+<tbody>
+<tr>
+<td class="product-cell">
+<a href="https://www2.hm.com/de_ch/productpage.1143149013.html" rel="noopener" target="_blank"><strong>Baby pyjama — H&amp;M Bedruckter Baumwollpyjama</strong></a>
+<span>@ H&amp;M Switzerland</span>
+</td>
+<td class="discount-cell">-46%</td>
+<td class="old-cell">13.-</td>
+<td class="new-cell">7.-</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="deal-category">
+<h3>TOYS</h3>
+<table aria-label="🧸 TOYS" class="deal-table">
+<colgroup>
+<col class="col-product"/>
+<col class="col-discount"/>
+<col class="col-old"/>
+<col class="col-new"/>
+</colgroup>
+<tbody>
+<tr>
+<td class="product-cell">
+<a href="https://www.babyone.ch/baby-knisterspielzeug/baby-einstein/neptune-s-sensory-sidekick-activity-plush-toy/2000585474201.html" rel="noopener" target="_blank"><strong>Activity plush — Baby Einstein Neptune’s Sensory Sidekick</strong></a>
+<span>@ BabyOne</span>
+</td>
+<td class="discount-cell">-40%</td>
+<td class="old-cell">15.-</td>
+<td class="new-cell">9.-</td>
+</tr>
+<tr>
+<td class="product-cell">
+<a href="https://www.babyone.ch/rasseln-greiflinge/haba/haengefigur-waldfreunde/2000584688005.html" rel="noopener" target="_blank"><strong>Baby hanging toy — HABA Hängefigur Waldfreunde</strong></a>
+<span>@ BabyOne</span>
+</td>
+<td class="discount-cell">-34%</td>
+<td class="old-cell">15.-</td>
+<td class="new-cell">10.-</td>
+</tr>
+<tr>
+<td class="product-cell">
+<a href="https://www.babyone.ch/rasseln-greiflinge/baby-einstein/roxy-s-bright-flight-musical-toy/2000587260109.html" rel="noopener" target="_blank"><strong>Musical toy — Baby Einstein Roxy’s Bright Flight</strong></a>
+<span>@ BabyOne</span>
+</td>
+<td class="discount-cell">-31%</td>
+<td class="old-cell">13.-</td>
+<td class="new-cell">9.-</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="deal-category">
+<h3>OUTDOOR PLAY</h3>
+<table aria-label="🚲 OUTDOOR PLAY" class="deal-table">
+<colgroup>
+<col class="col-product"/>
+<col class="col-discount"/>
+<col class="col-old"/>
+<col class="col-new"/>
+</colgroup>
+<tbody>
+<tr>
+<td class="product-cell">
+<a href="https://www.babyone.ch/wasserspielzeug/aquaplay/mountain-lake/2000573710106.html" rel="noopener" target="_blank"><strong>Water-play system — AquaPlay Mountain Lake</strong></a>
+<span>@ BabyOne</span>
+</td>
+<td class="discount-cell">-33%</td>
+<td class="old-cell">85.-</td>
+<td class="new-cell">57.-</td>
+</tr>
+<tr>
+<td class="product-cell">
+<a href="https://www.babyone.ch/sandspielzeug/outdoor-active/schubkarre-/2000589376907.html" rel="noopener" target="_blank"><strong>Garden wheelbarrow — Outdoor Active Schubkarre</strong></a>
+<span>@ BabyOne</span>
+</td>
+<td class="discount-cell">-37%</td>
+<td class="old-cell">30.-</td>
+<td class="new-cell">19.-</td>
+</tr>
+<tr>
+<td class="product-cell">
+<a href="https://www.babyone.ch/wasserspielzeug/aquaplay/wassersprinkler-aquanauti/2000589379908.html" rel="noopener" target="_blank"><strong>Water sprinkler — AquaPlay AquaNauti</strong></a>
+<span>@ BabyOne</span>
+</td>
+<td class="discount-cell">-36%</td>
+<td class="old-cell">25.-</td>
+<td class="new-cell">16.-</td>
+</tr>
+</tbody>
+</table>
+</section>
+<p class="deal-note">Prices and availability can change quickly.</p>
+</section>
+</main>
+</div>
+</div>
+</div>
+<footer class="site-footer">
+<section aria-label="Contact Gugu Basel" class="footer-social footer-contact">
+<a aria-label="Message Gugu Basel on Instagram" class="instagram-link" href="https://www.instagram.com/gugubasel" rel="noopener" target="_blank">
+<span aria-hidden="true" class="instagram-icon">
+<svg aria-hidden="true" role="img" viewbox="0 0 24 24">
+<rect height="18" rx="5" ry="5" width="18" x="3" y="3"></rect>
+<circle cx="12" cy="12" r="4.1"></circle>
+<circle cx="17.5" cy="6.5" r="1.1"></circle>
+</svg>
+</span><img alt="Gugu Basel" class="footer-mini-logo" loading="lazy" src="assets/gugu-basel-logo.png"/>
+<span class="instagram-copy">
+<strong>Contact Gugu Basel</strong>
+<small>Send us a DM</small>
+</span>
+<span aria-hidden="true" class="footer-arrow">↗</span>
+</a>
+</section>
+<section class="legal-copy">
+<details id="terms">
+<summary>Terms</summary>
+<div><p>Gugu Basel is an independent family-information page publishing Basel family-event ideas and Swiss-wide family deals. The content is provided for general information and planning purposes.</p><p>Event dates, times, age guidance, prices, registration requirements, availability, programmes and venue details can change after publication. Please verify important information directly with the linked organiser, venue or official source before travelling, registering or purchasing.</p><p>Product deals are selected editorially from publicly available retailer information. Prices, discounts, reference prices, stock, delivery conditions and availability may change at any time. A listed deal does not guarantee continued availability or the lowest market price.</p><p>Links to organisers, venues, retailers and other third-party websites are provided for convenience. Gugu Basel does not control those websites and is not responsible for their content, availability, purchases, bookings, services, terms or privacy practices.</p><p>Gugu Basel is not an event organiser, ticket seller or retailer unless expressly stated otherwise.</p><p>Gugu Basel may contain sponsored content, paid partnerships or affiliate links in the future. Where applicable, commercial relationships will be identified clearly near the relevant content using labels such as “Sponsored”, “Paid partnership” or “Affiliate link”. Editorial inclusion alone does not constitute an endorsement or warranty.</p><p>Original Gugu Basel text, branding, layout and editorial selections are protected to the extent permitted by applicable law. Third-party names, trademarks, event names, images and linked content remain the property of their respective owners.</p></div></details>
+<details id="privacy">
+<summary>Privacy</summary>
+<div><p>Gugu Basel does not intentionally collect personal data directly through this website.</p><p>Technical data may nevertheless be processed automatically by the website hosting and infrastructure providers when the site is accessed. Depending on the provider, this may include information such as an IP address, browser or device information, access time and technical server logs used to deliver, operate and secure the website.</p><p>Gugu Basel currently provides contact through Instagram DM rather than a website contact form. Information you choose to send through Instagram is processed under Instagram’s own terms and privacy practices.</p><p>The website contains external links to Instagram, event organisers, venues, retailers and other third-party websites. Clicking an external link takes you to a third-party service. Its own privacy policy and data-processing practices then apply.</p><p>Gugu Basel does not intentionally use advertising trackers or analytics scripts in the current page code. No website contact form is used. Hosting or third-party services may nevertheless process technical information necessary to provide their services.</p><p>If Gugu Basel later introduces analytics, non-essential cookies, embedded third-party services, advertising technology, affiliate tracking or other technologies that materially change how personal data is processed, this Privacy notice will be updated and any additional transparency or consent measures required for that implementation will be introduced.</p><p>Gugu Basel does not sell personal data to advertisers or other third parties.</p></div></details>
+<details id="impressum">
+<summary>Impressum</summary>
+<div><p>Gugu Basel is an independent family-information project focused on Basel family events and Swiss-wide family deals.</p><p>Editorial responsibility: Gugu Basel.</p><p>Contact: Send us a DM through the official Gugu Basel Instagram account linked on this website.</p><p>Gugu Basel is not an event organiser, ticket seller or retailer unless expressly stated otherwise. Event and product information is compiled from organiser, venue and retailer sources and may change without notice.</p><p>Third-party trademarks, company names, product names and event names are used for identification and informational purposes and remain the property of their respective owners.</p><p>If the project develops into a commercial operation or applicable law requires additional operator information, the Impressum will be updated with the legally required details.</p></div></details>
+</section>
+<p class="footer-copyright">© 2026 Gugu Basel. All rights reserved.</p>
+</footer>
+</div>
+<script>
     (() => {
       const fitTableType = () => {
         const compact = window.matchMedia('(max-width: 390px)').matches;
