@@ -1636,7 +1636,21 @@ html,body{margin:0!important;padding:0!important}
   box-shadow:0 5px 14px rgba(14,61,88,.045)!important;
 }
 .event-main,.event-meta{background:#fff!important}
-.events-footer-art{display:block!important;width:100%!important;margin-top:10px!important}
+.events-footer-art{
+  display:block!important;
+  width:calc(100% + 24px)!important;
+  max-width:none!important;
+  margin-top:10px!important;
+  margin-left:-12px!important;
+  margin-right:-12px!important;
+}
+@media(max-width:390px){
+  .events-footer-art{
+    width:calc(100% + 16px)!important;
+    margin-left:-8px!important;
+    margin-right:-8px!important;
+  }
+}
 
 @media(max-width:390px){
   .date-title{font-size:19px!important}
@@ -1765,7 +1779,14 @@ html,body{margin:0!important;padding:0!important}
 .event-photo-cell{background:#fff!important;overflow:hidden!important;}
 .event-photo-link{display:block!important;width:100%!important;height:100%!important;overflow:hidden!important;}
 .event-stock-photo{display:block!important;width:100%!important;height:100%!important;min-height:88px!important;object-fit:cover!important;object-position:center!important;background:#fff!important;border:0!important;margin:0!important;padding:0!important;}
-</style></head>
+</style>
+<style>
+/* FINAL: Swiss Deals category bars match Basel Events category bars */
+#deals-panel .category-head{
+  background:linear-gradient(90deg,#d9f2fc 0%,#b8e6f7 100%) !important;
+}
+</style>
+</head>
 <body>
 <div class="app">
 <div style="position:relative">
@@ -1977,7 +1998,7 @@ html,body{margin:0!important;padding:0!important}
 <div><div class="week-kicker">THIS WEEK</div><div class="week-date">14-20.SEP.2026</div></div>
 <div class="deal-count">9 deals</div>
 </div>
-<div class="note">💡 <span>Tap the product name or photo to open the retailer page.</span></div>
+
 </div>
 <div class="category-head"><span>👶</span><strong>BABY GEAR</strong><span>⌄</span></div>
 <div class="deal-list">
