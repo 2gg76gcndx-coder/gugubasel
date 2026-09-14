@@ -489,3 +489,93 @@ jobs:
               issue_number: context.issue.number,
               state: 'closed'
             });
+name: GUGU Index URL Patch
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  patch-index:
+    if: startsWith(github.event.issue.title, 'GUGU_INDEX_PATCH:')
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Patch URLs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path("index.html")
+          text = p.read_text(encoding="utf-8")
+
+          replacements = {
+              "PFISTER_PLACEHOLDER": "https://www.pfister.ch/de/produkt/34456/moll-schreibtisch-champion-left-up",
+              "OCHSNER_PLACEHOLDER": "https://www.ochsnersport.ch/de/shop/fila-upload-2-kinder-laufschuh-schwarz-weiss-00002002292346-p.html",
+              "TRANSA_PLACEHOLDER": "https://www.transa.ch/de/p/patagonia-baby-micro-d-snap-t-jacket-145560-295/"
+          }
+
+          # Replace any href containing the relevant retailer/product identifiers.
+          import re
+
+          text = re.sub(
+              r'href="[^"]*pfister[^"]*champion-left-up[^"]*"',
+              'href="' + replacements["PFISTER_PLACEHOLDER"] + '"',
+              text,
+              flags=re.I
+          )
+
+          text = re.sub(
+              r'href="[^"]*ochsnersport[^"]*upload-2[^"]*"',
+              'href="' + replacements["OCHSNER_PLACEHOLDER"] + '"',
+              text,
+              flags=re.I
+          )
+
+          text = re.sub(
+              r'href="[^"]*transa[^"]*baby-micro-d-snap-t-jacket[^"]*"',
+              'href="' + replacements["TRANSA_PLACEHOLDER"] + '"',
+              text,
+              flags=re.I
+          )
+
+          p.write_text(text, encoding="utf-8")
+          PY
+
+      - name: Commit changes
+        run: |
+          git config user.name "gugu-index-bot"
+          git config user.email "gugu-index-bot@users.noreply.github.com"
+
+          git add index.html
+
+          if git diff --cached --quiet; then
+            echo "No changes found."
+          else
+            git commit -m "Fix product URLs in index.html"
+            git push
+          fi
+
+      - name: Close issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: "✅ index.html product URLs patched."
+            });
+
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: "closed"
+            });
