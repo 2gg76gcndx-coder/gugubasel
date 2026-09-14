@@ -1786,6 +1786,13 @@ html,body{margin:0!important;padding:0!important}
   background:linear-gradient(90deg,#d9f2fc 0%,#b8e6f7 100%) !important;
 }
 </style>
+
+<!-- ===== Privacy-first analytics: Simple Analytics =====
+     Aggregate traffic only: no cookies, localStorage, visitor IDs or ad profiling.
+     Create/add gugubasel.ch in your Simple Analytics account before publishing
+     so these pageviews and events appear in your dashboard. -->
+<script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+<script async src="https://scripts.simpleanalyticscdn.com/auto-events.js"></script>
 </head>
 <body>
 <div class="app">
@@ -2193,10 +2200,35 @@ html,body{margin:0!important;padding:0!important}
 </a>
 <section class="legal">
 <details id="terms"><summary>Terms</summary><div><p>Gugu Basel is an independent family-information page publishing Basel family-event ideas and Swiss-wide family deals. The content is provided for general information and planning purposes.</p><p>Event dates, times, age guidance, prices, registration requirements, availability, programmes and venue details can change after publication. Please verify important information directly with the linked organiser, venue or official source before travelling, registering or purchasing.</p><p>Product deals are selected editorially from publicly available retailer information. Prices, discounts, reference prices, stock, delivery conditions and availability may change at any time. A listed deal does not guarantee continued availability or the lowest market price.</p><p>Links to organisers, venues, retailers and other third-party websites are provided for convenience. Gugu Basel does not control those websites and is not responsible for their content, availability, purchases, bookings, services, terms or privacy practices.</p><p>Gugu Basel is not an event organiser, ticket seller or retailer unless expressly stated otherwise.</p><p>Gugu Basel may contain sponsored content, paid partnerships or affiliate links in the future. Where applicable, commercial relationships will be identified clearly near the relevant content using labels such as “Sponsored”, “Paid partnership” or “Affiliate link”. Editorial inclusion alone does not constitute an endorsement or warranty.</p><p>Original Gugu Basel text, branding, layout and editorial selections are protected to the extent permitted by applicable law. Third-party names, trademarks, event names, images and linked content remain the property of their respective owners.</p></div></details>
-<details id="privacy"><summary>Privacy</summary><div><p>Gugu Basel does not intentionally collect personal data directly through this website.</p><p>Technical data may nevertheless be processed automatically by the website hosting and infrastructure providers when the site is accessed. Depending on the provider, this may include information such as an IP address, browser or device information, access time and technical server logs used to deliver, operate and secure the website.</p><p>Gugu Basel currently provides contact through Instagram DM rather than a website contact form. Information you choose to send through Instagram is processed under Instagram’s own terms and privacy practices.</p><p>The website contains external links to Instagram, event organisers, venues, retailers and other third-party websites. Clicking an external link takes you to a third-party service. Its own privacy policy and data-processing practices then apply.</p><p>Gugu Basel does not intentionally use advertising trackers or analytics scripts in the current page code. No website contact form is used. Hosting or third-party services may nevertheless process technical information necessary to provide their services.</p><p>If Gugu Basel later introduces analytics, non-essential cookies, embedded third-party services, advertising technology, affiliate tracking or other technologies that materially change how personal data is processed, this Privacy notice will be updated and any additional transparency or consent measures required for that implementation will be introduced.</p><p>Gugu Basel does not sell personal data to advertisers or other third parties.</p></div></details>
+<details id="privacy"><summary>Privacy</summary><div><p>Gugu Basel is designed to collect as little visitor data as reasonably possible. The website does not use a contact form and does not ask visitors to create an account.</p><p>For aggregate website statistics, Gugu Basel uses Simple Analytics, a privacy-focused analytics service. The implementation does not set analytics cookies, use localStorage, create persistent visitor IDs, fingerprint devices or build cross-site visitor profiles. Simple Analytics states that IP addresses are not stored and that its analytics infrastructure and data are hosted in the European Union (Netherlands).</p><p>The analytics are used to understand website traffic and improve Gugu Basel. They may include aggregate page views, traffic/referral sources, campaign parameters, broad device/browser information, country-level statistics and non-personal interaction events.</p><p>Gugu Basel also measures non-personal website interactions that are useful for improving the service. These include opening Weekend Plans or Family Deals, selecting Saturday or Sunday, and outbound-link clicks. For an outbound click, the destination link may be recorded so Gugu Basel can understand which event or product links are useful. No names, email addresses, account identifiers or message contents are intentionally sent as analytics event data.</p><p>Because this analytics setup is designed not to use cookies or persistent identifiers, Gugu Basel does not display an analytics-cookie consent banner for this implementation. If the site later introduces cookies, advertising technology, user-level tracking, embedded services or another technology that changes the privacy impact, this notice and any required consent controls will be updated before or when that technology is introduced.</p><p>Technical data may still be processed by website hosting, DNS and infrastructure providers as necessary to deliver, operate and secure the website. Their processing is governed by their own terms and privacy practices.</p><p>Gugu Basel currently provides contact through Instagram DM rather than a website contact form. Information you choose to send through Instagram is processed under Instagram’s own terms and privacy practices.</p><p>The website contains external links to Instagram, event organisers, venues, retailers and other third-party websites. When you open an external link, the destination service's own privacy policy and data-processing practices apply.</p><p>Gugu Basel does not sell personal data to advertisers or other third parties.</p></div></details>
 <details id="impressum"><summary>Impressum</summary><div><p>Gugu Basel is an independent family-information project focused on Basel family events and Swiss-wide family deals.</p><p>Editorial responsibility: Gugu Basel.</p><p>Contact: Send us a DM through the official Gugu Basel Instagram account linked on this website.</p><p>Gugu Basel is not an event organiser, ticket seller or retailer unless expressly stated otherwise. Event and product information is compiled from organiser, venue and retailer sources and may change without notice.</p><p>Third-party trademarks, company names, product names and event names are used for identification and informational purposes and remain the property of their respective owners.</p><p>If the project develops into a commercial operation or applicable law requires additional operator information, the Impressum will be updated with the legally required details.</p></div></details>
 </section>
 <p class="copyright">© 2026 Gugu Basel. All rights reserved.</p>
 </footer>
-</div></body>
+</div>
+<!-- ===== Gugu Basel aggregate interaction events =====
+     Event names contain no user-entered or personally identifying information.
+     Outbound product/event/Instagram links are handled by Simple Analytics auto-events. -->
+<script>
+(function () {
+  const guguEvents = {
+    "tab-events": "view_weekend_plans",
+    "tab-deals": "view_family_deals",
+    "day-sat": "view_saturday",
+    "day-sun": "view_sunday"
+  };
+
+  Object.keys(guguEvents).forEach(function (id) {
+    const input = document.getElementById(id);
+    if (!input) return;
+
+    input.addEventListener("change", function () {
+      if (input.checked && typeof window.sa_event === "function") {
+        window.sa_event(guguEvents[id]);
+      }
+    });
+  });
+})();
+</script>
+</body>
 </html>
