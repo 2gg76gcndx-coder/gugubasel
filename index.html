@@ -3480,6 +3480,56 @@ html,body{margin:0!important;padding:0!important}
   }
 }
 </style>
+
+<style id="birthday-venues-new-cloud">
+/* NEW cloud badge beside Birthday Venue in Family Guides */
+/* Keep Birthday Venue on the exact same grid/text start as Cake makers. */
+.family-guides .guide-subitems-links a[href="#birthday-venues"] > .guide-link-label-with-new{
+  grid-column:2 !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:3px !important;
+  width:max-content !important;
+  max-width:100% !important;
+  padding-left:0 !important;
+  margin-left:0 !important;
+}
+.family-guides .guide-subitems-links a[href="#birthday-venues"] > .guide-link-label-with-new::before{
+  content:none !important;
+  display:none !important;
+}
+.family-guides .guide-new-cloud{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-left:3px;
+  padding:3px 8px;
+  min-width:35px;
+  height:20px;
+  background:#ffe45c;
+  color:#7a5900;
+  border-radius:999px;
+  font-size:12px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:.04em;
+  box-shadow:0 2px 5px rgba(122,89,0,.14);
+  vertical-align:middle;
+  flex:0 0 auto;
+}
+.family-guides .guide-new-cloud::before,
+.family-guides .guide-new-cloud::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  background:#ffe45c;
+  border-radius:50%;
+}
+.family-guides .guide-new-cloud::before{width:12px;height:12px;left:3px;top:-3px;}
+.family-guides .guide-new-cloud::after{width:10px;height:10px;right:4px;top:-2px;}
+</style>
 </head>
 <body>
 <div class="app">
@@ -3792,7 +3842,7 @@ html,body{margin:0!important;padding:0!important}
 <details class="guide-chapter" open="">
 <summary><span aria-hidden="true" class="guide-chapter-emoji">🎂</span><span class="guide-chapter-title">BIRTHDAY</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
 <div class="guide-subitems guide-subitems-links">
-<a href="#birthday-venues"><span aria-hidden="true" class="guide-sub-emoji">🎂</span><span class="guide-link-label">Birthday Venue</span></a>
+<a href="#birthday-venues"><span aria-hidden="true" class="guide-sub-emoji">🎂</span><span class="guide-link-label guide-link-label-with-new">Birthday Venue<span class="guide-new-cloud">NEW</span></span></a>
 <a href="#cake-makers"><span aria-hidden="true" class="guide-sub-emoji">🧁</span><span class="guide-link-label">Cake makers</span></a>
 <a href="#entertainers"><span aria-hidden="true" class="guide-sub-emoji">🎭</span><span class="guide-link-label">Entertainers</span></a>
 <a href="#party-supplies"><span aria-hidden="true" class="guide-sub-emoji">🎈</span><span class="guide-link-label">Party supplies</span></a>
