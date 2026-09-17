@@ -2062,59 +2062,66 @@ html,body{margin:0!important;padding:0!important}
   --bg2:#bde7ff;
   --stack-img:none;
   position:relative;
-  min-height:96px;
-  border-radius:22px;
+  min-height:108px;
+  border-radius:26px;
   overflow:hidden;
+  border:1px solid rgba(188,220,236,.82);
   background:
-    radial-gradient(circle at 20% 18%,rgba(255,255,255,.82) 0 14%,transparent 15%),
-    radial-gradient(circle at 82% 20%,rgba(255,212,228,.45) 0 12%,transparent 13%),
-    radial-gradient(circle at 76% 78%,rgba(255,255,255,.28) 0 16%,transparent 17%),
-    linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 100%);
+    radial-gradient(circle at 18% 16%,rgba(255,255,255,.95) 0 10%,transparent 11%),
+    radial-gradient(circle at 85% 18%,rgba(255,199,221,.58) 0 8%,transparent 9%),
+    radial-gradient(circle at 72% 82%,rgba(255,235,156,.44) 0 10%,transparent 11%),
+    radial-gradient(circle at 12% 84%,rgba(164,227,255,.34) 0 12%,transparent 13%),
+    linear-gradient(180deg,color-mix(in srgb,var(--bg1) 88%,#ffffff 12%) 0%,color-mix(in srgb,var(--bg2) 86%,#ffffff 14%) 100%);
   display:grid;
   place-items:center;
   isolation:isolate;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.7),
-    0 10px 22px rgba(7,59,82,.10);
+    inset 0 1px 0 rgba(255,255,255,.88),
+    0 12px 24px rgba(7,59,82,.10),
+    0 3px 8px rgba(13,125,219,.08);
 }
 .venue-thumb-stack::before,
 .venue-thumb-stack::after{
   content:"";
   position:absolute;
-  width:58px;
-  height:72px;
-  border-radius:18px;
+  width:62px;
+  height:80px;
+  border-radius:20px;
   background-color:#fff;
   background-image:
-    linear-gradient(180deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.08) 32%,rgba(255,255,255,.02) 100%),
+    linear-gradient(180deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.12) 34%,rgba(255,255,255,.02) 100%),
     var(--stack-img);
   background-size:cover,cover;
   background-position:center,center;
   background-repeat:no-repeat,no-repeat;
-  border:1px solid rgba(255,255,255,.75);
+  border:1px solid rgba(255,255,255,.9);
+  filter:saturate(1.12) contrast(1.03);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.9),
-    0 10px 18px rgba(7,59,82,.14);
+    inset 0 1px 0 rgba(255,255,255,.96),
+    0 10px 18px rgba(7,59,82,.14),
+    0 2px 7px rgba(13,125,219,.08);
 }
-.venue-thumb-stack::before{left:8px;bottom:10px;transform:rotate(-11deg) scale(.98);opacity:.96}
-.venue-thumb-stack::after{right:8px;top:10px;transform:rotate(10deg) scale(.96);opacity:.96}
+.venue-thumb-stack::before{left:7px;bottom:10px;transform:rotate(-12deg) scale(.98);opacity:.92}
+.venue-thumb-stack::after{right:7px;top:10px;transform:rotate(12deg) scale(.97);opacity:.92}
 .stack-face{
   position:relative;
   z-index:2;
-  width:64px;
-  height:80px;
-  border-radius:20px;
+  width:72px;
+  height:88px;
+  border-radius:22px;
   background-color:#ffffff;
   background-image:
-    linear-gradient(180deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.10) 34%,rgba(255,255,255,.02) 100%),
+    linear-gradient(180deg,rgba(255,255,255,.99) 0%,rgba(255,255,255,.14) 34%,rgba(255,255,255,.03) 100%),
     var(--stack-img);
   background-size:cover,cover;
   background-position:center,center;
   background-repeat:no-repeat,no-repeat;
-  border:1px solid rgba(255,255,255,.82);
+  border:1px solid rgba(255,255,255,.96);
+  filter:saturate(1.16) contrast(1.04);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.94),
-    0 12px 24px rgba(7,59,82,.18);
+    inset 0 1px 0 rgba(255,255,255,.98),
+    0 14px 26px rgba(7,59,82,.18),
+    0 4px 10px rgba(13,125,219,.10);
   display:grid;
   place-items:center;
   font-size:0;
@@ -2124,22 +2131,27 @@ html,body{margin:0!important;padding:0!important}
 .stack-face::before{
   content:"";
   position:absolute;
-  inset:8px 8px auto 8px;
-  height:13px;
+  left:9px;
+  right:9px;
+  top:9px;
+  height:14px;
   border-radius:999px;
-  background:linear-gradient(90deg,rgba(255,255,255,.72),rgba(255,255,255,0));
+  background:linear-gradient(90deg,rgba(255,255,255,.78),rgba(255,255,255,.05));
   pointer-events:none;
 }
 .stack-face::after{
   content:"";
   position:absolute;
-  right:11px;
-  top:13px;
-  width:10px;
-  height:10px;
+  right:10px;
+  top:12px;
+  width:11px;
+  height:11px;
   border-radius:50%;
-  background:rgba(255,255,255,.58);
-  box-shadow:0 0 0 5px rgba(255,255,255,.12);
+  background:rgba(255,255,255,.72);
+  box-shadow:
+    -58px 46px 0 -5px rgba(255,210,76,.68),
+    -44px 14px 0 -6px rgba(255,185,208,.62),
+    0 0 0 5px rgba(255,255,255,.13);
   pointer-events:none;
 }
 .theme-indoor{--bg1:#dbf4ff;--bg2:#bfe7ff;--stack-img:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23eef8ff%22/%3E%3Ccircle%20cx%3D%2225%22%20cy%3D%2227%22%20r%3D%229%22%20fill%3D%22%23ffd54f%22/%3E%3Crect%20x%3D%2218%22%20y%3D%2272%22%20width%3D%2242%22%20height%3D%2212%22%20rx%3D%226%22%20fill%3D%22%234fc3f7%22/%3E%3Cpath%20d%3D%22M42%2027h22l14%2030-18%2010-18-30z%22%20fill%3D%22%23ff8a65%22/%3E%3Cpath%20d%3D%22M64%2027v18l18%2012%22%20fill%3D%22none%22%20stroke%3D%22%236d4c41%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2284%22%20r%3D%2216%22%20fill%3D%22%2381c784%22/%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2284%22%20r%3D%228%22%20fill%3D%22%23fff59d%22/%3E%3C/svg%3E")}
@@ -2280,8 +2292,9 @@ html,body{margin:0!important;padding:0!important}
   .guide-library-head h2{font-size:19px}
   .guide-list-category{font-size:14px}
   .venue-card{grid-template-columns:88px minmax(0,1fr);gap:10px}
-  .venue-thumb-stack{min-height:88px;border-radius:20px}
-  .stack-face{width:60px;height:74px;font-size:26px;border-radius:18px}
+  .venue-thumb-stack{min-height:94px;border-radius:22px}
+  .venue-thumb-stack::before,.venue-thumb-stack::after{width:54px;height:69px;border-radius:17px}
+  .stack-face{width:62px;height:76px;font-size:26px;border-radius:19px}
   .venue-title{font-size:14px}
 }
 @media(max-width:390px){
@@ -2486,9 +2499,9 @@ html,body{margin:0!important;padding:0!important}
   .guide-subitems{padding-left:40px !important;}
   .guide-subitems-links a{min-height:32px !important;padding:6px 8px !important;}
   .venue-card{grid-template-columns:80px minmax(0,1fr) !important;gap:9px !important;}
-  .venue-thumb-stack{min-height:78px !important;border-radius:17px !important;}
-  .venue-thumb-stack::before,.venue-thumb-stack::after{width:47px !important;height:59px !important;border-radius:14px !important;}
-  .stack-face{width:54px !important;height:68px !important;border-radius:17px !important;}
+  .venue-thumb-stack{min-height:86px !important;border-radius:20px !important;}
+  .venue-thumb-stack::before,.venue-thumb-stack::after{width:50px !important;height:64px !important;border-radius:16px !important;}
+  .stack-face{width:58px !important;height:72px !important;border-radius:18px !important;}
   .family-guides-footer-art{border-radius:18px;}
 }
 </style>
@@ -2506,6 +2519,397 @@ html,body{margin:0!important;padding:0!important}
     position:relative !important;
     z-index:3 !important;
   }
+}
+</style>
+
+
+<style>
+/* ===== Family Guides — Weekend Plans visual match ===== */
+/* Chapter headlines use the same rounded navy type and blue category-bar treatment
+   as Weekend Plans, with two yellow shine marks on the right. */
+.family-guides .guide-accordion{
+  gap:10px !important;
+}
+.family-guides .guide-chapter{
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  overflow:visible !important;
+}
+.family-guides .guide-chapter > summary{
+  position:relative !important;
+  display:grid !important;
+  grid-template-columns:52px minmax(0,1fr) 34px 18px !important;
+  align-items:center !important;
+  gap:8px !important;
+  min-height:58px !important;
+  margin:0 !important;
+  padding:7px 10px 7px 9px !important;
+  border:0 !important;
+  border-radius:15px !important;
+  background:linear-gradient(90deg,#d9f2fc 0%,#b8e6f7 100%) !important;
+  box-shadow:none !important;
+  color:#0a4163 !important;
+  font-family:"Arial Rounded MT Bold","Arial Rounded MT","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif !important;
+  font-size:17px !important;
+  line-height:1.05 !important;
+  font-weight:900 !important;
+  letter-spacing:-.02em !important;
+}
+.family-guides .guide-chapter > summary > span:nth-child(2){
+  color:#0a4163 !important;
+  font:inherit !important;
+  min-width:0 !important;
+  padding:0 !important;
+}
+/* Disable the old pseudo-element caret so the new shine marks and caret can coexist. */
+.family-guides .guide-chapter > summary::before,
+.family-guides .guide-chapter > summary::after{
+  content:none !important;
+  display:none !important;
+}
+.family-guides .guide-shines{
+  grid-column:3 !important;
+  justify-self:end !important;
+  position:relative !important;
+  display:block !important;
+  width:30px !important;
+  height:32px !important;
+  padding:0 !important;
+}
+.family-guides .guide-shines::before,
+.family-guides .guide-shines::after{
+  content:"" !important;
+  position:absolute !important;
+  display:block !important;
+  width:7px !important;
+  height:20px !important;
+  border-radius:999px !important;
+  background:#ffd21f !important;
+  box-shadow:0 1px 0 rgba(255,255,255,.35) !important;
+}
+.family-guides .guide-shines::before{
+  left:7px !important;
+  top:1px !important;
+  transform:rotate(24deg) !important;
+}
+.family-guides .guide-shines::after{
+  right:4px !important;
+  bottom:1px !important;
+  transform:rotate(64deg) !important;
+}
+.family-guides .guide-caret{
+  grid-column:4 !important;
+  justify-self:end !important;
+  width:12px !important;
+  height:12px !important;
+  padding:0 !important;
+  border-right:3px solid #0a4163 !important;
+  border-bottom:3px solid #0a4163 !important;
+  transform:rotate(45deg) translateY(-2px) !important;
+  transform-origin:center !important;
+  transition:transform .15s ease !important;
+}
+.family-guides .guide-chapter[open] .guide-caret{
+  transform:rotate(225deg) translate(-1px,-1px) !important;
+}
+
+/* Keep the user's layered cartoon artwork, but give each subchapter thumbnail
+   a dedicated Weekend-Plans-style image cell instead of a cramped icon slot. */
+.family-guides .guide-subitems{
+  padding:6px 0 2px !important;
+  gap:7px !important;
+}
+.family-guides .guide-subitems-links a{
+  display:grid !important;
+  grid-template-columns:72px minmax(0,1fr) 18px !important;
+  align-items:center !important;
+  gap:10px !important;
+  min-height:72px !important;
+  padding:5px 10px 5px 5px !important;
+  border-radius:14px !important;
+  background:#fff !important;
+  border:1px solid #d6e9f2 !important;
+  box-shadow:none !important;
+  color:#0a4163 !important;
+  font-family:"Arial Rounded MT Bold","Arial Rounded MT","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif !important;
+  font-size:15px !important;
+  line-height:1.12 !important;
+  font-weight:900 !important;
+}
+.family-guides .guide-subitems-links a::after{
+  grid-column:3 !important;
+  content:"›" !important;
+  color:#0a4163 !important;
+  font-size:27px !important;
+  line-height:1 !important;
+  font-weight:900 !important;
+  justify-self:end !important;
+}
+.family-guides .guide-subitems-links a > .guide-stack-thumb--mini{
+  grid-column:1 !important;
+  justify-self:stretch !important;
+  width:68px !important;
+  height:60px !important;
+  flex-basis:68px !important;
+  transform:none !important;
+  filter:drop-shadow(0 4px 8px rgba(7,59,82,.08)) !important;
+}
+.family-guides .guide-subitems-links a > .guide-stack-thumb--mini::before,
+.family-guides .guide-subitems-links a > .guide-stack-thumb--mini::after,
+.family-guides .guide-subitems-links a > .guide-stack-thumb--mini > i{
+  background-image:var(--guide-art) !important;
+  background-size:cover !important;
+  background-position:center !important;
+  border:1px solid rgba(8,59,89,.08) !important;
+}
+.family-guides .guide-subitems-links a > .guide-stack-thumb--mini::before{
+  width:48px !important;
+  height:48px !important;
+  left:3px !important;
+  top:7px !important;
+  border-radius:13px !important;
+  transform:rotate(-8deg) !important;
+  opacity:.84 !important;
+}
+.family-guides .guide-subitems-links a > .guide-stack-thumb--mini::after{
+  width:48px !important;
+  height:48px !important;
+  right:3px !important;
+  top:6px !important;
+  border-radius:13px !important;
+  transform:rotate(8deg) !important;
+  opacity:.88 !important;
+}
+.family-guides .guide-subitems-links a > .guide-stack-thumb--mini > i{
+  width:52px !important;
+  height:52px !important;
+  left:8px !important;
+  top:3px !important;
+  border-radius:14px !important;
+  box-shadow:0 5px 11px rgba(7,59,82,.14) !important;
+}
+.family-guides .guide-subitems-links a > .guide-link-label{
+  grid-column:2 !important;
+  color:#0a4163 !important;
+  font:inherit !important;
+  padding:0 !important;
+}
+
+/* Chapter thumbnail stays layered but is scaled to the Weekend Plans headline height. */
+.family-guides .guide-chapter > summary > .guide-stack-thumb{
+  grid-column:1 !important;
+  width:48px !important;
+  height:44px !important;
+  transform:none !important;
+  transform-origin:center !important;
+  justify-self:start !important;
+}
+
+@media(max-width:390px){
+  .family-guides .guide-chapter > summary{
+    grid-template-columns:48px minmax(0,1fr) 30px 16px !important;
+    min-height:55px !important;
+    padding:6px 8px !important;
+    gap:7px !important;
+    font-size:16px !important;
+  }
+  .family-guides .guide-shines{width:27px !important;height:29px !important;transform:scale(.9) !important;transform-origin:center !important;}
+  .family-guides .guide-subitems-links a{
+    grid-template-columns:66px minmax(0,1fr) 16px !important;
+    min-height:68px !important;
+    padding:5px 8px 5px 4px !important;
+    gap:8px !important;
+    font-size:14px !important;
+  }
+  .family-guides .guide-subitems-links a > .guide-stack-thumb--mini{
+    width:62px !important;
+    height:56px !important;
+  }
+  .family-guides .guide-subitems-links a > .guide-stack-thumb--mini::before,
+  .family-guides .guide-subitems-links a > .guide-stack-thumb--mini::after{
+    width:44px !important;
+    height:44px !important;
+  }
+  .family-guides .guide-subitems-links a > .guide-stack-thumb--mini > i{
+    width:48px !important;
+    height:48px !important;
+    left:7px !important;
+  }
+}
+</style>
+
+<style>
+/* ===== Family Guides — compact subchapter rows ===== */
+.family-guides .guide-subitems{
+  gap:5px !important;
+  padding:5px 0 2px 26px !important;
+}
+.family-guides .guide-subitems-links a{
+  grid-template-columns:52px minmax(0,1fr) 16px !important;
+  gap:8px !important;
+  min-height:48px !important;
+  padding:3px 9px 3px 4px !important;
+  border-radius:13px !important;
+  font-size:14px !important;
+}
+.family-guides .guide-subitems-links a > .guide-stack-thumb--mini{
+  width:48px !important;
+  height:42px !important;
+  flex-basis:48px !important;
+}
+.family-guides .guide-subitems-links a > .guide-stack-thumb--mini::before,
+.family-guides .guide-subitems-links a > .guide-stack-thumb--mini::after{
+  width:34px !important;
+  height:34px !important;
+  top:5px !important;
+  border-radius:10px !important;
+}
+.family-guides .guide-subitems-links a > .guide-stack-thumb--mini::before{left:2px !important;}
+.family-guides .guide-subitems-links a > .guide-stack-thumb--mini::after{right:2px !important;}
+.family-guides .guide-subitems-links a > .guide-stack-thumb--mini > i{
+  width:38px !important;
+  height:38px !important;
+  left:5px !important;
+  top:2px !important;
+  border-radius:11px !important;
+}
+.family-guides .guide-subitems-links a::after{
+  font-size:24px !important;
+}
+@media(max-width:390px){
+  .family-guides .guide-subitems{
+    padding-left:22px !important;
+  }
+  .family-guides .guide-subitems-links a{
+    grid-template-columns:48px minmax(0,1fr) 15px !important;
+    min-height:46px !important;
+    padding:3px 8px 3px 3px !important;
+    gap:7px !important;
+    font-size:13.5px !important;
+  }
+  .family-guides .guide-subitems-links a > .guide-stack-thumb--mini{
+    width:44px !important;
+    height:40px !important;
+  }
+  .family-guides .guide-subitems-links a > .guide-stack-thumb--mini::before,
+  .family-guides .guide-subitems-links a > .guide-stack-thumb--mini::after{
+    width:32px !important;
+    height:32px !important;
+  }
+  .family-guides .guide-subitems-links a > .guide-stack-thumb--mini > i{
+    width:36px !important;
+    height:36px !important;
+    left:4px !important;
+  }
+}
+</style>
+
+
+<style id="birthday-venue-photo-stack-upgrade">
+/* Birthday venues — photographic stack thumbnails, matched to Weekend Plans photo quality */
+#birthday-venues .venue-thumb-stack{
+  min-height:104px !important;
+  border-radius:22px !important;
+  overflow:visible !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  isolation:isolate;
+}
+#birthday-venues .venue-thumb-stack::before,
+#birthday-venues .venue-thumb-stack::after,
+#birthday-venues .venue-thumb-stack .stack-face{
+  background-image:var(--stack-img) !important;
+  background-size:cover !important;
+  background-position:var(--photo-pos,center) !important;
+  background-repeat:no-repeat !important;
+  background-color:#fff !important;
+  border:1px solid rgba(255,255,255,.96) !important;
+  filter:saturate(1.08) contrast(1.03) !important;
+}
+#birthday-venues .venue-thumb-stack::before{
+  width:70px !important;height:84px !important;
+  left:4px !important;bottom:8px !important;
+  border-radius:20px !important;
+  transform:rotate(-8deg) !important;
+  opacity:.58 !important;
+  box-shadow:0 9px 20px rgba(7,59,82,.12) !important;
+}
+#birthday-venues .venue-thumb-stack::after{
+  width:70px !important;height:84px !important;
+  right:4px !important;top:8px !important;
+  border-radius:20px !important;
+  transform:rotate(8deg) !important;
+  opacity:.72 !important;
+  box-shadow:0 9px 20px rgba(7,59,82,.13) !important;
+}
+#birthday-venues .venue-thumb-stack .stack-face{
+  width:78px !important;height:94px !important;
+  border-radius:22px !important;
+  overflow:hidden !important;
+  transform:none !important;
+  box-shadow:0 12px 26px rgba(7,59,82,.18),0 2px 6px rgba(7,59,82,.08) !important;
+}
+#birthday-venues .stack-face::before{
+  left:0 !important;right:0 !important;top:0 !important;height:24px !important;
+  border-radius:22px 22px 0 0 !important;
+  background:linear-gradient(180deg,rgba(255,255,255,.70),rgba(255,255,255,0)) !important;
+}
+#birthday-venues .stack-face::after{
+  right:10px !important;top:10px !important;width:9px !important;height:9px !important;
+  background:rgba(255,255,255,.76) !important;
+  box-shadow:0 0 0 4px rgba(255,255,255,.13) !important;
+}
+
+/* Indoor play */
+#birthday-venues .venue-kiddypark{--stack-img:url("https://images.unsplash.com/photo-1780932333368-4995b2e14174?auto=format&fit=crop&w=640&q=82");--photo-pos:center}
+#birthday-venues .venue-hoppolino{--stack-img:url("https://images.unsplash.com/photo-1720729706303-1e49139fe941?auto=format&fit=crop&w=640&q=82");--photo-pos:center}
+#birthday-venues .venue-swiss-mega-park{--stack-img:url("https://images.unsplash.com/photo-1780932333368-4995b2e14174?auto=format&fit=crop&w=640&q=82");--photo-pos:55% center}
+#birthday-venues .venue-impulsiv-kinderland{--stack-img:url("https://images.unsplash.com/photo-1720729706303-1e49139fe941?auto=format&fit=crop&w=640&q=82");--photo-pos:44% center}
+#birthday-venues .venue-okidoki-kinderland{--stack-img:url("https://images.unsplash.com/photo-1780932333368-4995b2e14174?auto=format&fit=crop&w=640&q=82");--photo-pos:62% center}
+#birthday-venues .venue-spielestrich{--stack-img:url("data:image/jpeg;base64,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");--photo-pos:center}
+
+/* Active & sports */
+#birthday-venues .venue-jump-factory{--stack-img:url("https://images.unsplash.com/photo-1751235604534-f07bf076d690?auto=format&fit=crop&w=640&q=82");--photo-pos:center}
+#birthday-venues .venue-overground{--stack-img:url("https://images.unsplash.com/photo-1780642215038-5363bfb0485c?auto=format&fit=crop&w=640&q=82");--photo-pos:center}
+#birthday-venues .venue-elys-boulderloft{--stack-img:url("https://images.unsplash.com/photo-1564769662533-4f00a87b4056?auto=format&fit=crop&w=640&q=82");--photo-pos:center}
+
+/* Animals & nature */
+#birthday-venues .venue-zoo-basel{--stack-img:url("https://images.unsplash.com/photo-1667083213657-f8f6d461f0ff?auto=format&fit=crop&w=640&q=82");--photo-pos:center}
+
+/* Art & creativity */
+#birthday-venues .venue-museum-tinguely,
+#birthday-venues .venue-paint-it-easy{--stack-img:url("data:image/jpeg;base64,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");--photo-pos:center}
+
+/* Theatre & themed parties */
+#birthday-venues .venue-theater-arlecchino,
+#birthday-venues .venue-magical-cafe{--stack-img:url("https://images.unsplash.com/photo-1771942690809-49605caf6ec5?auto=format&fit=crop&w=640&q=82");--photo-pos:center}
+
+/* Discovery & museums */
+#birthday-venues .venue-naturhistorisches-museum,
+#birthday-venues .venue-muks,
+#birthday-venues .venue-museum-der-kulturen{--stack-img:url("https://images.unsplash.com/photo-1763696118771-b1b35552bfc2?auto=format&fit=crop&w=640&q=82");--photo-pos:center}
+
+/* Cooking & baking */
+#birthday-venues .venue-sutter-begg{--stack-img:url("https://images.unsplash.com/photo-1772729541087-d47b7bf1238c?auto=format&fit=crop&w=640&q=82");--photo-pos:center}
+
+/* Adventure & puzzles */
+#birthday-venues .venue-breakout-basel{--stack-img:url("https://images.unsplash.com/photo-1763875018477-e0e831ccf180?auto=format&fit=crop&w=640&q=82");--photo-pos:center}
+
+/* Outdoor */
+#birthday-venues .venue-kannenfeldpark,
+#birthday-venues .venue-schuetzenmattpark,
+#birthday-venues .venue-margarethenpark{--stack-img:url("https://images.unsplash.com/photo-1780992632886-9f1af7aec50a?auto=format&fit=crop&w=640&q=82");--photo-pos:center}
+
+/* Bonus / home party */
+#birthday-venues .venue-your-home{--stack-img:url("https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=640&q=82");--photo-pos:center}
+
+@media(max-width:390px){
+  #birthday-venues .venue-thumb-stack{min-height:92px !important}
+  #birthday-venues .venue-thumb-stack::before,
+  #birthday-venues .venue-thumb-stack::after{width:58px !important;height:70px !important;border-radius:17px !important}
+  #birthday-venues .venue-thumb-stack .stack-face{width:66px !important;height:80px !important;border-radius:19px !important}
 }
 </style>
 
@@ -2850,7 +3254,7 @@ html,body{margin:0!important;padding:0!important}
 </header>
 <div class="guide-accordion">
 <details class="guide-chapter" open="">
-<summary><span aria-hidden="true" class="guide-stack-thumb art-birthday"><i></i></span><span>Birthday</span></summary>
+<summary><span aria-hidden="true" class="guide-stack-thumb art-birthday"><i></i></span><span>Birthday</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
 <div class="guide-subitems guide-subitems-links">
 <a href="#birthday-venues"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-birthday-venues"><i></i></span><span class="guide-link-label">Birthday venues</span></a>
 <a href="#cake-makers"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-cake-makers"><i></i></span><span class="guide-link-label">Cake makers</span></a>
@@ -2859,7 +3263,7 @@ html,body{margin:0!important;padding:0!important}
 </div>
 </details>
 <details class="guide-chapter" open="">
-<summary><span aria-hidden="true" class="guide-stack-thumb art-places"><i></i></span><span>Places to Go</span></summary>
+<summary><span aria-hidden="true" class="guide-stack-thumb art-places"><i></i></span><span>Places to Go</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
 <div class="guide-subitems guide-subitems-links">
 <a href="#places-indoor-play"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-indoor-play"><i></i></span><span class="guide-link-label">Indoor play</span></a>
 <a href="#places-playgrounds"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-playgrounds"><i></i></span><span class="guide-link-label">Playgrounds</span></a>
@@ -2869,25 +3273,25 @@ html,body{margin:0!important;padding:0!important}
 </div>
 </details>
 <details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-stack-thumb art-rainy"><i></i></span><span>Rainy-Day Ideas</span></summary>
+<summary><span aria-hidden="true" class="guide-stack-thumb art-rainy"><i></i></span><span>Rainy-Day Ideas</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
 </details>
 <details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-stack-thumb art-free"><i></i></span><span>Free Things to Do</span></summary>
+<summary><span aria-hidden="true" class="guide-stack-thumb art-free"><i></i></span><span>Free Things to Do</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
 </details>
 <details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-stack-thumb art-cafes"><i></i></span><span>Family-friendly Cafes</span></summary>
+<summary><span aria-hidden="true" class="guide-stack-thumb art-cafes"><i></i></span><span>Family-friendly Cafes</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
 </details>
 <details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-stack-thumb art-restaurants"><i></i></span><span>Family-friendly Restaurants</span></summary>
+<summary><span aria-hidden="true" class="guide-stack-thumb art-restaurants"><i></i></span><span>Family-friendly Restaurants</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
 </details>
 <details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-stack-thumb art-classes"><i></i></span><span>Classes &amp; Activities</span></summary>
+<summary><span aria-hidden="true" class="guide-stack-thumb art-classes"><i></i></span><span>Classes &amp; Activities</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
 </details>
 <details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-stack-thumb art-day-trips"><i></i></span><span>Day Trips</span></summary>
+<summary><span aria-hidden="true" class="guide-stack-thumb art-day-trips"><i></i></span><span>Day Trips</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
 </details>
 <details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-stack-thumb art-seasonal"><i></i></span><span>Seasonal Guides</span></summary>
+<summary><span aria-hidden="true" class="guide-stack-thumb art-seasonal"><i></i></span><span>Seasonal Guides</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
 </details>
 </div>
 <section class="guide-library" data-default-open="true" id="birthday-venues">
