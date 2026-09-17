@@ -9,7 +9,7 @@
 <link href="/favicon.PNG" rel="apple-touch-icon"/>
 <title>Gugu Basel — Weekend Plans &amp; Family Deals</title>
 <meta content="Basel family events and Swiss-wide family deals." name="description"/>
-<link rel="canonical" href="https://gugubasel.ch/"/>
+<link href="https://gugubasel.ch/" rel="canonical"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -1810,6 +1810,582 @@ html,body{margin:0!important;padding:0!important}
      so these pageviews and events appear in your dashboard. -->
 <script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 <script async="" src="https://scripts.simpleanalyticscdn.com/auto-events.js"></script>
+<style>
+/* ===== FAMILY GUIDES + COLOURED TOP TABS ===== */
+#tab-guides:checked~.panels>#guides-panel{display:block}
+
+/* Three equal primary tabs */
+.main-tabs{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
+.main-tabs label{
+  min-width:0 !important;
+  min-height:56px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:9px !important;
+  padding:8px 10px !important;
+  border-radius:16px !important;
+  border:2px solid transparent !important;
+  box-shadow:0 7px 16px rgba(7,59,82,.10) !important;
+  font-size:14px !important;
+  font-weight:900 !important;
+  line-height:1.02 !important;
+  text-align:left !important;
+}
+.main-tabs label .tab-icon{
+  width:24px;
+  height:24px;
+  flex:0 0 24px;
+  display:block;
+}
+.main-tabs label .tab-text{display:block}
+.main-tabs label .tab-icon svg{
+  width:24px;
+  height:24px;
+  display:block;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.main-tabs label[for="tab-events"]{
+  background:linear-gradient(180deg,#2190ff 0%,#0f74da 100%) !important;
+  color:#ffffff !important;
+  border-color:#0c6cca !important;
+}
+.main-tabs label[for="tab-deals"]{
+  background:linear-gradient(180deg,#ffd94f 0%,#f4c619 100%) !important;
+  color:#083b59 !important;
+  border-color:#e7b815 !important;
+}
+.main-tabs label[for="tab-guides"]{
+  background:linear-gradient(180deg,#c8fbf4 0%,#a8efe6 100%) !important;
+  color:#083b59 !important;
+  border-color:#48c4bb !important;
+}
+#tab-events:checked~.panels .main-tabs label[for="tab-events"],
+#tab-deals:checked~.panels .main-tabs label[for="tab-deals"],
+#tab-guides:checked~.panels .main-tabs label[for="tab-guides"]{
+  box-shadow:0 9px 20px rgba(7,59,82,.16) !important;
+  transform:translateY(-1px);
+}
+
+.family-guides{
+  background:linear-gradient(180deg,#e8fbf9 0%,#dff7f5 100%);
+  border:1px solid #cdeeea;
+  border-radius:22px;
+  padding:11px;
+  margin:0 0 12px;
+}
+.guides-heading{
+  display:flex;
+  align-items:flex-start;
+  gap:9px;
+  padding:2px 3px 10px;
+}
+.guides-heading-icon{font-size:28px;line-height:1}
+.guides-heading h1{
+  margin:0;
+  font-size:22px;
+  line-height:1.05;
+  font-weight:900;
+  color:#083b59;
+  font-family:"Arial Rounded MT Bold","Arial Rounded MT","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif;
+}
+.guides-heading p{
+  margin:2px 0 0;
+  font-family:"Avenir Next","SF Pro Text",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif;
+  font-size:13px;
+  line-height:1.25;
+  font-weight:600;
+  color:#607c8b;
+}
+.guide-accordion{display:grid;gap:6px}
+.guide-chapter{
+  background:#fff;
+  border:1px solid #e0edf1;
+  border-radius:13px;
+  overflow:hidden;
+}
+.guide-chapter summary{
+  list-style:none;
+  min-height:39px;
+  display:grid;
+  grid-template-columns:31px minmax(0,1fr) 18px;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  cursor:pointer;
+  color:#083b59;
+  font-size:16px;
+  line-height:1.05;
+  font-weight:900;
+  font-family:"Arial Rounded MT Bold","Arial Rounded MT","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif;
+}
+.guide-chapter summary::-webkit-details-marker{display:none}
+.guide-chapter summary::after{
+  content:"⌄";
+  justify-self:end;
+  font-size:20px;
+  line-height:1;
+  font-weight:900;
+  transform-origin:center;
+  transition:transform .15s ease;
+}
+.guide-chapter[open] summary::after{transform:rotate(180deg)}
+.guide-emoji{font-size:21px;text-align:center}
+.guide-subitems{
+  display:grid;
+  gap:3px;
+  padding:0 12px 8px 47px;
+  font-family:"Avenir Next","SF Pro Text",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif;
+  color:#173f59;
+  font-size:14px;
+  line-height:1.15;
+  font-weight:650;
+}
+.guide-subitems span{position:relative;padding-left:14px}
+.guide-subitems span::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:.43em;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#18b9b0;
+}
+.guide-subitems-links{
+  gap:7px;
+  padding-right:12px;
+}
+.guide-subitems-links a{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  min-height:38px;
+  padding:9px 12px;
+  border-radius:12px;
+  background:linear-gradient(180deg,#f7fbfd 0%,#eef8fb 100%);
+  border:1px solid #d8ebf4;
+  color:#083b59;
+  text-decoration:none;
+  font-family:"Avenir Next","SF Pro Text",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif;
+  font-weight:700;
+  box-shadow:0 2px 6px rgba(7,59,82,.04);
+}
+.guide-subitems-links a::before{
+  content:"";
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#18b9b0;
+  flex:0 0 8px;
+}
+.guide-subitems-links a::after{
+  content:"›";
+  margin-left:auto;
+  color:#083b59;
+  font-size:20px;
+  line-height:1;
+  font-weight:900;
+}
+.guide-subitems-links a:hover,
+.guide-subitems-links a:focus-visible{
+  background:linear-gradient(180deg,#eff9ff 0%,#e5f5fb 100%);
+  border-color:#b9ddea;
+  outline:none;
+}
+
+.guide-library{
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid #d0ebe7;
+}
+.guide-library-head{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin:0 3px 10px;
+}
+.guide-library-icon{font-size:24px;line-height:1}
+.guide-library-head h2{
+  margin:0;
+  font-size:20px;
+  line-height:1.08;
+  color:#083b59;
+  font-weight:800;
+  font-family:"Arial Rounded MT Bold","Arial Rounded MT","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif;
+}
+.guide-library-head p{
+  margin:2px 0 0;
+  font-family:"Avenir Next","SF Pro Text",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif;
+  font-size:13px;
+  line-height:1.25;
+  color:#607c8b;
+  font-weight:600;
+}
+.guide-category-block{margin-top:10px}
+.guide-list-category{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  background:linear-gradient(90deg,#d9f2fc 0%,#b8e6f7 100%);
+  border-radius:15px;
+  color:#083b59;
+  font-size:15px;
+  line-height:1.05;
+  font-weight:900;
+  font-family:"Arial Rounded MT Bold","Arial Rounded MT","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif;
+}
+.guide-list-category span{font-size:18px;line-height:1}
+.venue-card-list{display:grid;gap:0;margin-top:5px;background:#fff;border:1px solid #d6e9f2;border-top:0;border-radius:0 0 18px 18px;overflow:hidden}
+.venue-card{
+  display:grid;
+  grid-template-columns:96px minmax(0,1fr);
+  gap:12px;
+  align-items:center;
+  padding:10px;
+  background:#fff;
+  border:0;
+  border-top:1px solid #d6e9f2;
+  border-radius:0;
+  text-decoration:none;
+  color:#083b59;
+  box-shadow:none;
+}
+.venue-thumb-stack{
+  --bg1:#dff5ff;
+  --bg2:#bde7ff;
+  --stack-img:none;
+  position:relative;
+  min-height:96px;
+  border-radius:22px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 20% 18%,rgba(255,255,255,.82) 0 14%,transparent 15%),
+    radial-gradient(circle at 82% 20%,rgba(255,212,228,.45) 0 12%,transparent 13%),
+    radial-gradient(circle at 76% 78%,rgba(255,255,255,.28) 0 16%,transparent 17%),
+    linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 100%);
+  display:grid;
+  place-items:center;
+  isolation:isolate;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.7),
+    0 10px 22px rgba(7,59,82,.10);
+}
+.venue-thumb-stack::before,
+.venue-thumb-stack::after{
+  content:"";
+  position:absolute;
+  width:58px;
+  height:72px;
+  border-radius:18px;
+  background-color:#fff;
+  background-image:
+    linear-gradient(180deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.08) 32%,rgba(255,255,255,.02) 100%),
+    var(--stack-img);
+  background-size:cover,cover;
+  background-position:center,center;
+  background-repeat:no-repeat,no-repeat;
+  border:1px solid rgba(255,255,255,.75);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    0 10px 18px rgba(7,59,82,.14);
+}
+.venue-thumb-stack::before{left:8px;bottom:10px;transform:rotate(-11deg) scale(.98);opacity:.96}
+.venue-thumb-stack::after{right:8px;top:10px;transform:rotate(10deg) scale(.96);opacity:.96}
+.stack-face{
+  position:relative;
+  z-index:2;
+  width:64px;
+  height:80px;
+  border-radius:20px;
+  background-color:#ffffff;
+  background-image:
+    linear-gradient(180deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.10) 34%,rgba(255,255,255,.02) 100%),
+    var(--stack-img);
+  background-size:cover,cover;
+  background-position:center,center;
+  background-repeat:no-repeat,no-repeat;
+  border:1px solid rgba(255,255,255,.82);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.94),
+    0 12px 24px rgba(7,59,82,.18);
+  display:grid;
+  place-items:center;
+  font-size:0;
+  color:transparent;
+  transform:translateY(1px);
+}
+.stack-face::before{
+  content:"";
+  position:absolute;
+  inset:8px 8px auto 8px;
+  height:13px;
+  border-radius:999px;
+  background:linear-gradient(90deg,rgba(255,255,255,.72),rgba(255,255,255,0));
+  pointer-events:none;
+}
+.stack-face::after{
+  content:"";
+  position:absolute;
+  right:11px;
+  top:13px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,.58);
+  box-shadow:0 0 0 5px rgba(255,255,255,.12);
+  pointer-events:none;
+}
+.theme-indoor{--bg1:#dbf4ff;--bg2:#bfe7ff;--stack-img:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23eef8ff%22/%3E%3Ccircle%20cx%3D%2225%22%20cy%3D%2227%22%20r%3D%229%22%20fill%3D%22%23ffd54f%22/%3E%3Crect%20x%3D%2218%22%20y%3D%2272%22%20width%3D%2242%22%20height%3D%2212%22%20rx%3D%226%22%20fill%3D%22%234fc3f7%22/%3E%3Cpath%20d%3D%22M42%2027h22l14%2030-18%2010-18-30z%22%20fill%3D%22%23ff8a65%22/%3E%3Cpath%20d%3D%22M64%2027v18l18%2012%22%20fill%3D%22none%22%20stroke%3D%22%236d4c41%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2284%22%20r%3D%2216%22%20fill%3D%22%2381c784%22/%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2284%22%20r%3D%228%22%20fill%3D%22%23fff59d%22/%3E%3C/svg%3E")}
+.theme-sports{--bg1:#e6fbe6;--bg2:#c8f2c7;--stack-img:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23eefaf0%22/%3E%3Ccircle%20cx%3D%2270%22%20cy%3D%2225%22%20r%3D%2211%22%20fill%3D%22%23ffcc80%22/%3E%3Cpath%20d%3D%22M60%2039%2047%2058l-17%2010%22%20fill%3D%22none%22%20stroke%3D%22%231e88e5%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M61%2042%2079%2056l16%205%22%20fill%3D%22none%22%20stroke%3D%22%2343a047%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M55%2059%2071%2072l-9%2022%22%20fill%3D%22none%22%20stroke%3D%22%233949ab%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M70%2071%2091%2084%22%20fill%3D%22none%22%20stroke%3D%22%23ef5350%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Ccircle%20cx%3D%2226%22%20cy%3D%2280%22%20r%3D%2210%22%20fill%3D%22%23ffd54f%22/%3E%3C/svg%3E")}
+.theme-animals{--bg1:#f0fbdf;--bg2:#d7f1b1;--stack-img:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4faea%22/%3E%3Crect%20x%3D%2251%22%20y%3D%2224%22%20width%3D%2218%22%20height%3D%2254%22%20rx%3D%229%22%20fill%3D%22%23ffcc80%22/%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2224%22%20r%3D%2216%22%20fill%3D%22%23ffcc80%22/%3E%3Ccircle%20cx%3D%2252%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%238d6e63%22/%3E%3Ccircle%20cx%3D%2268%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%238d6e63%22/%3E%3Ccircle%20cx%3D%2255%22%20cy%3D%2227%22%20r%3D%223%22%20fill%3D%22%235d4037%22/%3E%3Ccircle%20cx%3D%2265%22%20cy%3D%2227%22%20r%3D%223%22%20fill%3D%22%235d4037%22/%3E%3Cpath%20d%3D%22M57%2035c2%202%204%203%206%200%22%20fill%3D%22none%22%20stroke%3D%22%235d4037%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22/%3E%3Ccircle%20cx%3D%2240%22%20cy%3D%2248%22%20r%3D%226%22%20fill%3D%22%238d6e63%22/%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2256%22%20r%3D%226%22%20fill%3D%22%238d6e63%22/%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2270%22%20r%3D%2218%22%20fill%3D%22%2366bb6a%22/%3E%3Cpath%20d%3D%22M39%2074c5-9%2011-13%2019-18%22%20fill%3D%22none%22%20stroke%3D%22%2343a047%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E")}
+.theme-art{--bg1:#fff0db;--bg2:#ffdcb2;--stack-img:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23fff5e8%22/%3E%3Cpath%20d%3D%22M63%2022c-21%200-38%2016-38%2036%200%2015%2010%2026%2023%2026h4c7%200%2011%204%2011%209%200%203%202%205%205%205%2015%200%2027-12%2027-28%200-27-18-48-32-48Z%22%20fill%3D%22%23ffecb3%22%20stroke%3D%22%23fb8c00%22%20stroke-width%3D%224%22/%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2242%22%20r%3D%226%22%20fill%3D%22%23ef5350%22/%3E%3Ccircle%20cx%3D%2239%22%20cy%3D%2259%22%20r%3D%226%22%20fill%3D%22%2342a5f5%22/%3E%3Ccircle%20cx%3D%2256%22%20cy%3D%2267%22%20r%3D%226%22%20fill%3D%22%2366bb6a%22/%3E%3Ccircle%20cx%3D%2269%22%20cy%3D%2251%22%20r%3D%226%22%20fill%3D%22%23ab47bc%22/%3E%3Cpath%20d%3D%22M87%2029%2099%2041%2063%2077%2052%2079l2-12z%22%20fill%3D%22%238d6e63%22/%3E%3Cpath%20d%3D%22M94%2024%20103%2033%22%20fill%3D%22none%22%20stroke%3D%22%235d4037%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E")}
+.theme-theatre{--bg1:#f8e8ff;--bg2:#e7c9ff;--stack-img:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f7efff%22/%3E%3Cpath%20d%3D%22M23%2023h74v49c0%2013-10%2023-23%2023-6%200-11-2-15-6-4%204-10%206-16%206-13%200-23-10-23-23Z%22%20fill%3D%22%23d1c4e9%22/%3E%3Cpath%20d%3D%22M35%2039c7%206%2016%206%2023%200%22%20fill%3D%22none%22%20stroke%3D%22%235e35b1%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M63%2039c7%206%2016%206%2023%200%22%20fill%3D%22none%22%20stroke%3D%22%235e35b1%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22/%3E%3Ccircle%20cx%3D%2243%22%20cy%3D%2250%22%20r%3D%224%22%20fill%3D%22%235e35b1%22/%3E%3Ccircle%20cx%3D%2277%22%20cy%3D%2250%22%20r%3D%224%22%20fill%3D%22%235e35b1%22/%3E%3Cpath%20d%3D%22M38%2063c6%207%2014%208%2021%202%22%20fill%3D%22none%22%20stroke%3D%22%235e35b1%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M65%2067c7-4%2014-4%2019%201%22%20fill%3D%22none%22%20stroke%3D%22%235e35b1%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22/%3E%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%228%22%20height%3D%2282%22%20rx%3D%224%22%20fill%3D%22%23ef5350%22/%3E%3Crect%20x%3D%2294%22%20y%3D%2218%22%20width%3D%228%22%20height%3D%2282%22%20rx%3D%224%22%20fill%3D%22%23ef5350%22/%3E%3C/svg%3E")}
+.theme-museum{--bg1:#eceeff;--bg2:#d5dcff;--stack-img:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f1f3ff%22/%3E%3Cpath%20d%3D%22M23%2041%2060%2023l37%2018v7H23z%22%20fill%3D%22%2390caf9%22/%3E%3Crect%20x%3D%2230%22%20y%3D%2248%22%20width%3D%2212%22%20height%3D%2235%22%20rx%3D%224%22%20fill%3D%22%237986cb%22/%3E%3Crect%20x%3D%2254%22%20y%3D%2248%22%20width%3D%2212%22%20height%3D%2235%22%20rx%3D%224%22%20fill%3D%22%237986cb%22/%3E%3Crect%20x%3D%2278%22%20y%3D%2248%22%20width%3D%2212%22%20height%3D%2235%22%20rx%3D%224%22%20fill%3D%22%237986cb%22/%3E%3Crect%20x%3D%2223%22%20y%3D%2283%22%20width%3D%2274%22%20height%3D%229%22%20rx%3D%224%22%20fill%3D%22%235c6bc0%22/%3E%3Ccircle%20cx%3D%2285%22%20cy%3D%2231%22%20r%3D%2213%22%20fill%3D%22%23fff59d%22/%3E%3Cpath%20d%3D%22M85%2025v12M79%2031h12%22%20stroke%3D%22%235c6bc0%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E")}
+.theme-cooking{--bg1:#fff2e3;--bg2:#ffd5ae;--stack-img:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23fff4ea%22/%3E%3Cpath%20d%3D%22M36%2055h48l-6%2031H42z%22%20fill%3D%22%23ffcc80%22/%3E%3Cpath%20d%3D%22M42%2055c0-12%208-22%2018-22s18%2010%2018%2022%22%20fill%3D%22%23f48fb1%22/%3E%3Cpath%20d%3D%22M52%2029c3-8%2012-11%2019-8-1%208-8%2013-16%2012%22%20fill%3D%22%2381c784%22/%3E%3Ccircle%20cx%3D%2251%22%20cy%3D%2269%22%20r%3D%225%22%20fill%3D%22%23ef5350%22/%3E%3Ccircle%20cx%3D%2268%22%20cy%3D%2274%22%20r%3D%225%22%20fill%3D%22%2342a5f5%22/%3E%3Cpath%20d%3D%22M88%2028c10%207%2010%2021%200%2028M83%2030c6%205%206%2014%200%2019%22%20fill%3D%22none%22%20stroke%3D%22%238d6e63%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E")}
+.theme-adventure{--bg1:#e7fbf4;--bg2:#bdeeda;--stack-img:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23ebfbf6%22/%3E%3Cpath%20d%3D%22M28%2036h47l-5%2042H33z%22%20fill%3D%22%23fff9c4%22%20stroke%3D%22%2366bb6a%22%20stroke-width%3D%224%22/%3E%3Cpath%20d%3D%22M41%2047%2052%2056l13-14%2011%2012%22%20fill%3D%22none%22%20stroke%3D%22%2343a047%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Ccircle%20cx%3D%2282%22%20cy%3D%2272%22%20r%3D%2216%22%20fill%3D%22%2390caf9%22%20stroke%3D%22%231e88e5%22%20stroke-width%3D%225%22/%3E%3Cpath%20d%3D%22M93%2083%20104%2094%22%20fill%3D%22none%22%20stroke%3D%22%236d4c41%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22/%3E%3Ccircle%20cx%3D%2254%22%20cy%3D%2261%22%20r%3D%225%22%20fill%3D%22%23ef5350%22/%3E%3C/svg%3E")}
+.theme-outdoor{--bg1:#e9f9e9;--bg2:#cbefc6;--stack-img:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23eef9ed%22/%3E%3Ccircle%20cx%3D%2292%22%20cy%3D%2227%22%20r%3D%2212%22%20fill%3D%22%23ffd54f%22/%3E%3Crect%20x%3D%2254%22%20y%3D%2255%22%20width%3D%2210%22%20height%3D%2232%22%20rx%3D%225%22%20fill%3D%22%238d6e63%22/%3E%3Ccircle%20cx%3D%2259%22%20cy%3D%2248%22%20r%3D%2222%22%20fill%3D%22%2366bb6a%22/%3E%3Ccircle%20cx%3D%2243%22%20cy%3D%2252%22%20r%3D%2215%22%20fill%3D%22%2381c784%22/%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2254%22%20r%3D%2214%22%20fill%3D%22%2381c784%22/%3E%3Cpath%20d%3D%22M24%2084c12-10%2026-12%2040%200%2014-12%2028-10%2040%200%22%20fill%3D%22none%22%20stroke%3D%22%2343a047%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E")}
+.venue-card:first-child{border-top:0}
+.theme-home{--bg1:#fff1dd;--bg2:#ffd8ad;--stack-img:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23fff5ea%22/%3E%3Cpath%20d%3D%22M28%2057%2060%2030l32%2027v31H28z%22%20fill%3D%22%2390caf9%22/%3E%3Cpath%20d%3D%22M20%2059%2060%2024l40%2035%22%20fill%3D%22none%22%20stroke%3D%22%235c6bc0%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2253%22%20y%3D%2269%22%20width%3D%2214%22%20height%3D%2219%22%20rx%3D%224%22%20fill%3D%22%23ffcc80%22/%3E%3Cpath%20d%3D%22M32%2037c12%209%2024%209%2036%200s24-9%2036%200%22%20fill%3D%22none%22%20stroke%3D%22%23ef5350%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22/%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2241%22%20r%3D%224%22%20fill%3D%22%23ffd54f%22/%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2241%22%20r%3D%224%22%20fill%3D%22%2381c784%22/%3E%3Ccircle%20cx%3D%2283%22%20cy%3D%2241%22%20r%3D%224%22%20fill%3D%22%2342a5f5%22/%3E%3C/svg%3E")}
+/* Venue-specific birthday-guide thumbnails */
+.venue-kiddypark{--bg1:#dbf4ff;--bg2:#bfe7ff;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2086c18-8%2036-8%2053%200%2017-8%2038-9%2067%200v34H0z%22%20fill%3D%22%23d8f1fd%22%2F%3E%0A%3Crect%20x%3D%2224%22%20y%3D%2242%22%20width%3D%2218%22%20height%3D%2230%22%20rx%3D%225%22%20fill%3D%22%237bc5ff%22%2F%3E%0A%3Crect%20x%3D%2245%22%20y%3D%2234%22%20width%3D%2216%22%20height%3D%2224%22%20rx%3D%225%22%20fill%3D%22%23ffd873%22%2F%3E%0A%3Cpath%20d%3D%22M61%2045h18l-7%2023H56z%22%20fill%3D%22%23ff9f80%22%2F%3E%0A%3Cpath%20d%3D%22M44%2058h18%22%20stroke%3D%22%234a6f8f%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%2290%22%20cy%3D%2276%22%20r%3D%2212%22%20fill%3D%22%237fd48a%22%2F%3E%0A%3Ccircle%20cx%3D%2289%22%20cy%3D%2276%22%20r%3D%225%22%20fill%3D%22%23fff3a8%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-hoppolino{--bg1:#e3f7ff;--bg2:#c6ebff;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2088c25-10%2049-7%2072%201%2016-8%2031-7%2048-2v33H0z%22%20fill%3D%22%23dff2ff%22%2F%3E%0A%3Crect%20x%3D%2228%22%20y%3D%2242%22%20width%3D%2244%22%20height%3D%2234%22%20rx%3D%228%22%20fill%3D%22%23ffb0c7%22%2F%3E%0A%3Crect%20x%3D%2235%22%20y%3D%2233%22%20width%3D%2212%22%20height%3D%2218%22%20rx%3D%225%22%20fill%3D%22%23ffd56f%22%2F%3E%0A%3Crect%20x%3D%2253%22%20y%3D%2233%22%20width%3D%2212%22%20height%3D%2218%22%20rx%3D%225%22%20fill%3D%22%2388d1ff%22%2F%3E%0A%3Cpath%20d%3D%22M72%2052l16-9v25H72z%22%20fill%3D%22%237dd78a%22%2F%3E%0A%3Ccircle%20cx%3D%2284%22%20cy%3D%2231%22%20r%3D%224%22%20fill%3D%22%23ffd56f%22%2F%3E%0A%3Cpath%20d%3D%22M86%2024v14M79%2031h14%22%20stroke%3D%22%23ffd56f%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-swiss-mega-park{--bg1:#dff6ff;--bg2:#c0e7ff;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2088c21-8%2041-6%2061%202%2018-7%2036-9%2059-3v33H0z%22%20fill%3D%22%23ddf3ff%22%2F%3E%0A%3Crect%20x%3D%2219%22%20y%3D%2248%22%20width%3D%2223%22%20height%3D%2223%22%20rx%3D%225%22%20fill%3D%22%237ad1ff%22%2F%3E%0A%3Crect%20x%3D%2244%22%20y%3D%2237%22%20width%3D%2223%22%20height%3D%2234%22%20rx%3D%225%22%20fill%3D%22%23ffd56f%22%2F%3E%0A%3Crect%20x%3D%2269%22%20y%3D%2244%22%20width%3D%2223%22%20height%3D%2227%22%20rx%3D%225%22%20fill%3D%22%2388e2a0%22%2F%3E%0A%3Cpath%20d%3D%22M67%2047h15l11%2011-10%209H67z%22%20fill%3D%22%23ff9d80%22%2F%3E%0A%3Ccircle%20cx%3D%2226%22%20cy%3D%2244%22%20r%3D%224%22%20fill%3D%22%23fff%22%20opacity%3D%22.7%22%2F%3E%0A%3Ccircle%20cx%3D%2235%22%20cy%3D%2242%22%20r%3D%223%22%20fill%3D%22%23fff%22%20opacity%3D%22.7%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-impulsiv-kinderland{--bg1:#e7f8ff;--bg2:#caeeff;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c26-8%2047-7%2065%202%2018-8%2033-10%2055-3v32H0z%22%20fill%3D%22%23dff4ff%22%2F%3E%0A%3Cpath%20d%3D%22M25%2055c0-11%209-20%2020-20s20%209%2020%2020v17H25z%22%20fill%3D%22%237fcdf9%22%2F%3E%0A%3Cpath%20d%3D%22M45%2035h19l13%2014v22H58V49z%22%20fill%3D%22%23ffd470%22%2F%3E%0A%3Crect%20x%3D%2277%22%20y%3D%2249%22%20width%3D%2214%22%20height%3D%2222%22%20rx%3D%225%22%20fill%3D%22%23ffae92%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2268%22%20r%3D%227%22%20fill%3D%22%2387de95%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-okidoki-kinderland{--bg1:#e2f8ff;--bg2:#c4edff;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2088c20-7%2039-5%2057%203%2023-10%2041-10%2063-3v32H0z%22%20fill%3D%22%23def3ff%22%2F%3E%0A%3Crect%20x%3D%2224%22%20y%3D%2241%22%20width%3D%2218%22%20height%3D%2227%22%20rx%3D%225%22%20fill%3D%22%2388d1ff%22%2F%3E%0A%3Crect%20x%3D%2244%22%20y%3D%2248%22%20width%3D%2216%22%20height%3D%2220%22%20rx%3D%225%22%20fill%3D%22%237de090%22%2F%3E%0A%3Cpath%20d%3D%22M60%2046h20l-10%2022H54z%22%20fill%3D%22%23ffae8a%22%2F%3E%0A%3Ccircle%20cx%3D%2286%22%20cy%3D%2255%22%20r%3D%2210%22%20fill%3D%22%23ffd56f%22%2F%3E%0A%3Ccircle%20cx%3D%2286%22%20cy%3D%2255%22%20r%3D%224%22%20fill%3D%22%23fff3b6%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-spielestrich{--bg1:#eef9ff;--bg2:#d1ecff;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c22-8%2044-6%2066%203%2012-6%2029-8%2054-3v31H0z%22%20fill%3D%22%23e3f5ff%22%2F%3E%0A%3Crect%20x%3D%2224%22%20y%3D%2255%22%20width%3D%2218%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22%23ffb7b9%22%2F%3E%0A%3Crect%20x%3D%2242%22%20y%3D%2247%22%20width%3D%2220%22%20height%3D%2226%22%20rx%3D%224%22%20fill%3D%22%238ad2ff%22%2F%3E%0A%3Crect%20x%3D%2262%22%20y%3D%2254%22%20width%3D%2220%22%20height%3D%2219%22%20rx%3D%224%22%20fill%3D%22%23ffd56f%22%2F%3E%0A%3Cpath%20d%3D%22M50%2037l16-11%2016%2011v10H50z%22%20fill%3D%22%2389dd98%22%2F%3E%0A%3Crect%20x%3D%2259%22%20y%3D%2246%22%20width%3D%2210%22%20height%3D%2212%22%20rx%3D%223%22%20fill%3D%22%23fff0cf%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-jump-factory{--bg1:#ebfbe7;--bg2:#c9f0c8;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2088c25-9%2047-8%2068%201%2018-8%2034-8%2052-1v32H0z%22%20fill%3D%22%23e7f7e3%22%2F%3E%0A%3Crect%20x%3D%2223%22%20y%3D%2273%22%20width%3D%2242%22%20height%3D%228%22%20rx%3D%224%22%20fill%3D%22%236fc3ff%22%2F%3E%0A%3Ccircle%20cx%3D%2276%22%20cy%3D%2238%22%20r%3D%228%22%20fill%3D%22%23f5c39c%22%2F%3E%0A%3Cpath%20d%3D%22M70%2047l-13%2014-15%204%22%20fill%3D%22none%22%20stroke%3D%22%233b82f6%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M71%2049l16%2013%2014%203%22%20fill%3D%22none%22%20stroke%3D%22%2348b15d%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M68%2065l15%2011-6%2014%22%20fill%3D%22none%22%20stroke%3D%22%23455a64%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-overground{--bg1:#ecfbe9;--bg2:#cef2d1;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c20-7%2045-7%2065%201%2018-7%2034-8%2055-2v32H0z%22%20fill%3D%22%23e5f9ea%22%2F%3E%0A%3Cpath%20d%3D%22M18%2074h22l6-10h22l6-10h25%22%20fill%3D%22none%22%20stroke%3D%22%2382c96f%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%2259%22%20cy%3D%2238%22%20r%3D%228%22%20fill%3D%22%23f5c39c%22%2F%3E%0A%3Cpath%20d%3D%22M55%2046l-10%2011-14%201%22%20fill%3D%22none%22%20stroke%3D%22%230f7bd8%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M58%2048l13%208%2011-2%22%20fill%3D%22none%22%20stroke%3D%22%23ff8f65%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M56%2059l7%2013%22%20fill%3D%22none%22%20stroke%3D%22%235f6b73%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-elys-boulderloft{--bg1:#ecf9ef;--bg2:#d1f0d6;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2088c17-7%2032-6%2047%200%2023-7%2048-9%2073-1v33H0z%22%20fill%3D%22%23e8f9eb%22%2F%3E%0A%3Cpath%20d%3D%22M28%2028h36l17%2058H28z%22%20fill%3D%22%2398c5a2%22%2F%3E%0A%3Ccircle%20cx%3D%2248%22%20cy%3D%2243%22%20r%3D%224%22%20fill%3D%22%23ffd76b%22%2F%3E%0A%3Ccircle%20cx%3D%2262%22%20cy%3D%2255%22%20r%3D%224%22%20fill%3D%22%23ffad92%22%2F%3E%0A%3Ccircle%20cx%3D%2244%22%20cy%3D%2269%22%20r%3D%224%22%20fill%3D%22%238bd3ff%22%2F%3E%0A%3Ccircle%20cx%3D%2266%22%20cy%3D%2276%22%20r%3D%224%22%20fill%3D%22%23f48fb1%22%2F%3E%0A%3Ccircle%20cx%3D%2289%22%20cy%3D%2239%22%20r%3D%227%22%20fill%3D%22%23f3c59c%22%2F%3E%0A%3Cpath%20d%3D%22M84%2047l-10%2012-8%200%22%20fill%3D%22none%22%20stroke%3D%22%230f7bd8%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M86%2048l8%2010-2%2013%22%20fill%3D%22none%22%20stroke%3D%22%234caf50%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-zoo-basel{--bg1:#f1fbdf;--bg2:#d6f2b2;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c23-8%2043-8%2063%200%2019-8%2038-9%2057-3v34H0z%22%20fill%3D%22%23e7f7cd%22%2F%3E%0A%3Crect%20x%3D%2252%22%20y%3D%2230%22%20width%3D%2214%22%20height%3D%2240%22%20rx%3D%227%22%20fill%3D%22%23f1c27d%22%2F%3E%0A%3Ccircle%20cx%3D%2259%22%20cy%3D%2226%22%20r%3D%2213%22%20fill%3D%22%23f1c27d%22%2F%3E%0A%3Ccircle%20cx%3D%2253%22%20cy%3D%2219%22%20r%3D%224%22%20fill%3D%22%238d6e63%22%2F%3E%0A%3Ccircle%20cx%3D%2266%22%20cy%3D%2219%22%20r%3D%224%22%20fill%3D%22%238d6e63%22%2F%3E%0A%3Ccircle%20cx%3D%2255%22%20cy%3D%2227%22%20r%3D%222.2%22%20fill%3D%22%235d4037%22%2F%3E%0A%3Ccircle%20cx%3D%2263%22%20cy%3D%2227%22%20r%3D%222.2%22%20fill%3D%22%235d4037%22%2F%3E%0A%3Cpath%20d%3D%22M56%2033c2%202%204%202%206%200%22%20fill%3D%22none%22%20stroke%3D%22%238d6e63%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%2243%22%20cy%3D%2247%22%20r%3D%225%22%20fill%3D%22%238d6e63%22%2F%3E%0A%3Ccircle%20cx%3D%2278%22%20cy%3D%2255%22%20r%3D%225%22%20fill%3D%22%238d6e63%22%2F%3E%0A%3Ccircle%20cx%3D%2237%22%20cy%3D%2278%22%20r%3D%2216%22%20fill%3D%22%237ccc7a%22%2F%3E%0A%3Cpath%20d%3D%22M30%2079c4-7%208-11%2015-15%22%20fill%3D%22none%22%20stroke%3D%22%234aa95c%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-museum-tinguely{--bg1:#fff0dd;--bg2:#ffd9b0;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c21-8%2043-6%2061%202%2019-7%2039-8%2059-2v31H0z%22%20fill%3D%22%23ffe9d0%22%2F%3E%0A%3Ccircle%20cx%3D%2238%22%20cy%3D%2267%22%20r%3D%2213%22%20fill%3D%22%238dd3ff%22%20stroke%3D%22%234f6b79%22%20stroke-width%3D%224%22%2F%3E%0A%3Ccircle%20cx%3D%2238%22%20cy%3D%2267%22%20r%3D%224%22%20fill%3D%22%23fff%22%2F%3E%0A%3Ccircle%20cx%3D%2275%22%20cy%3D%2254%22%20r%3D%2210%22%20fill%3D%22%23ffd66e%22%20stroke%3D%22%234f6b79%22%20stroke-width%3D%224%22%2F%3E%0A%3Ccircle%20cx%3D%2275%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23fff%22%2F%3E%0A%3Cpath%20d%3D%22M38%2054l10-12%2027%2012%22%20fill%3D%22none%22%20stroke%3D%22%234f6b79%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M38%2080l10%208h27%22%20fill%3D%22none%22%20stroke%3D%22%234f6b79%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M88%2035v18%22%20stroke%3D%22%23ff9d80%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%2288%22%20cy%3D%2231%22%20r%3D%225%22%20fill%3D%22%23ffb0c7%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-paint-it-easy{--bg1:#fff0dd;--bg2:#ffd8af;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c20-8%2040-7%2060%201%2018-8%2039-8%2060-2v32H0z%22%20fill%3D%22%23ffe9d1%22%2F%3E%0A%3Crect%20x%3D%2233%22%20y%3D%2233%22%20width%3D%2232%22%20height%3D%2238%22%20rx%3D%226%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%238fb7d3%22%20stroke-width%3D%223%22%2F%3E%0A%3Cpath%20d%3D%22M36%2061c7-15%2019-18%2026-5%204%207%209%208%2011%206v9H36z%22%20fill%3D%22%238ed38a%22%2F%3E%0A%3Ccircle%20cx%3D%2245%22%20cy%3D%2245%22%20r%3D%225%22%20fill%3D%22%23ffb0c7%22%2F%3E%0A%3Ccircle%20cx%3D%2256%22%20cy%3D%2249%22%20r%3D%225%22%20fill%3D%22%238bd3ff%22%2F%3E%0A%3Cpath%20d%3D%22M49%2072l-7%2018M60%2072l6%2018%22%20stroke%3D%22%238d6e63%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M78%2034l10%2010-23%2024-8-2%202-8z%22%20fill%3D%22%238d6e63%22%2F%3E%0A%3Cpath%20d%3D%22M82%2030l12%2012%22%20stroke%3D%22%235d4037%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-theater-arlecchino{--bg1:#f9ecff;--bg2:#e6cdfd;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c20-8%2041-7%2061%202%2017-7%2037-9%2059-3v32H0z%22%20fill%3D%22%23f1e1fb%22%2F%3E%0A%3Crect%20x%3D%2219%22%20y%3D%2223%22%20width%3D%227%22%20height%3D%2270%22%20rx%3D%223%22%20fill%3D%22%23ef6f7f%22%2F%3E%0A%3Crect%20x%3D%2294%22%20y%3D%2223%22%20width%3D%227%22%20height%3D%2270%22%20rx%3D%223%22%20fill%3D%22%23ef6f7f%22%2F%3E%0A%3Cpath%20d%3D%22M28%2028h64v40c0%2012-9%2022-20%2022-5%200-10-2-14-5-4%203-9%205-14%205-11%200-20-10-20-22z%22%20fill%3D%22%23d9cff2%22%2F%3E%0A%3Ccircle%20cx%3D%2244%22%20cy%3D%2250%22%20r%3D%223.5%22%20fill%3D%22%235e35b1%22%2F%3E%0A%3Ccircle%20cx%3D%2274%22%20cy%3D%2250%22%20r%3D%223.5%22%20fill%3D%22%235e35b1%22%2F%3E%0A%3Cpath%20d%3D%22M37%2062c6%207%2014%207%2021%201%22%20fill%3D%22none%22%20stroke%3D%22%235e35b1%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M63%2066c6-4%2013-4%2018%201%22%20fill%3D%22none%22%20stroke%3D%22%235e35b1%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-magical-cafe{--bg1:#f8ebff;--bg2:#e7cdfc;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c20-8%2041-7%2062%202%2018-8%2037-8%2058-2v31H0z%22%20fill%3D%22%23f0e0fb%22%2F%3E%0A%3Cpath%20d%3D%22M31%2058h32c0%2012-7%2019-16%2019S31%2070%2031%2058z%22%20fill%3D%22%238ed3ff%22%2F%3E%0A%3Cpath%20d%3D%22M63%2060h10c4%200%206%202%206%205%200%204-3%207-8%207h-6%22%20fill%3D%22none%22%20stroke%3D%22%238ed3ff%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M28%2080h42%22%20stroke%3D%22%238d6e63%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M42%2049c-6-6-6-13%200-19M51%2047c-5-5-5-10%200-15%22%20fill%3D%22none%22%20stroke%3D%22%23c084fc%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M80%2035l8%208-16%2016-10%202%202-10z%22%20fill%3D%22%23ffd56f%22%2F%3E%0A%3Cpath%20d%3D%22M88%2026l5%205M84%2030l12-2M89%2034l2%2012%22%20stroke%3D%22%23ffd56f%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-naturhistorisches-museum{--bg1:#edf0ff;--bg2:#d7deff;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c22-9%2043-8%2063%200%2018-8%2037-9%2057-2v31H0z%22%20fill%3D%22%23e5e9ff%22%2F%3E%0A%3Cpath%20d%3D%22M31%2064c0-15%2013-27%2028-27%2011%200%2021%207%2025%2017%208%201%2012%206%2012%2012%200%207-6%2012-13%2012H63c-7%208-16%2012-25%2012-8%200-13-3-13-9%200-6%203-10%206-17z%22%20fill%3D%22%23fff8de%22%20stroke%3D%22%237f8bd8%22%20stroke-width%3D%223%22%2F%3E%0A%3Ccircle%20cx%3D%2250%22%20cy%3D%2252%22%20r%3D%226%22%20fill%3D%22%237f8bd8%22%2F%3E%0A%3Ccircle%20cx%3D%2272%22%20cy%3D%2256%22%20r%3D%223%22%20fill%3D%22%237f8bd8%22%2F%3E%0A%3Cpath%20d%3D%22M70%2069h13%22%20stroke%3D%22%237f8bd8%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M34%2076h15M36%2083h11M38%2090h7%22%20stroke%3D%22%237f8bd8%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-muks{--bg1:#eef1ff;--bg2:#d7ddff;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c23-8%2044-7%2063%201%2018-7%2037-8%2057-2v32H0z%22%20fill%3D%22%23e6ebff%22%2F%3E%0A%3Crect%20x%3D%2225%22%20y%3D%2256%22%20width%3D%2220%22%20height%3D%2217%22%20rx%3D%224%22%20fill%3D%22%23ffd76b%22%2F%3E%0A%3Crect%20x%3D%2245%22%20y%3D%2247%22%20width%3D%2223%22%20height%3D%2226%22%20rx%3D%224%22%20fill%3D%22%238bd3ff%22%2F%3E%0A%3Crect%20x%3D%2268%22%20y%3D%2255%22%20width%3D%2222%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22%23ffb0c7%22%2F%3E%0A%3Cpath%20d%3D%22M34%2042c2-7%207-11%2014-11s12%204%2014%2011%22%20fill%3D%22none%22%20stroke%3D%22%2378c78c%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%2254%22%20cy%3D%2232%22%20r%3D%224%22%20fill%3D%22%2378c78c%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-museum-der-kulturen{--bg1:#eef1ff;--bg2:#d8e0ff;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c22-8%2044-7%2063%202%2018-8%2036-8%2057-2v31H0z%22%20fill%3D%22%23e9edff%22%2F%3E%0A%3Ccircle%20cx%3D%2242%22%20cy%3D%2259%22%20r%3D%2218%22%20fill%3D%22%238ecfff%22%20stroke%3D%22%235d77c8%22%20stroke-width%3D%223%22%2F%3E%0A%3Cpath%20d%3D%22M24%2059h36M42%2041c-6%205-9%2011-9%2018s3%2013%209%2018M42%2041c6%205%209%2011%209%2018s-3%2013-9%2018%22%20fill%3D%22none%22%20stroke%3D%22%235d77c8%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M73%2036c9%201%2015%206%2015%2013%200%2010-10%2017-15%2028-5-11-15-18-15-28%200-8%207-13%2015-13z%22%20fill%3D%22%23ffd76b%22%2F%3E%0A%3Ccircle%20cx%3D%2268%22%20cy%3D%2248%22%20r%3D%222.5%22%20fill%3D%22%238d6e63%22%2F%3E%0A%3Ccircle%20cx%3D%2278%22%20cy%3D%2248%22%20r%3D%222.5%22%20fill%3D%22%238d6e63%22%2F%3E%0A%3Cpath%20d%3D%22M67%2056c4%203%208%203%2012%200%22%20fill%3D%22none%22%20stroke%3D%22%238d6e63%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-sutter-begg{--bg1:#fff2e4;--bg2:#ffd6af;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c22-8%2043-7%2061%202%2020-8%2039-8%2059-2v31H0z%22%20fill%3D%22%23ffead4%22%2F%3E%0A%3Cpath%20d%3D%22M38%2057h45l-6%2025H44z%22%20fill%3D%22%23ffd07d%22%2F%3E%0A%3Cpath%20d%3D%22M44%2057c0-12%208-22%2017-22%208%200%2015%206%2017%2015%208%201%2013%206%2013%2013%200%207-5%2011-11%2011H44c-7%200-12-6-12-13%200-6%204-11%2012-11z%22%20fill%3D%22%23f59ac4%22%2F%3E%0A%3Ccircle%20cx%3D%2260%22%20cy%3D%2243%22%20r%3D%224%22%20fill%3D%22%23ffefb3%22%2F%3E%0A%3Cpath%20d%3D%22M88%2028c8%206%208%2018%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%238d6e63%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M84%2030c4%204%204%2011%200%2015%22%20fill%3D%22none%22%20stroke%3D%22%238d6e63%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-breakout-basel{--bg1:#e9fbf4;--bg2:#c7efde;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c22-8%2042-6%2062%202%2018-8%2038-9%2058-3v31H0z%22%20fill%3D%22%23e3f8ef%22%2F%3E%0A%3Cpath%20d%3D%22M26%2038h46l-4%2038H30z%22%20fill%3D%22%23fff8d2%22%20stroke%3D%22%236bc281%22%20stroke-width%3D%223%22%2F%3E%0A%3Cpath%20d%3D%22M37%2047l9%208%2011-13%2011%2011%22%20fill%3D%22none%22%20stroke%3D%22%2352a86a%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%2281%22%20cy%3D%2269%22%20r%3D%2213%22%20fill%3D%22%23a9d8ff%22%20stroke%3D%22%232c88d9%22%20stroke-width%3D%224%22%2F%3E%0A%3Cpath%20d%3D%22M90%2078l10%2010%22%20fill%3D%22none%22%20stroke%3D%22%238d6e63%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%2259%22%20cy%3D%2258%22%20r%3D%224%22%20fill%3D%22%23ef6f7f%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-kannenfeldpark{--bg1:#ebfaeb;--bg2:#cdf1ca;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c21-8%2042-7%2060%202%2020-8%2040-9%2060-2v31H0z%22%20fill%3D%22%23e5f8e5%22%2F%3E%0A%3Ccircle%20cx%3D%2287%22%20cy%3D%2225%22%20r%3D%2211%22%20fill%3D%22%23ffd56f%22%2F%3E%0A%3Crect%20x%3D%2250%22%20y%3D%2254%22%20width%3D%229%22%20height%3D%2225%22%20rx%3D%224%22%20fill%3D%22%238d6e63%22%2F%3E%0A%3Ccircle%20cx%3D%2255%22%20cy%3D%2247%22%20r%3D%2218%22%20fill%3D%22%236fcb73%22%2F%3E%0A%3Ccircle%20cx%3D%2242%22%20cy%3D%2250%22%20r%3D%2212%22%20fill%3D%22%238adf8e%22%2F%3E%0A%3Ccircle%20cx%3D%2267%22%20cy%3D%2252%22%20r%3D%2211%22%20fill%3D%22%238adf8e%22%2F%3E%0A%3Crect%20x%3D%2223%22%20y%3D%2250%22%20width%3D%2214%22%20height%3D%2219%22%20rx%3D%224%22%20fill%3D%22%238ed3ff%22%2F%3E%0A%3Cpath%20d%3D%22M37%2056h15l-8%2017H31z%22%20fill%3D%22%23ffb088%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-schuetzenmattpark{--bg1:#ebfaeb;--bg2:#cdf1ca;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c22-8%2042-7%2063%201%2018-7%2037-8%2057-2v32H0z%22%20fill%3D%22%23e5f8e5%22%2F%3E%0A%3Cpath%20d%3D%22M24%2080c12-5%2026-5%2039%200%2014-6%2029-6%2043%200%22%20fill%3D%22none%22%20stroke%3D%22%236fcb73%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M56%2042c5%206%205%2015%200%2024-5-8-5-17%200-24z%22%20fill%3D%22%238ed3ff%22%2F%3E%0A%3Cpath%20d%3D%22M45%2062c7-4%2015-4%2022%200%22%20fill%3D%22none%22%20stroke%3D%22%238ed3ff%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Crect%20x%3D%2283%22%20y%3D%2255%22%20width%3D%228%22%20height%3D%2220%22%20rx%3D%224%22%20fill%3D%22%238d6e63%22%2F%3E%0A%3Ccircle%20cx%3D%2287%22%20cy%3D%2249%22%20r%3D%2215%22%20fill%3D%22%2379d07d%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-margarethenpark{--bg1:#ecfaec;--bg2:#cef1cb;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c23-8%2044-7%2061%201%2020-8%2040-8%2059-1v31H0z%22%20fill%3D%22%23e6f8e6%22%2F%3E%0A%3Cpath%20d%3D%22M19%2082c14-10%2028-14%2044-8%2015%206%2030%206%2047-2%22%20fill%3D%22none%22%20stroke%3D%22%237aca7b%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Crect%20x%3D%2228%22%20y%3D%2242%22%20width%3D%2218%22%20height%3D%2227%22%20rx%3D%224%22%20fill%3D%22%23ffd56f%22%2F%3E%0A%3Cpath%20d%3D%22M28%2042l10-10%208%2010%22%20fill%3D%22%23ffb08f%22%2F%3E%0A%3Cpath%20d%3D%22M46%2054h16l-9%2018H39z%22%20fill%3D%22%238ed3ff%22%2F%3E%0A%3Ccircle%20cx%3D%2286%22%20cy%3D%2253%22%20r%3D%2212%22%20fill%3D%22%237ed68b%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-your-home{--bg1:#fff1dd;--bg2:#ffd8ad;--stack-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2224%22%20fill%3D%22%23f4fbff%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%228%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2293%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd7e5%22%20opacity%3D%22.65%22%2F%3E%0A%0A%0A%3Cpath%20d%3D%22M0%2089c21-8%2042-7%2061%202%2018-7%2038-8%2059-2v31H0z%22%20fill%3D%22%23ffead2%22%2F%3E%0A%3Cpath%20d%3D%22M30%2060l30-24%2030%2024v26H30z%22%20fill%3D%22%2391cbff%22%2F%3E%0A%3Cpath%20d%3D%22M22%2061l38-31%2038%2031%22%20fill%3D%22none%22%20stroke%3D%22%235c6bc0%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Crect%20x%3D%2254%22%20y%3D%2270%22%20width%3D%2213%22%20height%3D%2216%22%20rx%3D%223%22%20fill%3D%22%23ffd07d%22%2F%3E%0A%3Cpath%20d%3D%22M32%2040c9%207%2018%207%2028%200s19-7%2028%200%22%20fill%3D%22none%22%20stroke%3D%22%23ef6f7f%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%2238%22%20cy%3D%2243%22%20r%3D%223.5%22%20fill%3D%22%23ffd56f%22%2F%3E%0A%3Ccircle%20cx%3D%2260%22%20cy%3D%2243%22%20r%3D%223.5%22%20fill%3D%22%237dd78a%22%2F%3E%0A%3Ccircle%20cx%3D%2282%22%20cy%3D%2243%22%20r%3D%223.5%22%20fill%3D%22%238ed3ff%22%2F%3E%0A%0A%3C%2Fsvg%3E");}
+.venue-card-copy{min-width:0}
+.venue-title-line{
+  display:flex;
+  align-items:flex-start;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-bottom:5px;
+}
+.venue-index{
+  width:24px;
+  height:24px;
+  border-radius:999px;
+  background:#0f7bd8;
+  color:#fff;
+  display:grid;
+  place-items:center;
+  font-size:12px;
+  line-height:1;
+  font-weight:900;
+  flex:0 0 24px;
+}
+.venue-title{
+  font-size:15px;
+  line-height:1.14;
+  font-weight:800;
+  color:#083b59;
+  font-family:"Arial Rounded MT Bold","Arial Rounded MT","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif;
+}
+.venue-location{color:#0f7bd8;font-weight:800}
+.venue-age{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#eef8fc;
+  color:#31566b;
+  font-size:12px;
+  line-height:1.1;
+  font-weight:800;
+  margin-bottom:5px;
+}
+.venue-desc{
+  margin:0;
+  font-family:"Avenir Next","SF Pro Text",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif;
+  font-size:13px;
+  line-height:1.3;
+  color:#33576b;
+  font-weight:600;
+}
+.venue-linkline{
+  margin-top:6px;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  color:#0f7bd8;
+  font-size:12px;
+  line-height:1.1;
+  font-weight:800;
+  font-family:"Avenir Next","SF Pro Text",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif;
+}
+.guide-mini-grid{
+  display:grid;
+  gap:8px;
+  margin-top:12px;
+}
+.guide-mini-card{
+  background:#fff;
+  border:1px solid #dbeaf0;
+  border-radius:16px;
+  padding:11px 12px;
+  box-shadow:0 4px 12px rgba(7,59,82,.04);
+  scroll-margin-top:12px;
+}
+.guide-mini-card h3{
+  margin:0 0 4px;
+  font-size:16px;
+  line-height:1.1;
+  color:#083b59;
+  font-weight:800;
+  font-family:"Arial Rounded MT Bold","Arial Rounded MT","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif;
+}
+.guide-mini-card p{
+  margin:0;
+  font-family:"Avenir Next","SF Pro Text",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif;
+  font-size:13px;
+  line-height:1.3;
+  color:#5d7987;
+  font-weight:600;
+}
+#birthday-venues,
+#cake-makers,
+#entertainers,
+#party-supplies,
+#places-indoor-play,
+#places-playgrounds,
+#places-museums,
+#places-swimming,
+#places-animals{scroll-margin-top:12px}
+@media(max-width:390px){
+  .guide-library-head h2{font-size:19px}
+  .guide-list-category{font-size:14px}
+  .venue-card{grid-template-columns:88px minmax(0,1fr);gap:10px}
+  .venue-thumb-stack{min-height:88px;border-radius:20px}
+  .stack-face{width:60px;height:74px;font-size:26px;border-radius:18px}
+  .venue-title{font-size:14px}
+}
+@media(max-width:390px){
+  .main-tabs label{
+    font-size:13px !important;
+    padding-left:6px !important;
+    padding-right:6px !important;
+    gap:7px !important;
+  }
+  .main-tabs label .tab-icon,
+  .main-tabs label .tab-icon svg{
+    width:22px;
+    height:22px;
+  }
+  .guides-heading h1{font-size:21px}
+  .guide-chapter summary{font-size:15px}
+  .guide-subitems{font-size:13.5px}
+}
+</style>
+<style>
+/* ===== Family Guides: compact stacked cartoon thumbnails ===== */
+.family-guides .guides-heading{align-items:center;}
+.family-guides .guides-heading-icon{font-size:0;line-height:0;flex:0 0 54px;}
+.family-guides .guide-chapter summary{
+  grid-template-columns:54px minmax(0,1fr) 18px;
+  min-height:54px;
+  gap:7px;
+  padding:6px 10px;
+}
+.family-guides .guide-emoji{display:none!important;}
+.guide-stack-thumb{
+  --guide-art:none;
+  position:relative;
+  width:50px;
+  height:44px;
+  display:block;
+  flex:0 0 50px;
+  filter:drop-shadow(0 4px 7px rgba(7,59,82,.09));
+}
+.guide-stack-thumb::before,
+.guide-stack-thumb::after,
+.guide-stack-thumb>i{
+  content:"";
+  position:absolute;
+  width:36px;
+  height:35px;
+  border-radius:10px;
+  background-color:#fff;
+  background-image:var(--guide-art);
+  background-size:cover;
+  background-position:center;
+  border:1px solid rgba(8,59,89,.08);
+  box-shadow:0 3px 8px rgba(7,59,82,.10);
+}
+.guide-stack-thumb::before{left:1px;top:6px;transform:rotate(-9deg);opacity:.84;}
+.guide-stack-thumb::after{right:1px;top:5px;transform:rotate(9deg);opacity:.88;}
+.guide-stack-thumb>i{left:7px;top:2px;z-index:2;width:38px;height:38px;box-shadow:0 5px 11px rgba(7,59,82,.14);}
+.guide-stack-thumb--mini{width:44px;height:39px;flex-basis:44px;filter:drop-shadow(0 3px 6px rgba(7,59,82,.08));}
+.guide-stack-thumb--mini::before,.guide-stack-thumb--mini::after,.guide-stack-thumb--mini>i{width:31px;height:31px;border-radius:9px;}
+.guide-stack-thumb--mini::before{left:1px;top:5px}.guide-stack-thumb--mini::after{right:1px;top:5px}.guide-stack-thumb--mini>i{left:6px;top:2px;width:33px;height:33px}
+.family-guides .guide-subitems-links a{
+  display:grid;
+  grid-template-columns:44px minmax(0,1fr) 18px;
+  align-items:center;
+  justify-content:initial;
+  gap:8px;
+  min-height:52px;
+  padding:6px 10px;
+}
+.family-guides .guide-subitems-links a::before{display:none;}
+.family-guides .guide-subitems-links a::after{grid-column:3;justify-self:end;margin-left:0;}
+.family-guides .guide-subitems-links a>.guide-link-label{grid-column:2;min-width:0;}
+.family-guides .guide-subitems .guide-link-label{position:static;padding-left:0;}
+.family-guides .guide-subitems .guide-link-label::before{display:none!important;content:none!important;}
+.family-guides .guide-subitems span.guide-stack-thumb{padding-left:0;}
+.family-guides .guide-subitems span.guide-stack-thumb::before{content:"";position:absolute;top:5px;left:1px;width:31px;height:31px;border-radius:9px;background-color:#fff;background-image:var(--guide-art);background-size:cover;background-position:center;border:1px solid rgba(8,59,89,.08);box-shadow:0 3px 8px rgba(7,59,82,.10);transform:rotate(-9deg);opacity:.84;}
+.family-guides .guide-mini-title{display:flex;align-items:center;gap:9px;margin-bottom:4px;}
+.family-guides .guide-mini-title h3{margin:0;}
+@media(max-width:390px){
+  .family-guides .guide-chapter summary{grid-template-columns:50px minmax(0,1fr) 18px;min-height:51px;padding:5px 9px;}
+  .family-guides .guide-subitems{padding-left:43px;}
+  .family-guides .guide-subitems-links a{grid-template-columns:42px minmax(0,1fr) 16px;gap:7px;min-height:50px;padding:6px 9px;}
+  .guide-stack-thumb{transform:scale(.94);transform-origin:left center;}
+}
+.art-family{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23eef9ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23d9f1ff%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23b6def2%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Crect%20x%3D%2228%22%20y%3D%2229%22%20width%3D%2262%22%20height%3D%2242%22%20rx%3D%2211%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%239ad4ee%22%20stroke-width%3D%223%22%2F%3E%0A%3Cpath%20d%3D%22M36%2057%20l12-12%209%208%2013-15%2014%2017%22%20fill%3D%22none%22%20stroke%3D%22%235eb8df%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%2245%22%20cy%3D%2239%22%20r%3D%225%22%20fill%3D%22%23ffd86b%22%2F%3E%3Crect%20x%3D%2251%22%20y%3D%2259%22%20width%3D%2228%22%20height%3D%228%22%20rx%3D%224%22%20fill%3D%22%23ffd1dc%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-birthday{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23eff9ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23d7efff%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23ffd76a%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Cpath%20d%3D%22M20%2031%20Q60%2018%20100%2031%22%20fill%3D%22none%22%20stroke%3D%22%236eaed2%22%20stroke-width%3D%222%22%2F%3E%0A%3Cpath%20d%3D%22M24%2030%20l7%2010%207-12%208%2010%208-13%208%2011%208-10%208%2011%208-9%208%2010%22%20fill%3D%22%23ffd875%22%20opacity%3D%22.92%22%2F%3E%0A%3Crect%20x%3D%2242%22%20y%3D%2252%22%20width%3D%2237%22%20height%3D%2227%22%20rx%3D%227%22%20fill%3D%22%23ffb7c8%22%2F%3E%0A%3Crect%20x%3D%2247%22%20y%3D%2247%22%20width%3D%2227%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23ffffff%22%2F%3E%0A%3Cpath%20d%3D%22M60%2047%20v32%20M42%2062%20h37%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%224%22%2F%3E%0A%3Ccircle%20cx%3D%2229%22%20cy%3D%2250%22%20r%3D%229%22%20fill%3D%22%237dc9f0%22%2F%3E%3Cpath%20d%3D%22M29%2059%20q-5%2010%200%2016%22%20fill%3D%22none%22%20stroke%3D%22%235a7b91%22%20stroke-width%3D%222%22%2F%3E%0A%3Ccircle%20cx%3D%2292%22%20cy%3D%2249%22%20r%3D%228%22%20fill%3D%22%23ffd765%22%2F%3E%3Cpath%20d%3D%22M92%2057%20q5%209%200%2016%22%20fill%3D%22none%22%20stroke%3D%22%235a7b91%22%20stroke-width%3D%222%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-birthday-venues{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23edf8ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23d5effd%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23ffb3c4%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2262%22%20cy%3D%2238%22%20r%3D%229%22%20fill%3D%22%23f2c7a5%22%2F%3E%0A%3Cpath%20d%3D%22M53%2036%20q9-12%2018%200%20q-2-9-9-9%20q-8%200-9%209Z%22%20fill%3D%22%235b4636%22%2F%3E%0A%3Ccircle%20cx%3D%2259%22%20cy%3D%2238%22%20r%3D%221.2%22%20fill%3D%22%23284b63%22%2F%3E%3Ccircle%20cx%3D%2265%22%20cy%3D%2238%22%20r%3D%221.2%22%20fill%3D%22%23284b63%22%2F%3E%0A%3Cpath%20d%3D%22M59%2043%20q3%202%206%200%22%20fill%3D%22none%22%20stroke%3D%22%23a46d5e%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Crect%20x%3D%2254%22%20y%3D%2248%22%20width%3D%2216%22%20height%3D%2218%22%20rx%3D%227%22%20fill%3D%22%237cccf1%22%2F%3E%0A%3Cpath%20d%3D%22M57%2065%20l-5%2013%20M67%2065%20l6%2013%22%20stroke%3D%22%23546e7a%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2243%22%20r%3D%228%22%20fill%3D%22%23ff9fb2%22%2F%3E%3Ccircle%20cx%3D%2298%22%20cy%3D%2242%22%20r%3D%229%22%20fill%3D%22%23ffd971%22%2F%3E%0A%3Cpath%20d%3D%22M24%2051%20q-3%207%201%2013%20M98%2051%20q4%207%200%2014%22%20fill%3D%22none%22%20stroke%3D%22%236b8190%22%20stroke-width%3D%222%22%2F%3E%0A%3Crect%20x%3D%2238%22%20y%3D%2273%22%20width%3D%2247%22%20height%3D%228%22%20rx%3D%224%22%20fill%3D%22%23d7a46e%22%2F%3E%3Crect%20x%3D%2256%22%20y%3D%2281%22%20width%3D%2210%22%20height%3D%228%22%20rx%3D%223%22%20fill%3D%22%238d6e63%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-cake-makers{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23f2f9ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23dceffd%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23ffb4c6%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Crect%20x%3D%2237%22%20y%3D%2258%22%20width%3D%2247%22%20height%3D%2223%22%20rx%3D%227%22%20fill%3D%22%23ffb4c6%22%2F%3E%0A%3Crect%20x%3D%2244%22%20y%3D%2245%22%20width%3D%2233%22%20height%3D%2216%22%20rx%3D%226%22%20fill%3D%22%23fff3c9%22%2F%3E%0A%3Cpath%20d%3D%22M44%2051%20q6%207%2012%200%20q6%207%2012%200%20q5%206%209%200%22%20fill%3D%22none%22%20stroke%3D%22%23ef7e9a%22%20stroke-width%3D%223%22%2F%3E%0A%3Crect%20x%3D%2258%22%20y%3D%2232%22%20width%3D%224%22%20height%3D%2213%22%20rx%3D%222%22%20fill%3D%22%2378bde3%22%2F%3E%3Cpath%20d%3D%22M60%2031%20q-5-7%200-12%20q6%206%200%2012Z%22%20fill%3D%22%23ffd65c%22%2F%3E%0A%3Cpath%20d%3D%22M88%2037%20l13%2012-14%2019-9-8z%22%20fill%3D%22%2391d1bf%22%2F%3E%3Ccircle%20cx%3D%2293%22%20cy%3D%2246%22%20r%3D%223%22%20fill%3D%22%23ffffff%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-entertainers{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23eff8ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23d8effa%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23d9c2f0%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Cpath%20d%3D%22M35%2063%20h50%20l-8%2013H43Z%22%20fill%3D%22%2342566c%22%2F%3E%3Cellipse%20cx%3D%2260%22%20cy%3D%2261%22%20rx%3D%2228%22%20ry%3D%227%22%20fill%3D%22%232e4156%22%2F%3E%0A%3Cpath%20d%3D%22M45%2061%20l7-31%20h17%20l7%2031z%22%20fill%3D%22%23526a86%22%2F%3E%3Cpath%20d%3D%22M88%2030%20l-28%2028%22%20stroke%3D%22%238b5e3c%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M92%2020%20l3%207%208%201-6%205%202%208-7-4-7%204%202-8-6-5%208-1z%22%20fill%3D%22%23ffd55f%22%2F%3E%0A%3Ccircle%20cx%3D%2228%22%20cy%3D%2235%22%20r%3D%225%22%20fill%3D%22%23ff9eb2%22%2F%3E%3Ccircle%20cx%3D%2299%22%20cy%3D%2259%22%20r%3D%224%22%20fill%3D%22%237ec9ef%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-party-supplies{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23eff9ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23d8f0ff%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23ffd675%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Cpath%20d%3D%22M18%2031%20Q60%2019%20102%2031%22%20fill%3D%22none%22%20stroke%3D%22%2377b6d7%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M24%2031%20l7%2010%207-10%207%2010%207-10%207%2010%207-10%207%2010%207-10%207%2010%22%20fill%3D%22%23ffd76a%22%2F%3E%0A%3Crect%20x%3D%2226%22%20y%3D%2256%22%20width%3D%2229%22%20height%3D%2224%22%20rx%3D%225%22%20fill%3D%22%2380c8ef%22%2F%3E%3Crect%20x%3D%2260%22%20y%3D%2249%22%20width%3D%2234%22%20height%3D%2231%22%20rx%3D%226%22%20fill%3D%22%23ffadc0%22%2F%3E%0A%3Cpath%20d%3D%22M40%2056v24%20M26%2067h29%20M77%2049v31%20M60%2063h34%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%223%22%2F%3E%0A%3Cpath%20d%3D%22M72%2042%20l8-17%208%2017z%22%20fill%3D%22%238ed5ba%22%2F%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2225%22%20r%3D%223%22%20fill%3D%22%23ffd861%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-places{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23edf9ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23d6eff8%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%238ed2b1%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Cpath%20d%3D%22M25%2070%20V43%20h25%20v27%20M55%2070%20V34%20h39%20v36%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%238fc9e8%22%20stroke-width%3D%223%22%2F%3E%0A%3Cpath%20d%3D%22M55%2034%20l20-12%2019%2012%22%20fill%3D%22%23ffd873%22%20stroke%3D%22%238fc9e8%22%20stroke-width%3D%223%22%2F%3E%0A%3Ccircle%20cx%3D%2228%22%20cy%3D%2239%22%20r%3D%2212%22%20fill%3D%22%238fd7b6%22%2F%3E%3Crect%20x%3D%2226%22%20y%3D%2248%22%20width%3D%224%22%20height%3D%2219%22%20rx%3D%222%22%20fill%3D%22%238d6e63%22%2F%3E%0A%3Cpath%20d%3D%22M18%2079%20q24-11%2043%200%20q23-11%2043%200%22%20fill%3D%22none%22%20stroke%3D%22%236dbbe3%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-indoor-play{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23eef9ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23d9f1ff%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23ffb0be%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Cpath%20d%3D%22M25%2067%20h29%20l16-31%20h15%22%20fill%3D%22none%22%20stroke%3D%22%236fbbe5%22%20stroke-width%3D%228%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Crect%20x%3D%2276%22%20y%3D%2231%22%20width%3D%228%22%20height%3D%2240%22%20rx%3D%224%22%20fill%3D%22%23ff9fac%22%2F%3E%3Ccircle%20cx%3D%2229%22%20cy%3D%2275%22%20r%3D%226%22%20fill%3D%22%23ffd35f%22%2F%3E%3Ccircle%20cx%3D%2242%22%20cy%3D%2276%22%20r%3D%225%22%20fill%3D%22%238ad1b8%22%2F%3E%3Ccircle%20cx%3D%2253%22%20cy%3D%2276%22%20r%3D%226%22%20fill%3D%22%23ff9fb6%22%2F%3E%0A%3Crect%20x%3D%2217%22%20y%3D%2267%22%20width%3D%2246%22%20height%3D%2215%22%20rx%3D%227%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.72%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-playgrounds{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23eff9ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23d9f3ea%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23ffd55f%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Cpath%20d%3D%22M27%2072%20V35%20h32%20v37%22%20fill%3D%22none%22%20stroke%3D%22%237cb7d7%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M35%2037%20l8%2030%20M52%2037%20l-7%2030%22%20stroke%3D%22%236b7d89%22%20stroke-width%3D%222%22%2F%3E%3Crect%20x%3D%2237%22%20y%3D%2264%22%20width%3D%2213%22%20height%3D%225%22%20rx%3D%222.5%22%20fill%3D%22%23ffafbe%22%2F%3E%0A%3Cpath%20d%3D%22M70%2067%20l18-31%20h11%22%20fill%3D%22none%22%20stroke%3D%22%23ffaf80%22%20stroke-width%3D%228%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%2292%22%20cy%3D%2223%22%20r%3D%227%22%20fill%3D%22%23ffd760%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-museums{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23eef7ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23dbe8ff%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23a7b5ef%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Cpath%20d%3D%22M25%2045%2060%2026l35%2019v7H25Z%22%20fill%3D%22%2391ccea%22%2F%3E%3Crect%20x%3D%2229%22%20y%3D%2252%22%20width%3D%2262%22%20height%3D%2228%22%20rx%3D%224%22%20fill%3D%22%23ffffff%22%2F%3E%0A%3Crect%20x%3D%2236%22%20y%3D%2253%22%20width%3D%228%22%20height%3D%2224%22%20rx%3D%223%22%20fill%3D%22%237585c6%22%2F%3E%3Crect%20x%3D%2256%22%20y%3D%2253%22%20width%3D%228%22%20height%3D%2224%22%20rx%3D%223%22%20fill%3D%22%237585c6%22%2F%3E%3Crect%20x%3D%2276%22%20y%3D%2253%22%20width%3D%228%22%20height%3D%2224%22%20rx%3D%223%22%20fill%3D%22%237585c6%22%2F%3E%0A%3Cpath%20d%3D%22M43%2040%20q9-10%2018%200%20q8%209%2016%200%22%20fill%3D%22none%22%20stroke%3D%22%23fff2a8%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2238%22%20r%3D%223%22%20fill%3D%22%23fff2a8%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-swimming{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23eaf8ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23cfeeff%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%238bd5f6%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Cpath%20d%3D%22M13%2066%20q13-9%2026%200%20q13%209%2026%200%20q13-9%2026%200%20q8%206%2017%202%22%20fill%3D%22none%22%20stroke%3D%22%235bb8e7%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M14%2077%20q13-9%2026%200%20q13%209%2026%200%20q13-9%2026%200%20q8%206%2017%202%22%20fill%3D%22none%22%20stroke%3D%22%2389d3f3%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%2263%22%20cy%3D%2247%22%20r%3D%2215%22%20fill%3D%22%23ffb4c4%22%2F%3E%3Ccircle%20cx%3D%2263%22%20cy%3D%2247%22%20r%3D%227%22%20fill%3D%22%23eef8ff%22%2F%3E%3Ccircle%20cx%3D%2291%22%20cy%3D%2227%22%20r%3D%228%22%20fill%3D%22%23ffd55e%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-animals{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23effaf6%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23d9f2e6%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23f2c477%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Crect%20x%3D%2257%22%20y%3D%2240%22%20width%3D%2212%22%20height%3D%2237%22%20rx%3D%226%22%20fill%3D%22%23f2c477%22%2F%3E%3Ccircle%20cx%3D%2263%22%20cy%3D%2234%22%20r%3D%2212%22%20fill%3D%22%23f2c477%22%2F%3E%0A%3Ccircle%20cx%3D%2258%22%20cy%3D%2232%22%20r%3D%221.5%22%20fill%3D%22%2329485e%22%2F%3E%3Ccircle%20cx%3D%2266%22%20cy%3D%2232%22%20r%3D%221.5%22%20fill%3D%22%2329485e%22%2F%3E%3Cpath%20d%3D%22M59%2037%20q4%203%207%200%22%20fill%3D%22none%22%20stroke%3D%22%238f6b4d%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%2255%22%20cy%3D%2222%22%20r%3D%223%22%20fill%3D%22%238f6b4d%22%2F%3E%3Ccircle%20cx%3D%2271%22%20cy%3D%2222%22%20r%3D%223%22%20fill%3D%22%238f6b4d%22%2F%3E%3Ccircle%20cx%3D%2258%22%20cy%3D%2251%22%20r%3D%223%22%20fill%3D%22%23b88449%22%2F%3E%3Ccircle%20cx%3D%2267%22%20cy%3D%2260%22%20r%3D%223%22%20fill%3D%22%23b88449%22%2F%3E%0A%3Cpath%20d%3D%22M24%2076%20q7-22%2024-17%20q-4%2016-24%2017Z%22%20fill%3D%22%2379caa6%22%2F%3E%3Cpath%20d%3D%22M82%2077%20q4-18%2019-17%20q-2%2014-19%2017Z%22%20fill%3D%22%238fd4b5%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-rainy{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23edf8ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23dbeeff%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%238ecae7%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2275%22%20cy%3D%2242%22%20r%3D%229%22%20fill%3D%22%23f2c7a5%22%2F%3E%0A%3Cpath%20d%3D%22M66%2040%20q9-12%2018%200%20q-2-9-9-9%20q-8%200-9%209Z%22%20fill%3D%22%235b4636%22%2F%3E%0A%3Ccircle%20cx%3D%2272%22%20cy%3D%2242%22%20r%3D%221.2%22%20fill%3D%22%23284b63%22%2F%3E%3Ccircle%20cx%3D%2278%22%20cy%3D%2242%22%20r%3D%221.2%22%20fill%3D%22%23284b63%22%2F%3E%0A%3Cpath%20d%3D%22M72%2047%20q3%202%206%200%22%20fill%3D%22none%22%20stroke%3D%22%23a46d5e%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Crect%20x%3D%2267%22%20y%3D%2252%22%20width%3D%2216%22%20height%3D%2218%22%20rx%3D%227%22%20fill%3D%22%23ffd45e%22%2F%3E%0A%3Cpath%20d%3D%22M70%2069%20l-5%2013%20M80%2069%20l6%2013%22%20stroke%3D%22%23546e7a%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M14%2034%20h36%20v38H14Z%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%2398cce8%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M32%2034v38M14%2053h36%22%20stroke%3D%22%23b3dced%22%20stroke-width%3D%222%22%2F%3E%0A%3Cpath%20d%3D%22M20%2042%20l-3%207%20M28%2043%20l-3%207%20M41%2040%20l-3%208%20M47%2055%20l-3%207%22%20stroke%3D%22%2369b9e5%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M62%2045%20q13-14%2026%200%22%20fill%3D%22%23ff9db1%22%2F%3E%3Cpath%20d%3D%22M75%2045%20v16%20q0%207%207%207%22%20fill%3D%22none%22%20stroke%3D%22%236d7f8c%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-free{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23effaf6%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23daf3e8%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23ffd55f%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2237%22%20cy%3D%2244%22%20r%3D%229%22%20fill%3D%22%23f2c7a5%22%2F%3E%0A%3Cpath%20d%3D%22M28%2042%20q9-12%2018%200%20q-2-9-9-9%20q-8%200-9%209Z%22%20fill%3D%22%235b4636%22%2F%3E%0A%3Ccircle%20cx%3D%2234%22%20cy%3D%2244%22%20r%3D%221.2%22%20fill%3D%22%23284b63%22%2F%3E%3Ccircle%20cx%3D%2240%22%20cy%3D%2244%22%20r%3D%221.2%22%20fill%3D%22%23284b63%22%2F%3E%0A%3Cpath%20d%3D%22M34%2049%20q3%202%206%200%22%20fill%3D%22none%22%20stroke%3D%22%23a46d5e%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Crect%20x%3D%2229%22%20y%3D%2254%22%20width%3D%2216%22%20height%3D%2218%22%20rx%3D%227%22%20fill%3D%22%238ed4b6%22%2F%3E%0A%3Cpath%20d%3D%22M32%2071%20l-5%2013%20M42%2071%20l6%2013%22%20stroke%3D%22%23546e7a%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M82%2027%20l14%2012-14%2012-14-12Z%22%20fill%3D%22%23ffadbe%22%2F%3E%3Cpath%20d%3D%22M82%2051%20q-10%2012-3%2024%22%20fill%3D%22none%22%20stroke%3D%22%23667d8b%22%20stroke-width%3D%222%22%2F%3E%0A%3Cpath%20d%3D%22M18%2080%20q23-15%2043%200%20q23-15%2043%200%22%20fill%3D%22none%22%20stroke%3D%22%2379c99f%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%2296%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22%23ffd65d%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-cafes{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23f3faff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23dceff8%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23e7c6b6%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Crect%20x%3D%2231%22%20y%3D%2248%22%20width%3D%2238%22%20height%3D%2225%22%20rx%3D%228%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%238cc8e6%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M69%2054%20h8%20q9%200%209%208%20q0%208-9%208h-8%22%20fill%3D%22none%22%20stroke%3D%22%238cc8e6%22%20stroke-width%3D%223%22%2F%3E%0A%3Cpath%20d%3D%22M39%2045%20q-6-7%200-13%20M50%2045%20q-6-7%200-13%20M61%2045%20q-6-7%200-13%22%20fill%3D%22none%22%20stroke%3D%22%239aa7ae%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M75%2077%20h28%20l-7-18H82Z%22%20fill%3D%22%23ffd8a8%22%2F%3E%3Ccircle%20cx%3D%2289%22%20cy%3D%2263%22%20r%3D%224%22%20fill%3D%22%23ff9eac%22%2F%3E%3Crect%20x%3D%2282%22%20y%3D%2276%22%20width%3D%2214%22%20height%3D%224%22%20rx%3D%222%22%20fill%3D%22%23d39c67%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-restaurants{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23f2f9ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23dceef7%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23ffdba7%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Cellipse%20cx%3D%2260%22%20cy%3D%2257%22%20rx%3D%2232%22%20ry%3D%2220%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%238fcbe7%22%20stroke-width%3D%223%22%2F%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2257%22%20r%3D%2212%22%20fill%3D%22%23fff0b8%22%2F%3E%3Ccircle%20cx%3D%2255%22%20cy%3D%2254%22%20r%3D%224%22%20fill%3D%22%238dd3ad%22%2F%3E%3Ccircle%20cx%3D%2266%22%20cy%3D%2259%22%20r%3D%224%22%20fill%3D%22%23ff9faf%22%2F%3E%0A%3Cpath%20d%3D%22M20%2038%20v39%20M15%2038%20v14%20M25%2038%20v14%20M15%2052%20h10%22%20stroke%3D%22%237d8f99%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M101%2038%20v39%20M95%2038%20q12%200%2012%2012%20q0%2010-12%2010%22%20fill%3D%22none%22%20stroke%3D%22%237d8f99%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Crect%20x%3D%2283%22%20y%3D%2275%22%20width%3D%2221%22%20height%3D%226%22%20rx%3D%223%22%20fill%3D%22%23d7a36c%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-classes{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23f0f9ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23d9effc%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23ffb3c4%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Cpath%20d%3D%22M27%2074%2044%2033l17%2041%20M35%2057h18%22%20fill%3D%22none%22%20stroke%3D%22%238a765d%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Crect%20x%3D%2239%22%20y%3D%2234%22%20width%3D%2236%22%20height%3D%2228%22%20rx%3D%225%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%238dc9e8%22%20stroke-width%3D%223%22%2F%3E%3Ccircle%20cx%3D%2249%22%20cy%3D%2246%22%20r%3D%225%22%20fill%3D%22%23ff9eae%22%2F%3E%3Ccircle%20cx%3D%2261%22%20cy%3D%2250%22%20r%3D%225%22%20fill%3D%22%23ffd45f%22%2F%3E%3Cpath%20d%3D%22M82%2039%20q10-11%2016%200%20q-5%209-14%2013%22%20fill%3D%22none%22%20stroke%3D%22%237fc8a6%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M87%2057%20v20%20M95%2054%20v23%22%20stroke%3D%22%237890a0%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-day-trips{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23eef9ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23d9eff9%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23ffd45f%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Cpath%20d%3D%22M12%2068%2036%2036l17%2020%2014-16%2028%2028Z%22%20fill%3D%22%239fd0e8%22%2F%3E%3Cpath%20d%3D%22M29%2045%20l7-9%207%208%22%20fill%3D%22%23ffffff%22%2F%3E%0A%3Crect%20x%3D%2231%22%20y%3D%2263%22%20width%3D%2255%22%20height%3D%2217%22%20rx%3D%227%22%20fill%3D%22%23ffb1be%22%2F%3E%3Ccircle%20cx%3D%2243%22%20cy%3D%2280%22%20r%3D%226%22%20fill%3D%22%23455b6e%22%2F%3E%3Ccircle%20cx%3D%2275%22%20cy%3D%2280%22%20r%3D%226%22%20fill%3D%22%23455b6e%22%2F%3E%0A%3Crect%20x%3D%2241%22%20y%3D%2258%22%20width%3D%2216%22%20height%3D%229%22%20rx%3D%223%22%20fill%3D%22%23ffffff%22%2F%3E%3Crect%20x%3D%2260%22%20y%3D%2258%22%20width%3D%2216%22%20height%3D%229%22%20rx%3D%223%22%20fill%3D%22%23ffffff%22%2F%3E%3Ccircle%20cx%3D%2297%22%20cy%3D%2225%22%20r%3D%227%22%20fill%3D%22%23ffd55e%22%2F%3E%0A%3C%2Fsvg%3E");}
+.art-seasonal{--guide-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%2096%22%3E%0A%3Crect%20width%3D%22120%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23eff9ff%22%2F%3E%0A%3Cpath%20d%3D%22M0%2068%20C22%2058%2039%2072%2059%2064%20C80%2056%2096%2068%20120%2058%20V96%20H0Z%22%20fill%3D%22%23deeffa%22%2F%3E%0A%3Ccircle%20cx%3D%2298%22%20cy%3D%2219%22%20r%3D%227%22%20fill%3D%22%23ffbdcb%22%20opacity%3D%22.65%22%2F%3E%0A%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2224%22%20cy%3D%2216%22%20r%3D%226%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2231%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.82%22%2F%3E%0A%3Ccircle%20cx%3D%2233%22%20cy%3D%2239%22%20r%3D%2214%22%20fill%3D%22%23ffd45f%22%2F%3E%3Cpath%20d%3D%22M33%2018v8M33%2052v8M12%2039h8M46%2039h8M18%2024l6%206M42%2048l6%206M18%2054l6-6M42%2030l6-6%22%20stroke%3D%22%23ffd45f%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M78%2027%20c12%203%2013%2015%202%2022%20c-9-4-13-14-2-22Z%22%20fill%3D%22%23ffb06e%22%2F%3E%3Cpath%20d%3D%22M80%2030%20q-3%2010%200%2017%22%20fill%3D%22none%22%20stroke%3D%22%23996c4a%22%20stroke-width%3D%222%22%2F%3E%0A%3Cpath%20d%3D%22M26%2075%20l7-7%207%207-7%207z%22%20fill%3D%22%239bd5ef%22%2F%3E%3Cpath%20d%3D%22M33%2065v20M23%2075h20M26%2068l14%2014M40%2068%2026%2082%22%20stroke%3D%22%2377bfe5%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%2283%22%20cy%3D%2272%22%20r%3D%228%22%20fill%3D%22%23ffb1c3%22%2F%3E%3Ccircle%20cx%3D%2283%22%20cy%3D%2272%22%20r%3D%223%22%20fill%3D%22%23ffd55e%22%2F%3E%3Ccircle%20cx%3D%2283%22%20cy%3D%2261%22%20r%3D%225%22%20fill%3D%22%23ffb1c3%22%2F%3E%3Ccircle%20cx%3D%2293%22%20cy%3D%2269%22%20r%3D%225%22%20fill%3D%22%23ffb1c3%22%2F%3E%3Ccircle%20cx%3D%2275%22%20cy%3D%2280%22%20r%3D%225%22%20fill%3D%22%23ffb1c3%22%2F%3E%0A%3C%2Fsvg%3E");}
+</style>
 </head>
 <body>
 <div class="app">
@@ -1820,10 +2396,12 @@ html,body{margin:0!important;padding:0!important}
 <div class="nav-pop">
 <label for="tab-events">Weekend Plans</label>
 <label for="tab-deals">Family Deals</label>
+<label for="tab-guides">Family Guides</label>
 </div>
 </div>
 <input checked="checked" class="radio" id="tab-events" name="main" type="radio"/>
 <input class="radio" id="tab-deals" name="main" type="radio"/>
+<input class="radio" id="tab-guides" name="main" type="radio"/>
 <div class="panels">
 <section class="panel" id="events-panel">
 <div class="reference-hero events-title-card"><div aria-hidden="true" class="event-hero-art">
@@ -1852,8 +2430,9 @@ html,body{margin:0!important;padding:0!important}
 <h1><strong>Weekend plans &amp;<br/>Family deals</strong></h1>
 </div>
 <nav class="main-tabs">
-<label for="tab-events">Weekend Plans</label>
-<label for="tab-deals">Family Deals</label>
+<label for="tab-events"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><rect height="16" rx="3" width="18" x="3" y="5"></rect><path d="M8 3v4M16 3v4M3 9.5h18"></path></svg></span><span class="tab-text">Weekend<br/>Plans</span></label>
+<label for="tab-deals"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><path d="M20.5 11.5 12 20l-8-8 8.5-8.5h6.5v6.5Z"></path><circle cx="15.5" cy="8.5" fill="currentColor" r="1.2" stroke="none"></circle></svg></span><span class="tab-text">Family<br/>Deals</span></label>
+<label for="tab-guides"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><path d="M4 5.5h6.5c1.5 0 2.5.6 3.5 1.6 1-1 2-1.6 3.5-1.6H20v13h-2.5c-1.5 0-2.5.5-3.5 1.5-1-1-2-1.5-3.5-1.5H4Z"></path><path d="M12 7v12"></path></svg></span><span class="tab-text">Family<br/>Guides</span></label>
 </nav>
 <input checked="checked" class="radio" id="day-sat" name="day" type="radio"/>
 <input class="radio" id="day-sun" name="day" type="radio"/>
@@ -1873,8 +2452,9 @@ html,body{margin:0!important;padding:0!important}
 <!-- GUGU FIX: Family Deals product thumbnails are embedded as data URLs so publishing index.html alone cannot break them. -->
 <section class="panel" id="deals-panel">
 <nav class="main-tabs">
-<label for="tab-events">Weekend Plans</label>
-<label for="tab-deals">Family Deals</label>
+<label for="tab-events"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><rect height="16" rx="3" width="18" x="3" y="5"></rect><path d="M8 3v4M16 3v4M3 9.5h18"></path></svg></span><span class="tab-text">Weekend<br/>Plans</span></label>
+<label for="tab-deals"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><path d="M20.5 11.5 12 20l-8-8 8.5-8.5h6.5v6.5Z"></path><circle cx="15.5" cy="8.5" fill="currentColor" r="1.2" stroke="none"></circle></svg></span><span class="tab-text">Family<br/>Deals</span></label>
+<label for="tab-guides"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><path d="M4 5.5h6.5c1.5 0 2.5.6 3.5 1.6 1-1 2-1.6 3.5-1.6H20v13h-2.5c-1.5 0-2.5.5-3.5 1.5-1-1-2-1.5-3.5-1.5H4Z"></path><path d="M12 7v12"></path></svg></span><span class="tab-text">Family<br/>Guides</span></label>
 </nav>
 <div class="reference-hero deals-title-card">
 <h1>👜 Family Deals</h1>
@@ -2130,6 +2710,333 @@ html,body{margin:0!important;padding:0!important}
 </div>
 <img alt="Family Deals footer" class="footer-art" data-image-name="footer2" decoding="async" src="./assets/Footer2.PNG?v=20260914-1"/>
 </section>
+<!-- FAMILY GUIDES START -->
+<section class="panel" id="guides-panel">
+<nav class="main-tabs">
+<label for="tab-events"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><rect height="16" rx="3" width="18" x="3" y="5"></rect><path d="M8 3v4M16 3v4M3 9.5h18"></path></svg></span><span class="tab-text">Weekend<br/>Plans</span></label>
+<label for="tab-deals"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><path d="M20.5 11.5 12 20l-8-8 8.5-8.5h6.5v6.5Z"></path><circle cx="15.5" cy="8.5" fill="currentColor" r="1.2" stroke="none"></circle></svg></span><span class="tab-text">Family<br/>Deals</span></label>
+<label for="tab-guides"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><path d="M4 5.5h6.5c1.5 0 2.5.6 3.5 1.6 1-1 2-1.6 3.5-1.6H20v13h-2.5c-1.5 0-2.5.5-3.5 1.5-1-1-2-1.5-3.5-1.5H4Z"></path><path d="M12 7v12"></path></svg></span><span class="tab-text">Family<br/>Guides</span></label>
+</nav>
+<section class="family-guides">
+<header class="guides-heading">
+<div aria-hidden="true" class="guides-heading-icon"><span aria-hidden="true" class="guide-stack-thumb art-family"><i></i></span></div>
+<div>
+<h1>Family Guides</h1>
+<p>Everything you need for family life in Basel</p>
+</div>
+</header>
+<div class="guide-accordion">
+<details class="guide-chapter" open="">
+<summary><span aria-hidden="true" class="guide-stack-thumb art-birthday"><i></i></span><span>Birthday</span></summary>
+<div class="guide-subitems guide-subitems-links">
+<a href="#birthday-venues"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-birthday-venues"><i></i></span><span class="guide-link-label">Birthday venues</span></a>
+<a href="#cake-makers"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-cake-makers"><i></i></span><span class="guide-link-label">Cake makers</span></a>
+<a href="#entertainers"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-entertainers"><i></i></span><span class="guide-link-label">Entertainers</span></a>
+<a href="#party-supplies"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-party-supplies"><i></i></span><span class="guide-link-label">Party supplies</span></a>
+</div>
+</details>
+<details class="guide-chapter" open="">
+<summary><span aria-hidden="true" class="guide-stack-thumb art-places"><i></i></span><span>Places to Go</span></summary>
+<div class="guide-subitems guide-subitems-links">
+<a href="#places-indoor-play"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-indoor-play"><i></i></span><span class="guide-link-label">Indoor play</span></a>
+<a href="#places-playgrounds"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-playgrounds"><i></i></span><span class="guide-link-label">Playgrounds</span></a>
+<a href="#places-museums"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-museums"><i></i></span><span class="guide-link-label">Museums</span></a>
+<a href="#places-swimming"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-swimming"><i></i></span><span class="guide-link-label">Swimming</span></a>
+<a href="#places-animals"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-animals"><i></i></span><span class="guide-link-label">Animals</span></a>
+</div>
+</details>
+<details class="guide-chapter">
+<summary><span aria-hidden="true" class="guide-stack-thumb art-rainy"><i></i></span><span>Rainy-Day Ideas</span></summary>
+</details>
+<details class="guide-chapter">
+<summary><span aria-hidden="true" class="guide-stack-thumb art-free"><i></i></span><span>Free Things to Do</span></summary>
+</details>
+<details class="guide-chapter">
+<summary><span aria-hidden="true" class="guide-stack-thumb art-cafes"><i></i></span><span>Family-friendly Cafes</span></summary>
+</details>
+<details class="guide-chapter">
+<summary><span aria-hidden="true" class="guide-stack-thumb art-restaurants"><i></i></span><span>Family-friendly Restaurants</span></summary>
+</details>
+<details class="guide-chapter">
+<summary><span aria-hidden="true" class="guide-stack-thumb art-classes"><i></i></span><span>Classes &amp; Activities</span></summary>
+</details>
+<details class="guide-chapter">
+<summary><span aria-hidden="true" class="guide-stack-thumb art-day-trips"><i></i></span><span>Day Trips</span></summary>
+</details>
+<details class="guide-chapter">
+<summary><span aria-hidden="true" class="guide-stack-thumb art-seasonal"><i></i></span><span>Seasonal Guides</span></summary>
+</details>
+</div>
+<section class="guide-library" data-default-open="true" id="birthday-venues">
+<header class="guide-library-head">
+<div aria-hidden="true" class="guide-library-icon">🎂</div>
+<div>
+<h2>Birthday Venues</h2>
+<p>23 ideas in and around Basel — tap any card to open the venue link.</p>
+</div>
+</header>
+<section class="guide-category-block">
+<div class="guide-list-category"><span aria-hidden="true">🛝</span><strong>INDOOR PLAY</strong></div>
+<div class="venue-card-list">
+<a class="venue-card" href="https://kiddypark.ch/basel" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-kiddypark"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">1</span><span class="venue-title">Kiddy Park <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: Babies &amp; kids; adult tariff from 16</div>
+<p class="venue-desc">Indoor play; birthday packages available.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+<a class="venue-card" href="https://hoppolino.ch/kindergeburtstag/" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-hoppolino"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">2</span><span class="venue-title">Hoppolino <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: Children of all ages</div>
+<p class="venue-desc">Indoor play centre; dedicated birthday packages available.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+<a class="venue-card" href="https://swissmegapark.ch/funpark/" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-swiss-mega-park"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">3</span><span class="venue-title">Swiss MEGA Park <span class="venue-location">— Frenkendorf</span></span></div>
+<div class="venue-age">Age: 1–16</div>
+<p class="venue-desc">Toddler area plus larger play attractions; birthday packages available.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+<a class="venue-card" href="https://www.impulsiv-kinderland-weil.de/" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-impulsiv-kinderland"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">4</span><span class="venue-title">Impulsiv Kinderland <span class="venue-location">— Weil am Rhein</span></span></div>
+<div class="venue-age">Age: 1+; main attractions 3+</div>
+<p class="venue-desc">Separate toddler area for approx. ages 1–3; birthday packages available.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+<a class="venue-card" href="https://www.okidoki-loerrach.de/kindergeburtstag/geburtstagsparty" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-okidoki-kinderland"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">5</span><span class="venue-title">Okidoki Kinderland <span class="venue-location">— Lörrach</span></span></div>
+<div class="venue-age">Age: 1+</div>
+<p class="venue-desc">Indoor play centre; birthday packages available.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+<a class="venue-card" href="https://www.robi-spiel-aktionen.ch/angebot/offene-kinder-und-jugendarbeit/spielestrich.html" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-spielestrich"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">6</span><span class="venue-title">SpielEstrich <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: Kindergarten age–12</div>
+<p class="venue-desc">Birthday rental possible during dedicated slots; regular open-play sessions are not for birthday parties.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+</div>
+</section><section class="guide-category-block">
+<div class="guide-list-category"><span aria-hidden="true">🏃</span><strong>ACTIVE &amp; SPORTS</strong></div>
+<div class="venue-card-list">
+<a class="venue-card" href="https://jumpfactory.ch/basel/geburtstagsjump/" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-jump-factory"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">7</span><span class="venue-title">Jump Factory <span class="venue-location">— Münchenstein</span></span></div>
+<div class="venue-age">Age: All ages*</div>
+<p class="venue-desc">Trampoline birthday packages; younger children require accompanying/supervising adults depending on age.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+<a class="venue-card" href="https://www.overground.ch/products/geburtstagsfeier" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-overground"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">8</span><span class="venue-title">Overground <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: 4+</div>
+<p class="venue-desc">Active/movement-based birthday party programme.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+<a class="venue-card" href="https://boulderloft.ch/kurse" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-elys-boulderloft"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">9</span><span class="venue-title">ELYS Boulderloft <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: 5+</div>
+<p class="venue-desc">Children’s bouldering birthday parties available.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+</div>
+</section><section class="guide-category-block">
+<div class="guide-list-category"><span aria-hidden="true">🐾</span><strong>ANIMALS &amp; NATURE</strong></div>
+<div class="venue-card-list">
+<a class="venue-card" href="https://www.zoobasel.ch/de/zooerlebnisse/" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-zoo-basel"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">10</span><span class="venue-title">Zoo Basel <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: 6+</div>
+<p class="venue-desc">Organised children’s birthday experience at the zoo; advance booking required.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+</div>
+</section><section class="guide-category-block">
+<div class="guide-list-category"><span aria-hidden="true">🎨</span><strong>ART &amp; CREATIVITY</strong></div>
+<div class="venue-card-list">
+<a class="venue-card" href="https://www.tinguely.ch/en/education/leisure-activities-for-children-and-families.html" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-museum-tinguely"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">11</span><span class="venue-title">Museum Tinguely <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: 6+</div>
+<p class="venue-desc">Creative museum birthday programme; group-size restrictions apply.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+<a class="venue-card" href="https://paintiteasy.ch/en/childrens-birthday-party/" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-paint-it-easy"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">12</span><span class="venue-title">Paint It Easy <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: Various ages</div>
+<p class="venue-desc">Creative painting birthday parties; activities can be adapted to children’s ages.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+</div>
+</section><section class="guide-category-block">
+<div class="guide-list-category"><span aria-hidden="true">🎭</span><strong>THEATRE &amp; THEMED PARTIES</strong></div>
+<div class="venue-card-list">
+<a class="venue-card" href="https://theater-arlecchino.ch/mitmachen-aktivitaeten/kindergeburtstage/" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-theater-arlecchino"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">13</span><span class="venue-title">Theater Arlecchino <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: 4+</div>
+<p class="venue-desc">Theatre-based children’s birthday option.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+<a class="venue-card" href="https://magicalcafe.ch/children-birthday-parties/" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-magical-cafe"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">14</span><span class="venue-title">Magical Café <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: Various ages</div>
+<p class="venue-desc">Themed children’s birthday parties with multiple party themes.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+</div>
+</section><section class="guide-category-block">
+<div class="guide-list-category"><span aria-hidden="true">🔎</span><strong>DISCOVERY &amp; MUSEUMS</strong></div>
+<div class="venue-card-list">
+<a class="venue-card" href="https://www.nmbs.ch/de/events/kindergeburtstage.html" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-naturhistorisches-museum"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">15</span><span class="venue-title">Naturhistorisches Museum Basel <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: 5+ / 7+ depending on theme</div>
+<p class="venue-desc">Several museum birthday programmes; dinosaur birthday is 7+.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+<a class="venue-card" href="https://www.muks.ch/de/page/kindergeburtstage" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-muks"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">16</span><span class="venue-title">MUKS <span class="venue-location">— Riehen</span></span></div>
+<div class="venue-age">Age: 5+ / 8+ depending on programme</div>
+<p class="venue-desc">Different hands-on birthday workshops with programme-specific minimum ages.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+<a class="venue-card" href="https://www.mkb.ch/de/ihr-besuch/ihr-anlass-im-museum/kindergeburtstage.html" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-museum-der-kulturen"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">17</span><span class="venue-title">Museum der Kulturen Basel <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: 6+</div>
+<p class="venue-desc">Guided/creative children’s birthday programmes at the museum.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+</div>
+</section><section class="guide-category-block">
+<div class="guide-list-category"><span aria-hidden="true">🍫</span><strong>COOKING &amp; BAKING</strong></div>
+<div class="venue-card-list">
+<a class="venue-card" href="https://www.sutterbegg.ch/events" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-sutter-begg"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">18</span><span class="venue-title">Sutter Begg <span class="venue-location">— Münchenstein</span></span></div>
+<div class="venue-age">Age: 5–11</div>
+<p class="venue-desc">Baking/chocolate-themed children’s birthday activities.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+</div>
+</section><section class="guide-category-block">
+<div class="guide-list-category"><span aria-hidden="true">🕵️</span><strong>ADVENTURE &amp; PUZZLES</strong></div>
+<div class="venue-card-list">
+<a class="venue-card" href="https://www.breakoutbasel.ch/events/" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-breakout-basel"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">19</span><span class="venue-title">Breakout Basel <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: 8+ hunt / 12+ escape room</div>
+<p class="venue-desc">Interactive hunt for younger children; escape-room option from 12.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+</div>
+</section><section class="guide-category-block">
+<div class="guide-list-category"><span aria-hidden="true">🌳</span><strong>OUTDOOR</strong></div>
+<div class="venue-card-list">
+<a class="venue-card" href="https://www.bs.ch/themen/kultur-sport-und-freizeit/parks-und-rhein/parks-und-gruenanlagen/kannenfeldpark" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-kannenfeldpark"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">20</span><span class="venue-title">Kannenfeldpark <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: All ages</div>
+<p class="venue-desc">Large public park with playgrounds; DIY birthday, no organised birthday package.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+<a class="venue-card" href="https://www.bs.ch/themen/kultur-sport-und-freizeit/parks-und-rhein/parks-und-gruenanlagen/schuetzenmattpark" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-schuetzenmattpark"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">21</span><span class="venue-title">Schützenmattpark <span class="venue-location">— Basel</span></span></div>
+<div class="venue-age">Age: All ages</div>
+<p class="venue-desc">Playground, lawns and water-play facilities; DIY birthday, no organised birthday package.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+<a class="venue-card" href="https://www.bs.ch/themen/kultur-sport-und-freizeit/parks-und-rhein/parks-und-gruenanlagen/margarethenpark" rel="noopener" target="_blank">
+<div class="venue-thumb-stack venue-margarethenpark"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">22</span><span class="venue-title">Margarethenpark <span class="venue-location">— Binningen</span></span></div>
+<div class="venue-age">Age: All ages</div>
+<p class="venue-desc">Large park and playground; DIY birthday, no organised birthday package.</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+</div>
+</section><section class="guide-category-block">
+<div class="guide-list-category"><span aria-hidden="true">🏠🎈</span><strong>AND THE BONUS OPTION…</strong></div>
+<div class="venue-card-list">
+<a class="venue-card" href="#">
+<div class="venue-thumb-stack venue-your-home"><span aria-hidden="true" class="stack-face"></span></div>
+<div class="venue-card-copy">
+<div class="venue-title-line"><span class="venue-index">23</span><span class="venue-title">Your Home <span class="venue-location">— Wherever you are</span></span></div>
+<div class="venue-age">Age: All ages 😄</div>
+<p class="venue-desc">No booking, no closing time… but cleanup is on you! 🧹😂</p>
+<div class="venue-linkline">Open guide ↗</div>
+</div>
+</a>
+</div>
+</section>
+</section>
+<div class="guide-mini-grid">
+<section class="guide-mini-card" id="cake-makers"><div class="guide-mini-title"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-cake-makers"><i></i></span><h3>Cake makers</h3></div><p>Chapter ready and clickable — content can be added next.</p></section>
+<section class="guide-mini-card" id="entertainers"><div class="guide-mini-title"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-entertainers"><i></i></span><h3>Entertainers</h3></div><p>Chapter ready and clickable — content can be added next.</p></section>
+<section class="guide-mini-card" id="party-supplies"><div class="guide-mini-title"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-party-supplies"><i></i></span><h3>Party supplies</h3></div><p>Chapter ready and clickable — content can be added next.</p></section>
+<section class="guide-mini-card" id="places-indoor-play"><div class="guide-mini-title"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-indoor-play"><i></i></span><h3>Indoor play</h3></div><p>Places to Go subchapter is now clickable. Add the full guide whenever you’re ready.</p></section>
+<section class="guide-mini-card" id="places-playgrounds"><div class="guide-mini-title"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-playgrounds"><i></i></span><h3>Playgrounds</h3></div><p>Places to Go subchapter is now clickable. Add the full guide whenever you’re ready.</p></section>
+<section class="guide-mini-card" id="places-museums"><div class="guide-mini-title"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-museums"><i></i></span><h3>Museums</h3></div><p>Places to Go subchapter is now clickable. Add the full guide whenever you’re ready.</p></section>
+<section class="guide-mini-card" id="places-swimming"><div class="guide-mini-title"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-swimming"><i></i></span><h3>Swimming</h3></div><p>Places to Go subchapter is now clickable. Add the full guide whenever you’re ready.</p></section>
+<section class="guide-mini-card" id="places-animals"><div class="guide-mini-title"><span aria-hidden="true" class="guide-stack-thumb guide-stack-thumb--mini art-animals"><i></i></span><h3>Animals</h3></div><p>Places to Go subchapter is now clickable. Add the full guide whenever you’re ready.</p></section>
+</div>
+</section>
+</section>
+<!-- FAMILY GUIDES END -->
 </div>
 <footer class="site-footer"><a class="contact" href="https://www.instagram.com/gugubasel" rel="noopener" target="_blank">
 <span class="ig">◎</span><span><strong>Follow Gugu Basel on Instagram @gugubasel</strong><small>Send us a DM</small></span>
@@ -2150,6 +3057,7 @@ html,body{margin:0!important;padding:0!important}
   const guguEvents = {
     "tab-events": "view_weekend_plans",
     "tab-deals": "view_family_deals",
+    "tab-guides": "view_family_guides",
     "day-sat": "view_saturday",
     "day-sun": "view_sunday"
   };
