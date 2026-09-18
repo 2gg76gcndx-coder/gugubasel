@@ -3603,6 +3603,239 @@ html,body{margin:0!important;padding:0!important}
 }
 </style>
 
+
+<style id="birthday-venues-nested-subchapter">
+/* Birthday Venue is now a true nested Family Guides subchapter; open by default. */
+.family-guides .guide-subitems-links > .birthday-venue-subchapter{
+  display:block !important;
+  width:100% !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+}
+.family-guides .guide-subitems-links > .birthday-venue-subchapter > summary{
+  list-style:none !important;
+  display:grid !important;
+  grid-template-columns:28px minmax(0,1fr) 14px !important;
+  gap:7px !important;
+  align-items:center !important;
+  width:100% !important;
+  height:28px !important;
+  min-height:28px !important;
+  max-height:28px !important;
+  padding:2px 8px !important;
+  box-sizing:border-box !important;
+  border-radius:12px !important;
+  background:linear-gradient(180deg,#f7fbfd 0%,#eef8fb 100%) !important;
+  border:1px solid #d8ebf4 !important;
+  color:#083b59 !important;
+  cursor:pointer !important;
+  box-shadow:0 2px 6px rgba(7,59,82,.04) !important;
+}
+.family-guides .guide-subitems-links > .birthday-venue-subchapter > summary::-webkit-details-marker{display:none !important;}
+.family-guides .guide-subitems-links > .birthday-venue-subchapter > summary > .guide-sub-emoji{
+  grid-column:1 !important;
+  position:static !important;
+  padding-left:0 !important;
+  text-align:center !important;
+  line-height:1 !important;
+}
+.family-guides .guide-subitems-links > .birthday-venue-subchapter > summary > .guide-sub-emoji::before{
+  content:none !important;
+  display:none !important;
+}
+.family-guides .guide-subitems-links > .birthday-venue-subchapter > summary > .guide-link-label{
+  grid-column:2 !important;
+  min-width:0 !important;
+  position:static !important;
+  padding-left:0 !important;
+  color:#06456e !important;
+  font-family:"Arial Rounded MT Bold","Arial Rounded MT","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif !important;
+  font-size:15px !important;
+  font-weight:900 !important;
+  line-height:1.12 !important;
+  letter-spacing:normal !important;
+}
+.family-guides .guide-subitems-links > .birthday-venue-subchapter > summary > .guide-link-label::before{
+  content:none !important;
+  display:none !important;
+}
+.family-guides .guide-subitems-links > .birthday-venue-subchapter > summary::after{
+  content:"⌄" !important;
+  grid-column:3 !important;
+  justify-self:end !important;
+  color:#083b59 !important;
+  font-size:16px !important;
+  line-height:1 !important;
+  font-weight:900 !important;
+  transform-origin:center !important;
+  transition:transform .15s ease !important;
+}
+.family-guides .guide-subitems-links > .birthday-venue-subchapter[open] > summary::after{
+  transform:rotate(180deg) !important;
+}
+/* Extend the existing NEW badge alignment rule to the new summary. */
+.family-guides .birthday-venue-subchapter > summary > .guide-link-label-with-new{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:3px !important;
+  width:max-content !important;
+  max-width:100% !important;
+}
+/* The moved venue list starts immediately beneath its Birthday Venue row. */
+.family-guides .birthday-venue-subchapter > #birthday-venues{
+  width:100% !important;
+  margin:5px 0 2px !important;
+  padding-top:0 !important;
+  border-top:0 !important;
+}
+/* Avoid repeating the Birthday Venue heading now that the subchapter summary is the heading. */
+.family-guides .birthday-venue-subchapter > #birthday-venues > .guide-library-head{
+  display:none !important;
+}
+/* Neutralize generic subitem span decoration inside the moved venue library. */
+.family-guides .guide-subitems #birthday-venues span{
+  padding-left:0;
+}
+.family-guides .guide-subitems #birthday-venues span::before{
+  content:none !important;
+  display:none !important;
+}
+@media(max-width:390px){
+  .family-guides .guide-subitems-links > .birthday-venue-subchapter > summary{
+    height:27px !important;
+    min-height:27px !important;
+    max-height:27px !important;
+  }
+  .family-guides .guide-subitems-links > .birthday-venue-subchapter > summary > .guide-link-label{
+    font-size:14px !important;
+  }
+}
+</style>
+
+<style id="family-guide-main-headlines-plus3">
+/* Main Family Guides chapter headlines: +3px from the prior 17px / 16px sizes. */
+.family-guides .guide-accordion > .guide-chapter > summary > .guide-chapter-title{
+  font-size:20px !important;
+}
+@media(max-width:390px){
+  .family-guides .guide-accordion > .guide-chapter > summary > .guide-chapter-title{
+    font-size:19px !important;
+  }
+}
+</style>
+
+<style id="family-guide-subchapters-plus3-equal-height">
+/* Family Guides subchapter labels: +3px from the current product-name-matched size. */
+.family-guides .guide-subitems-links a > .guide-link-label,
+.family-guides .guide-subitems-links > .birthday-venue-subchapter > summary > .guide-link-label{
+  font-size:18px !important;
+}
+
+/* Birthday Venue header: exactly the same vertical banner thickness as the other subchapter rows (e.g. Cake makers). */
+.family-guides .guide-subitems-links > .birthday-venue-subchapter > summary{
+  grid-template-columns:30px minmax(0,1fr) 16px !important;
+  gap:8px !important;
+  height:42px !important;
+  min-height:42px !important;
+  max-height:42px !important;
+  padding:6px 9px !important;
+  border-radius:12px !important;
+}
+.family-guides .guide-subitems-links > .birthday-venue-subchapter > summary > .guide-sub-emoji{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:30px !important;
+  min-width:30px !important;
+  height:30px !important;
+  font-size:22px !important;
+}
+
+@media(max-width:390px){
+  .family-guides .guide-subitems-links a > .guide-link-label,
+  .family-guides .guide-subitems-links > .birthday-venue-subchapter > summary > .guide-link-label{
+    font-size:17px !important;
+  }
+  .family-guides .guide-subitems-links > .birthday-venue-subchapter > summary{
+    grid-template-columns:28px minmax(0,1fr) 15px !important;
+    gap:7px !important;
+    height:40px !important;
+    min-height:40px !important;
+    max-height:40px !important;
+    padding:5px 8px !important;
+  }
+  .family-guides .guide-subitems-links > .birthday-venue-subchapter > summary > .guide-sub-emoji{
+    width:28px !important;
+    min-width:28px !important;
+    height:28px !important;
+    font-size:21px !important;
+  }
+}
+</style>
+
+
+<style id="family-guide-main-headlines-plus3-more">
+/* Main Family Guides chapter names: +3px from the current 20px / 19px sizes. */
+.family-guides .guide-accordion > .guide-chapter > summary > .guide-chapter-title{
+  font-size:23px !important;
+}
+@media(max-width:390px){
+  .family-guides .guide-accordion > .guide-chapter > summary > .guide-chapter-title{
+    font-size:22px !important;
+  }
+}
+</style>
+
+<style id="family-guide-main-chapters-tagline-plus3-final">
+/* Requested: MAIN Family Guides chapter names +3px from current size. */
+.family-guides .guide-accordion > .guide-chapter > summary > .guide-chapter-title{
+  font-size:26px !important;
+}
+/* Family Guides tagline: +3px from current 13px. */
+.family-guides .guides-heading.guides-heading-slogan p{
+  font-size:16px !important;
+}
+@media(max-width:390px){
+  .family-guides .guide-accordion > .guide-chapter > summary > .guide-chapter-title{
+    font-size:25px !important;
+  }
+}
+</style>
+
+<style id="family-guide-final-main-plus2-sub-minus1">
+/* Screenshot labels: 1 = main chapters (+2px), 2 = subchapters (-1px). */
+.family-guides .guide-accordion > .guide-chapter > summary > .guide-chapter-title{
+  font-size:28px !important;
+}
+.family-guides .guide-subitems-links a > .guide-link-label,
+.family-guides .guide-subitems-links > .birthday-venue-subchapter > summary > .guide-link-label{
+  font-size:17px !important;
+}
+@media(max-width:390px){
+  .family-guides .guide-accordion > .guide-chapter > summary > .guide-chapter-title{
+    font-size:27px !important;
+  }
+  .family-guides .guide-subitems-links a > .guide-link-label,
+  .family-guides .guide-subitems-links > .birthday-venue-subchapter > summary > .guide-link-label{
+    font-size:16px !important;
+  }
+}
+</style>
+
+<style id="family-guide-main-chapters-plus1-more-final">
+/* Main Family Guides chapters: +1px more. Subchapters and tagline unchanged. */
+.family-guides .guide-accordion > .guide-chapter > summary > .guide-chapter-title{
+  font-size:29px !important;
+}
+@media(max-width:390px){
+  .family-guides .guide-accordion > .guide-chapter > summary > .guide-chapter-title{
+    font-size:28px !important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -3915,44 +4148,8 @@ html,body{margin:0!important;padding:0!important}
 <details class="guide-chapter" open="">
 <summary><span aria-hidden="true" class="guide-chapter-emoji">🎂</span><span class="guide-chapter-title">BIRTHDAY</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
 <div class="guide-subitems guide-subitems-links">
-<a href="#birthday-venues"><span aria-hidden="true" class="guide-sub-emoji">🎂</span><span class="guide-link-label guide-link-label-with-new">Birthday Venue<span class="guide-new-cloud">NEW</span></span></a>
-<a href="#cake-makers"><span aria-hidden="true" class="guide-sub-emoji">🧁</span><span class="guide-link-label">Cake makers</span></a>
-<a href="#entertainers"><span aria-hidden="true" class="guide-sub-emoji">🎭</span><span class="guide-link-label">Entertainers</span></a>
-<a href="#party-supplies"><span aria-hidden="true" class="guide-sub-emoji">🎈</span><span class="guide-link-label">Party supplies</span></a>
-</div>
-</details>
-<details class="guide-chapter" open="">
-<summary><span aria-hidden="true" class="guide-chapter-emoji">🛝</span><span class="guide-chapter-title">PLACES TO GO</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
-<div class="guide-subitems guide-subitems-links">
-<a href="#places-indoor-play"><span aria-hidden="true" class="guide-sub-emoji">🛝</span><span class="guide-link-label">Indoor play</span></a>
-<a href="#places-playgrounds"><span aria-hidden="true" class="guide-sub-emoji">🌳</span><span class="guide-link-label">Playgrounds</span></a>
-<a href="#places-museums"><span aria-hidden="true" class="guide-sub-emoji">🏛️</span><span class="guide-link-label">Museums</span></a>
-<a href="#places-swimming"><span aria-hidden="true" class="guide-sub-emoji">🏊</span><span class="guide-link-label">Swimming</span></a>
-<a href="#places-animals"><span aria-hidden="true" class="guide-sub-emoji">🐾</span><span class="guide-link-label">Animals</span></a>
-</div>
-</details>
-<details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-chapter-emoji">🌧️</span><span class="guide-chapter-title">RAINY-DAY IDEAS</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
-</details>
-<details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-chapter-emoji">🆓</span><span class="guide-chapter-title">FREE THINGS TO DO</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
-</details>
-<details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-chapter-emoji">☕️</span><span class="guide-chapter-title">FAMILY-FRIENDLY CAFES</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
-</details>
-<details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-chapter-emoji">🍽️</span><span class="guide-chapter-title">FAMILY-FRIENDLY RESTAURANTS</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
-</details>
-<details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-chapter-emoji">🎨</span><span class="guide-chapter-title">CLASSES &amp; ACTIVITIES</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
-</details>
-<details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-chapter-emoji">🏕️</span><span class="guide-chapter-title">DAY TRIPS</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
-</details>
-<details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-chapter-emoji">🎄</span><span class="guide-chapter-title">SEASONAL GUIDES</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
-</details>
-</div>
+<details class="guide-subchapter birthday-venue-subchapter" open>
+<summary class="guide-subchapter-summary"><span aria-hidden="true" class="guide-sub-emoji">🎂</span><span class="guide-link-label guide-link-label-with-new">Birthday Venue<span class="guide-new-cloud">NEW</span></span></summary>
 <section class="guide-library" data-default-open="true" id="birthday-venues">
 <header class="guide-library-head">
 <div aria-hidden="true" class="guide-library-icon">🎂</div>
@@ -4210,16 +4407,46 @@ html,body{margin:0!important;padding:0!important}
 </div>
 </section>
 </section>
-<div class="guide-mini-grid">
-<section class="guide-mini-card" id="cake-makers"><div class="guide-mini-title"><span aria-hidden="true" class="guide-mini-emoji">🧁</span><h3>Cake makers</h3></div><p>Chapter ready and clickable — content can be added next.</p></section>
-<section class="guide-mini-card" id="entertainers"><div class="guide-mini-title"><span aria-hidden="true" class="guide-mini-emoji">🎭</span><h3>Entertainers</h3></div><p>Chapter ready and clickable — content can be added next.</p></section>
-<section class="guide-mini-card" id="party-supplies"><div class="guide-mini-title"><span aria-hidden="true" class="guide-mini-emoji">🎈</span><h3>Party supplies</h3></div><p>Chapter ready and clickable — content can be added next.</p></section>
-<section class="guide-mini-card" id="places-indoor-play"><div class="guide-mini-title"><span aria-hidden="true" class="guide-mini-emoji">🛝</span><h3>Indoor play</h3></div><p>Places to Go subchapter is now clickable. Add the full guide whenever you’re ready.</p></section>
-<section class="guide-mini-card" id="places-playgrounds"><div class="guide-mini-title"><span aria-hidden="true" class="guide-mini-emoji">🌳</span><h3>Playgrounds</h3></div><p>Places to Go subchapter is now clickable. Add the full guide whenever you’re ready.</p></section>
-<section class="guide-mini-card" id="places-museums"><div class="guide-mini-title"><span aria-hidden="true" class="guide-mini-emoji">🏛️</span><h3>Museums</h3></div><p>Places to Go subchapter is now clickable. Add the full guide whenever you’re ready.</p></section>
-<section class="guide-mini-card" id="places-swimming"><div class="guide-mini-title"><span aria-hidden="true" class="guide-mini-emoji">🏊</span><h3>Swimming</h3></div><p>Places to Go subchapter is now clickable. Add the full guide whenever you’re ready.</p></section>
-<section class="guide-mini-card" id="places-animals"><div class="guide-mini-title"><span aria-hidden="true" class="guide-mini-emoji">🐾</span><h3>Animals</h3></div><p>Places to Go subchapter is now clickable. Add the full guide whenever you’re ready.</p></section>
+</details>
+<a href="#cake-makers"><span aria-hidden="true" class="guide-sub-emoji">🧁</span><span class="guide-link-label">Cake makers</span></a>
+<a href="#entertainers"><span aria-hidden="true" class="guide-sub-emoji">🎭</span><span class="guide-link-label">Entertainers</span></a>
+<a href="#party-supplies"><span aria-hidden="true" class="guide-sub-emoji">🎈</span><span class="guide-link-label">Party supplies</span></a>
 </div>
+</details>
+<details class="guide-chapter" open="">
+<summary><span aria-hidden="true" class="guide-chapter-emoji">🛝</span><span class="guide-chapter-title">PLACES TO GO</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
+<div class="guide-subitems guide-subitems-links">
+<a href="#places-indoor-play"><span aria-hidden="true" class="guide-sub-emoji">🛝</span><span class="guide-link-label">Indoor play</span></a>
+<a href="#places-playgrounds"><span aria-hidden="true" class="guide-sub-emoji">🌳</span><span class="guide-link-label">Playgrounds</span></a>
+<a href="#places-museums"><span aria-hidden="true" class="guide-sub-emoji">🏛️</span><span class="guide-link-label">Museums</span></a>
+<a href="#places-swimming"><span aria-hidden="true" class="guide-sub-emoji">🏊</span><span class="guide-link-label">Swimming</span></a>
+<a href="#places-animals"><span aria-hidden="true" class="guide-sub-emoji">🐾</span><span class="guide-link-label">Animals</span></a>
+</div>
+</details>
+<details class="guide-chapter">
+<summary><span aria-hidden="true" class="guide-chapter-emoji">🌧️</span><span class="guide-chapter-title">RAINY-DAY IDEAS</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
+</details>
+<details class="guide-chapter">
+<summary><span aria-hidden="true" class="guide-chapter-emoji">🆓</span><span class="guide-chapter-title">FREE THINGS TO DO</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
+</details>
+<details class="guide-chapter">
+<summary><span aria-hidden="true" class="guide-chapter-emoji">☕️</span><span class="guide-chapter-title">FAMILY-FRIENDLY CAFES</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
+</details>
+<details class="guide-chapter">
+<summary><span aria-hidden="true" class="guide-chapter-emoji">🍽️</span><span class="guide-chapter-title">FAMILY-FRIENDLY RESTAURANTS</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
+</details>
+<details class="guide-chapter">
+<summary><span aria-hidden="true" class="guide-chapter-emoji">🎨</span><span class="guide-chapter-title">CLASSES &amp; ACTIVITIES</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
+</details>
+<details class="guide-chapter">
+<summary><span aria-hidden="true" class="guide-chapter-emoji">🏕️</span><span class="guide-chapter-title">DAY TRIPS</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
+</details>
+<details class="guide-chapter">
+<summary><span aria-hidden="true" class="guide-chapter-emoji">🎄</span><span class="guide-chapter-title">SEASONAL GUIDES</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
+</details>
+</div>
+
+
 <!-- Footer3 filename is case-sensitive in GitHub Pages: assets/Footer3.PNG -->
 <img alt="Gugu Basel Family Guides" class="family-guides-footer-art" data-image-name="footer3" decoding="async" loading="eager" src="./assets/Footer3.PNG?v=20260918-2" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='https://raw.githubusercontent.com/2gg76gcndx-coder/gugubasel/main/assets/Footer3.PNG';}else{this.style.display='none';}"/>
 </section>
