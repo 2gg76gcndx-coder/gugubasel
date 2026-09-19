@@ -1814,8 +1814,14 @@ html,body{margin:0!important;padding:0!important}
      Aggregate traffic only: no cookies, localStorage, visitor IDs or ad profiling.
      Create/add gugubasel.ch in your Simple Analytics account before publishing
      so these pageviews and events appear in your dashboard. -->
-<script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
-<script async="" src="https://scripts.simpleanalyticscdn.com/auto-events.js"></script>
+<script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+<script
+ async
+ data-collect="outbound,emails,downloads"
+ data-extensions="pdf,csv,docx,xlsx,zip,doc,xls"
+ data-use-title="true"
+ data-full-urls="false"
+ src="https://scripts.simpleanalyticscdn.com/auto-events.js"></script>
 <style>
 /* ===== FAMILY GUIDES + COLOURED TOP TABS ===== */
 #tab-guides:checked~.panels>#guides-panel{display:block}
