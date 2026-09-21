@@ -4208,6 +4208,17 @@ html,body{margin:0!important;padding:0!important}
   .family-guides #autumn-day-trips .autumn-table-head{font-size:9px !important}
 }
 </style>
+
+<style id="autumn-category-dot-removal">
+/* Remove inherited turquoise bullets from both spans in every Autumn Day Trips subchapter title. */
+.family-guides #autumn-day-trips .autumn-category > summary > span{
+  padding-left:0 !important;
+}
+.family-guides #autumn-day-trips .autumn-category > summary > span::before{
+  content:none !important;
+  display:none !important;
+}
+</style>
 </head>
 <body>
 <div class="app">
