@@ -3648,7 +3648,7 @@ html,body{margin:0!important;padding:0!important}
   padding:2px 8px !important;
   box-sizing:border-box !important;
   border-radius:12px !important;
-  background:linear-gradient(180deg,#f7fbfd 0%,#eef8fb 100%) !important;
+  background:#fff !important;
   border:1px solid #d8ebf4 !important;
   color:#083b59 !important;
   cursor:pointer !important;
@@ -3752,7 +3752,7 @@ html,body{margin:0!important;padding:0!important}
 /* Family Guides subchapter labels: +3px from the current product-name-matched size. */
 .family-guides .guide-subitems-links a > .guide-link-label,
 .family-guides .guide-subitems-links > .birthday-venue-subchapter > summary > .guide-link-label{
-  font-size:18px !important;
+  font-size:15px !important;
 }
 
 /* Birthday Venue header: exactly the same vertical banner thickness as the other subchapter rows (e.g. Cake makers). */
@@ -3929,6 +3929,281 @@ html,body{margin:0!important;padding:0!important}
 }
 </style>
 
+<style id="autumn-day-trips-guide">
+/* Autumn Day Trips: nested Seasonal Picks guide */
+.family-guides .guide-accordion > .seasonal-picks-chapter{order:-1 !important}
+.family-guides .seasonal-autumn-subchapter{
+  display:block !important;
+  width:100% !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:12px !important;
+  background:transparent !important;
+}
+.family-guides .seasonal-autumn-subchapter > summary{
+  list-style:none !important;
+  cursor:pointer !important;
+  display:grid !important;
+  grid-template-columns:30px minmax(0,1fr) auto 16px !important;
+  align-items:center !important;
+  gap:8px !important;
+  width:100% !important;
+  height:42px !important;
+  min-height:42px !important;
+  max-height:42px !important;
+  padding:6px 9px !important;
+  box-sizing:border-box !important;
+  border:1px solid #d8ebf4 !important;
+  border-radius:12px !important;
+  background:#fff !important;
+  background-image:none !important;
+  color:#083b59 !important;
+  box-shadow:0 2px 6px rgba(7,59,82,.04) !important;
+}
+.family-guides .seasonal-autumn-subchapter > summary::-webkit-details-marker{display:none !important}
+.family-guides .seasonal-autumn-subchapter > summary > .guide-sub-emoji{
+  grid-column:1 !important;
+  position:static !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:30px !important;
+  min-width:30px !important;
+  height:30px !important;
+  padding-left:0 !important;
+  font-size:22px !important;
+  line-height:1 !important;
+}
+.family-guides .seasonal-autumn-subchapter > summary > .guide-sub-emoji::before{content:none !important;display:none !important}
+.family-guides .seasonal-autumn-subchapter > summary::after{
+  content:"⌄" !important;
+  grid-column:4 !important;
+  justify-self:end !important;
+  color:#083b59 !important;
+  font-size:16px !important;
+  font-weight:900 !important;
+  line-height:1 !important;
+  transform-origin:center !important;
+  transition:transform .15s ease !important;
+}
+.family-guides .seasonal-autumn-subchapter[open] > summary::after{transform:rotate(180deg) !important}
+.family-guides .autumn-title-wrap{
+  grid-column:2 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:3px !important;
+  min-width:0 !important;
+  width:max-content !important;
+  max-width:100% !important;
+  flex-wrap:nowrap !important;
+}
+.family-guides .seasonal-autumn-subchapter .guide-link-label{
+  position:static !important;
+  min-width:0 !important;
+  padding-left:0 !important;
+  color:#06456e !important;
+  font-family:"Arial Rounded MT Bold","Arial Rounded MT","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif !important;
+  font-size:18px !important;
+  font-weight:900 !important;
+  line-height:1.12 !important;
+  letter-spacing:normal !important;
+  white-space:nowrap !important;
+}
+.family-guides .seasonal-autumn-subchapter > summary .guide-link-label::before{
+  content:none !important;
+  display:none !important;
+}
+.family-guides .autumn-count-pill{
+  grid-column:3 !important;
+  justify-self:end !important;
+  flex:0 0 auto !important;
+  white-space:nowrap !important;
+  padding:7px 9px !important;
+  font-size:12px !important;
+}
+.family-guides #autumn-day-trips{
+  width:100% !important;
+  min-width:0 !important;
+  margin:8px 0 2px !important;
+  padding:10px 8px 12px !important;
+  border-radius:15px !important;
+  background:#fffaf2 !important;
+  overflow:hidden !important;
+}
+.family-guides #autumn-day-trips .guide-library-head{display:none !important}
+.family-guides #autumn-day-trips .autumn-category{
+  width:100% !important;
+  min-width:0 !important;
+  margin:8px 0 !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+}
+.family-guides #autumn-day-trips .autumn-category > summary{
+  list-style:none !important;
+  display:grid !important;
+  grid-template-columns:32px minmax(0,1fr) 18px !important;
+  align-items:center !important;
+  gap:7px !important;
+  width:100% !important;
+  min-height:44px !important;
+  padding:7px 10px !important;
+  border:1px solid #a9ddf3 !important;
+  border-radius:15px !important;
+  background:linear-gradient(90deg,#c9f1fb,#b8e5f6) !important;
+  color:#0a4163 !important;
+  cursor:pointer !important;
+  font-family:"Arial Rounded MT Bold",Arial,Helvetica,sans-serif !important;
+  font-size:15px !important;
+  font-weight:900 !important;
+  line-height:1.1 !important;
+  box-sizing:border-box !important;
+}
+.family-guides #autumn-day-trips .autumn-category > summary::-webkit-details-marker{display:none !important}
+.family-guides #autumn-day-trips .autumn-category > summary::after{
+  content:"›" !important;
+  grid-column:3 !important;
+  justify-self:end !important;
+  color:#0a4163 !important;
+  font-size:24px !important;
+  line-height:1 !important;
+  transform:rotate(90deg) !important;
+  transition:transform .2s ease !important;
+}
+.family-guides #autumn-day-trips .autumn-category[open] > summary::after{transform:rotate(-90deg) !important}
+.family-guides #autumn-day-trips .autumn-category-icon{font-size:20px !important;text-align:center !important}
+.family-guides #autumn-day-trips .autumn-table{
+  width:100% !important;
+  min-width:0 !important;
+  margin:5px 0 0 !important;
+  border:1px solid #d6e9f2 !important;
+  border-radius:15px !important;
+  overflow:hidden !important;
+  background:#fff !important;
+}
+.family-guides #autumn-day-trips .autumn-table-head,
+.family-guides #autumn-day-trips .autumn-row{
+  display:grid !important;
+  grid-template-columns:27% 29% minmax(0,44%) !important;
+  width:100% !important;
+  min-width:0 !important;
+  box-sizing:border-box !important;
+}
+.family-guides #autumn-day-trips .autumn-table-head{
+  background:#eef8fd !important;
+  color:#456f86 !important;
+  font-size:10px !important;
+  font-weight:900 !important;
+  letter-spacing:.06em !important;
+  text-transform:uppercase !important;
+}
+.family-guides #autumn-day-trips .autumn-table-head span{padding:6px 8px !important;min-width:0 !important}
+.family-guides #autumn-day-trips .autumn-table-head span+span{border-left:1px solid #d6e9f2 !important}
+.family-guides #autumn-day-trips .autumn-row{
+  min-height:96px !important;
+  align-items:stretch !important;
+  background:#fff !important;
+}
+.family-guides #autumn-day-trips .autumn-row+.autumn-row{border-top:1px solid #d6e9f2 !important}
+.family-guides #autumn-day-trips .autumn-photo-cell{
+  position:relative !important;
+  min-width:0 !important;
+  min-height:96px !important;
+  padding:7px 6px 7px 7px !important;
+  overflow:hidden !important;
+  background:#fff !important;
+}
+.family-guides #autumn-day-trips .autumn-photo-frame{
+  position:relative !important;
+  width:100% !important;
+  height:100% !important;
+  min-height:82px !important;
+  overflow:hidden !important;
+  border-radius:13px !important;
+  background:#eef2f4 !important;
+  box-shadow:0 6px 15px rgba(9,45,69,.13) !important;
+}
+.family-guides #autumn-day-trips .autumn-photo{
+  position:absolute !important;
+  inset:0 !important;
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  max-width:none !important;
+  object-fit:cover !important;
+  object-position:center !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+}
+.family-guides #autumn-day-trips .autumn-name-cell,
+.family-guides #autumn-day-trips .autumn-details-cell{
+  min-width:0 !important;
+  padding:10px 8px !important;
+  border-left:1px solid #edf3f7 !important;
+  background:#fff !important;
+  overflow-wrap:anywhere !important;
+}
+.family-guides #autumn-day-trips .autumn-name-cell{display:flex !important;align-items:flex-start !important}
+.family-guides #autumn-day-trips a.autumn-name-link{
+  display:inline !important;
+  min-height:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:#0a4163 !important;
+  font-family:"Arial Rounded MT Bold",Arial,Helvetica,sans-serif !important;
+  font-size:14.5px !important;
+  font-weight:700 !important;
+  line-height:1.13 !important;
+  letter-spacing:-.012em !important;
+  text-decoration:none !important;
+  overflow-wrap:anywhere !important;
+}
+.family-guides #autumn-day-trips a.autumn-name-link::after{content:none !important;display:none !important}
+.family-guides #autumn-day-trips a.autumn-name-link:hover,
+.family-guides #autumn-day-trips a.autumn-name-link:focus{text-decoration:underline !important}
+.family-guides #autumn-day-trips .autumn-details-cell{
+  color:#405966 !important;
+  font-size:11.8px !important;
+  font-weight:700 !important;
+  line-height:1.15 !important;
+}
+.family-guides .family-guides-disclaimer{
+  margin:12px 8px 8px !important;
+  color:#58758a !important;
+  font-size:12px !important;
+  line-height:1.35 !important;
+  text-align:center !important;
+}
+@media (max-width:560px){
+  .family-guides .seasonal-autumn-subchapter > summary{
+    grid-template-columns:30px minmax(0,1fr) auto 14px !important;
+    gap:6px !important;
+    padding:6px 8px !important;
+  }
+  .family-guides .seasonal-autumn-subchapter .guide-link-label{font-size:15px !important}
+  .family-guides .seasonal-autumn-subchapter .guide-new-cloud{min-width:31px !important;height:18px !important;padding:2px 6px !important;font-size:10px !important}
+  .family-guides .autumn-count-pill{padding:6px 7px !important;font-size:11px !important}
+  .family-guides #autumn-day-trips{padding:8px 5px 10px !important}
+  .family-guides #autumn-day-trips .autumn-table-head,
+  .family-guides #autumn-day-trips .autumn-row{grid-template-columns:26% 32% minmax(0,42%) !important}
+  .family-guides #autumn-day-trips .autumn-row{min-height:90px !important}
+  .family-guides #autumn-day-trips .autumn-photo-cell{min-height:90px !important;padding:6px 5px 6px 6px !important}
+  .family-guides #autumn-day-trips .autumn-photo-frame{min-height:78px !important;border-radius:11px !important}
+  .family-guides #autumn-day-trips .autumn-name-cell,
+  .family-guides #autumn-day-trips .autumn-details-cell{padding:8px 6px !important}
+  .family-guides #autumn-day-trips a.autumn-name-link{font-size:13.2px !important;line-height:1.11 !important}
+  .family-guides #autumn-day-trips .autumn-details-cell{font-size:11.2px !important;line-height:1.15 !important}
+  .family-guides #autumn-day-trips .autumn-table-head{font-size:9px !important}
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -4506,7 +4781,7 @@ html,body{margin:0!important;padding:0!important}
 <summary><span aria-hidden="true" class="guide-chapter-emoji">🎂</span><span class="guide-chapter-title">BIRTHDAY</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
 <div class="guide-subitems guide-subitems-links">
 <details class="guide-subchapter birthday-venue-subchapter" open>
-<summary class="guide-subchapter-summary"><span aria-hidden="true" class="guide-sub-emoji">🎂</span><span class="guide-link-label guide-link-label-with-new">Birthday Venue<span class="guide-new-cloud">NEW</span></span></summary>
+<summary class="guide-subchapter-summary"><span aria-hidden="true" class="guide-sub-emoji">🎂</span><span class="guide-link-label">Birthday Venue</span></summary>
 <section class="guide-library" data-default-open="true" id="birthday-venues">
 <header class="guide-library-head">
 <div aria-hidden="true" class="guide-library-icon">🎂</div>
@@ -4770,6 +5045,61 @@ html,body{margin:0!important;padding:0!important}
 <a href="#party-supplies"><span aria-hidden="true" class="guide-sub-emoji">🎈</span><span class="guide-link-label">Party supplies</span></a>
 </div>
 </details>
+<details class="guide-chapter seasonal-picks-chapter" open="">
+<summary><span aria-hidden="true" class="guide-chapter-emoji">🎄</span><span class="guide-chapter-title">SEASONAL PICKS</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
+<div class="guide-subitems guide-subitems-links">
+<details class="guide-subchapter seasonal-autumn-subchapter" open>
+<summary class="guide-subchapter-summary">
+<span aria-hidden="true" class="guide-sub-emoji">🍁</span>
+<span class="autumn-title-wrap"><span class="guide-link-label guide-link-label-with-new">Autumn Day Trips<span class="guide-new-cloud">NEW</span></span></span>
+<span class="plan-count-pill autumn-count-pill">17 trips</span>
+</summary>
+<section class="guide-library" data-default-open="true" id="autumn-day-trips">
+<details class="autumn-category" open>
+<summary><span class="autumn-category-icon" aria-hidden="true">🎢</span><span>THEME &amp; FAMILY PARKS</span></summary>
+<div class="autumn-table"><div class="autumn-table-head"><span>Picture</span><span>Name</span><span>Details</span></div>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/01_parc_du_petit_prince.webp" alt="Parc du Petit Prince" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://www.parcdupetitprince.com/" rel="noopener" target="_blank">🇫🇷 Parc du Petit Prince<br/>~47 km ↗</a></div><div class="autumn-details-cell">Rides, shows, animals, playgrounds and seasonal Halloween fun.</div></article>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/02_steinwasen_park.webp" alt="Steinwasen-Park" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://www.steinwasen-park.de/" rel="noopener" target="_blank">🇩🇪 Steinwasen-Park<br/>~65 km ↗</a></div><div class="autumn-details-cell">Animals, rides, playgrounds and an iconic suspension bridge.</div></article>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/03_schongiland.webp" alt="Schongiland" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://schongiland.ch/" rel="noopener" target="_blank">🇨🇭 Schongiland<br/>~80 km ↗</a></div><div class="autumn-details-cell">Toboggan, rides, indoor play and animals for younger kids.</div></article>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/04_cigoland.webp" alt="Cigoland" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://www.cigoland.fr/" rel="noopener" target="_blank">🇫🇷 Cigoland, Kintzheim<br/>~86 km ↗</a></div><div class="autumn-details-cell">Gentle rides, storks, animals, train and carousel.</div></article>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/05_europa_park_rulantica.webp" alt="Europa-Park and Rulantica" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://www.europapark.de/" rel="noopener" target="_blank">🇩🇪 Europa-Park &amp; Rulantica<br/>~97 km ↗</a></div><div class="autumn-details-cell">Theme-park thrills plus a weather-proof indoor water world.</div></article>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/06_conny_land.webp" alt="CONNY-LAND" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://www.connyland.ch/" rel="noopener" target="_blank">🇨🇭 CONNY-LAND, Lipperswil<br/>~140 km ↗</a></div><div class="autumn-details-cell">Rides, dinosaurs, animals and indoor play for families.</div></article>
+</div></details>
+
+<details class="autumn-category" open>
+<summary><span class="autumn-category-icon" aria-hidden="true">🌊</span><span>INDOOR &amp; WATER FUN</span></summary>
+<div class="autumn-table"><div class="autumn-table-head"><span>Picture</span><span>Name</span><span>Details</span></div>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/07_kiddy_dome.webp" alt="Kiddy Dome" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://www.kiddydome.ch/" rel="noopener" target="_blank">🇨🇭 Kiddy Dome / Swiss Family Center<br/>~1h drive ↗</a></div><div class="autumn-details-cell">Huge indoor playground with trampolines, climbing and slides.</div></article>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/08_alpamare.webp" alt="Alpamare" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://www.alpamare.ch/" rel="noopener" target="_blank">🇨🇭 Alpamare<br/>~117 km ↗</a></div><div class="autumn-details-cell">Water slides, pools and toddler areas for rainy days.</div></article>
+</div></details>
+
+<details class="autumn-category" open>
+<summary><span class="autumn-category-icon" aria-hidden="true">🔬</span><span>SCIENCE, TRANSPORT &amp; DINOSAURS</span></summary>
+<div class="autumn-table"><div class="autumn-table-head"><span>Picture</span><span>Name</span><span>Details</span></div>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/09_sauriermuseum_frick.webp" alt="Sauriermuseum Frick" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://sauriermuseum-frick.ch/" rel="noopener" target="_blank">🇨🇭 Sauriermuseum Frick + Fossil Hunting<br/>~39 km ↗</a></div><div class="autumn-details-cell">Dinosaurs, museum exhibits and supervised real fossil hunting.</div></article>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/10_verkehrshaus_luzern.webp" alt="Verkehrshaus Luzern" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://www.verkehrshaus.ch/" rel="noopener" target="_blank">🇨🇭 Verkehrshaus, Luzern<br/>~99 km ↗</a></div><div class="autumn-details-cell">Interactive trains, planes, cars, space and transport exhibits.</div></article>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/11_sauriermuseum_aathal.webp" alt="Sauriermuseum Aathal" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://sauriermuseum.ch/" rel="noopener" target="_blank">🇨🇭 Sauriermuseum Aathal<br/>~107 km ↗</a></div><div class="autumn-details-cell">Dinosaur skeletons, fossils, digging activities and playground.</div></article>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/12_technorama.webp" alt="Swiss Science Center Technorama" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://www.technorama.ch/" rel="noopener" target="_blank">🇨🇭 Swiss Science Center Technorama<br/>~109 km ↗</a></div><div class="autumn-details-cell">Hands-on experiments, interactive science exhibits and live shows.</div></article>
+</div></details>
+
+<details class="autumn-category" open>
+<summary><span class="autumn-category-icon" aria-hidden="true">🌲</span><span>OUTDOOR ADVENTURE &amp; NATURE</span></summary>
+<div class="autumn-table"><div class="autumn-table-head"><span>Picture</span><span>Name</span><span>Details</span></div>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/13_seilpark_balmberg.webp" alt="Seilpark Balmberg" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://seilpark-balmberg.ch/" rel="noopener" target="_blank">🇨🇭 Seilpark Balmberg<br/>~61 km ↗</a></div><div class="autumn-details-cell">Rope courses, climbing and ziplines from age four.</div></article>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/14_grottes_prehisto_parc.webp" alt="Grottes and Préhisto-Parc" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://prehisto.ch/" rel="noopener" target="_blank">🇨🇭 Grottes &amp; Préhisto-Parc, Réclère<br/>~63 km ↗</a></div><div class="autumn-details-cell">Dinosaur trail and real caves; bring warm clothing.</div></article>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/15_pilatus_fraekmuentegg.webp" alt="Pilatus Fräkmüntegg" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://www.pilatus.ch/" rel="noopener" target="_blank">🇨🇭 Pilatus / Fräkmüntegg Adventure Day<br/>~100 km ↗</a></div><div class="autumn-details-cell">Gondola, toboggan, rope park and treetop walk.</div></article>
+</div></details>
+
+<details class="autumn-category" open>
+<summary><span class="autumn-category-icon" aria-hidden="true">🐄</span><span>FARM, CULTURE &amp; OPEN-AIR MUSEUMS</span></summary>
+<div class="autumn-table"><div class="autumn-table-head"><span>Picture</span><span>Name</span><span>Details</span></div>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/16_vogtsbauernhof.webp" alt="Vogtsbauernhof" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://www.vogtsbauernhof.de/" rel="noopener" target="_blank">🇩🇪 Vogtsbauernhof<br/>~118 km ↗</a></div><div class="autumn-details-cell">Historic farmhouses, animals, crafts and family workshops.</div></article>
+<article class="autumn-row"><div class="autumn-photo-cell"><div class="autumn-photo-frame"><img class="autumn-photo" src="assets/autumn/17_ballenberg.webp" alt="Ballenberg" loading="lazy" decoding="async"/></div></div><div class="autumn-name-cell"><a class="autumn-name-link" href="https://ballenberg.ch/" rel="noopener" target="_blank">🇨🇭 Ballenberg<br/>~143 km ↗</a></div><div class="autumn-details-cell">Historic houses, animals and traditional crafts in beautiful surroundings.</div></article>
+</div></details>
+</section>
+</details>
+</div>
+</details>
 <details class="guide-chapter" open="">
 <summary><span aria-hidden="true" class="guide-chapter-emoji">🛝</span><span class="guide-chapter-title">PLACES TO GO</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
 <div class="guide-subitems guide-subitems-links">
@@ -4810,12 +5140,10 @@ html,body{margin:0!important;padding:0!important}
 <a id="hiking-with-stroller" href="#hiking-with-stroller"><span aria-hidden="true" class="guide-sub-emoji">🥾</span><span class="guide-link-label">Hiking with Stroller</span></a>
 </div>
 </details>
-<details class="guide-chapter">
-<summary><span aria-hidden="true" class="guide-chapter-emoji">🎄</span><span class="guide-chapter-title">SEASONAL GUIDES</span><span aria-hidden="true" class="guide-shines"></span><span aria-hidden="true" class="guide-caret"></span></summary>
-</details>
 </div>
 
 
+<p class="family-guides-disclaimer"><em>Please verify all details directly with their official listing before going.</em></p>
 <!-- Footer3 filename is case-sensitive in GitHub Pages: assets/Footer3.PNG -->
 <img alt="Gugu Basel Family Guides" class="family-guides-footer-art" data-image-name="footer3" decoding="async" loading="eager" src="./assets/Footer3.PNG?v=20260918-2" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='https://raw.githubusercontent.com/2gg76gcndx-coder/gugubasel/main/assets/Footer3.PNG';}else{this.style.display='none';}"/>
 </section>
@@ -4857,6 +5185,25 @@ html,body{margin:0!important;padding:0!important}
     });
   });
 })();
+</script>
+<script>
+/* Load Autumn WebP files from GitHub when this HTML is previewed locally. */
+document.addEventListener("DOMContentLoaded",function(){
+  var guideAccordion=document.querySelector(".family-guides .guide-accordion");
+  var seasonalChapter=document.querySelector(".family-guides .seasonal-picks-chapter");
+  if(guideAccordion && seasonalChapter && guideAccordion.firstElementChild!==seasonalChapter){
+    guideAccordion.prepend(seasonalChapter);
+  }
+  document.querySelectorAll("#autumn-day-trips img.autumn-photo").forEach(function(img){
+    var relative=img.getAttribute("src");
+    if(!relative || /^https?:/i.test(relative)) return;
+    img.addEventListener("error",function(){
+      if(img.dataset.githubFallback) return;
+      img.dataset.githubFallback="1";
+      img.src="https://raw.githubusercontent.com/2gg76gcndx-coder/gugubasel/main/"+relative.replace(/^\.\//,"");
+    },{once:true});
+  });
+});
 </script>
 </body>
 </html>
