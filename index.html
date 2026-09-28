@@ -15,9 +15,54 @@
 <meta name="twitter:description" content="Everything needed for family life in Basel | Useful family guides, weekend activities &amp; Swiss-wide family deals"/>
 <link href="https://gugubasel.ch/" rel="canonical"/>
 <link rel="sitemap" type="application/xml" title="Sitemap" href="https://gugubasel.ch/sitemap.xml"/>
-<!-- Microsoft Clarity project ypd5sz8urr. Cookie storage is explicitly denied by default. -->
+<!-- Microsoft Clarity project ypd5sz8urr. Owner exclusion runs BEFORE the tracking script. -->
 <script>
 (function (w, d) {
+  // Visit ?gugu_owner=on once in each browser to stop loading Clarity there.
+  // Visit ?gugu_owner=off to restore tracking. This is a browser setting,
+  // not a device-wide identifier; clearing website data removes the setting.
+  var ownerKey = "gugu_owner_no_clarity";
+  var params = new URLSearchParams(w.location.search);
+  var command = params.get("gugu_owner");
+  var cookieName = ownerKey + "=";
+  var cookieOptions = "; path=/; SameSite=Lax" +
+    (w.location.protocol === "https:" ? "; Secure" : "");
+
+  function hasOwnerCookie() {
+    return d.cookie.split(";").some(function (item) {
+      return item.trim() === cookieName + "1";
+    });
+  }
+  function isOwnerStored() {
+    try { if (w.localStorage.getItem(ownerKey) === "1") return true; }
+    catch (e) { /* Storage can be unavailable in restricted browsers. */ }
+    return hasOwnerCookie();
+  }
+  var excluded;
+  if (command === "on") {
+    excluded = true; // Exclude the activation visit itself, even if storage is blocked.
+    try { w.localStorage.setItem(ownerKey, "1"); } catch (e) {}
+    d.cookie = cookieName + "1; Max-Age=315360000" + cookieOptions;
+  } else if (command === "off") {
+    excluded = false;
+    try { w.localStorage.removeItem(ownerKey); } catch (e) {}
+    d.cookie = cookieName + "; Max-Age=0" + cookieOptions;
+  } else {
+    excluded = isOwnerStored();
+  }
+
+  // Remove the command from the address bar without refreshing the page.
+  if (command === "on" || command === "off") {
+    params.delete("gugu_owner");
+    var remaining = params.toString();
+    try {
+      w.history.replaceState(w.history.state, "", w.location.pathname +
+        (remaining ? "?" + remaining : "") + w.location.hash);
+    } catch (e) { /* Filtering still works if URL cleanup is unavailable. */ }
+  }
+
+  // No Clarity network request, page-view event, clicks or replay on excluded visits.
+  if (excluded) return;
   var clarityProjectId = "ypd5sz8urr";
   if (!clarityProjectId || clarityProjectId.indexOf("YOUR_") === 0) return;
   (function(c,l,a,r,i,t,y){
