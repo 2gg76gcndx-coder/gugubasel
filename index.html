@@ -6142,6 +6142,144 @@ html,body{margin:0!important;padding:0!important}
   word-break: normal !important;
 }
 </style>
+
+<style id="gugu-product-deals-three-column-20261009">
+/* Product Deals: Weekend Plans-style three-column tables with double-height
+   product rows/photos and larger price typography. Scoped to Product Deals. */
+#deals-panel .deal-list {
+  display:grid !important;
+  gap:0 !important;
+  margin-top:5px !important;
+  border:1px solid #d6e9f2 !important;
+  border-radius:16px !important;
+  background:#fff !important;
+  overflow:hidden !important;
+}
+#deals-panel .deal-card {
+  display:grid !important;
+  grid-template-columns:30% 36% minmax(0,34%) !important;
+  gap:0 !important;
+  min-height:156px !important;
+  height:auto !important;
+  padding:0 !important;
+  align-items:stretch !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  background:#fff !important;
+}
+#deals-panel .deal-card + .deal-card {
+  border-top:3px solid #eaf3f8 !important;
+}
+#deals-panel .deal-photo {
+  box-sizing:border-box !important;
+  display:flex !important;
+  width:calc(100% - 14px) !important;
+  height:calc(100% - 14px) !important;
+  min-height:142px !important;
+  margin:7px !important;
+  align-items:center !important;
+  justify-content:center !important;
+  border-radius:13px !important;
+  overflow:hidden !important;
+  background:#f6fbff !important;
+  box-shadow:0 4px 12px rgba(9,45,69,.10) !important;
+}
+#deals-panel .deal-photo img {
+  display:block;
+  width:100% !important;
+  height:100% !important;
+  max-height:none !important;
+  object-fit:contain !important;
+  background:#fff !important;
+}
+#deals-panel .deal-copy {
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  align-items:flex-start !important;
+  gap:5px !important;
+  min-width:0 !important;
+  padding:12px 8px !important;
+  border-left:1px solid #edf3f7 !important;
+  background:#fff !important;
+}
+#deals-panel .deal-name {
+  display:block !important;
+  font-family:"Arial Rounded MT Bold","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif !important;
+  font-size:15.2px !important;
+  font-weight:700 !important;
+  line-height:1.17 !important;
+  letter-spacing:-.012em !important;
+  color:#0a4163 !important;
+  overflow-wrap:anywhere !important;
+  text-decoration:none !important;
+}
+#deals-panel .retailer {
+  margin:0 !important;
+  font-size:12.5px !important;
+  font-weight:700 !important;
+  line-height:1.25 !important;
+  color:#718793 !important;
+  overflow-wrap:anywhere !important;
+}
+#deals-panel .price-stack {
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  align-items:center !important;
+  gap:10px !important;
+  min-width:0 !important;
+  max-width:none !important;
+  width:100% !important;
+  padding:12px 6px !important;
+  border-left:1px solid #edf3f7 !important;
+  background:#fff !important;
+  white-space:normal !important;
+  text-align:center !important;
+}
+/* +4px versus the previous desktop discount, reference and current price. */
+#deals-panel .discount {
+  font-size:15.5px !important;
+  font-weight:900 !important;
+  line-height:1.08 !important;
+  padding:8px 8px !important;
+  white-space:nowrap !important;
+}
+#deals-panel .old {
+  font-size:15px !important;
+  font-weight:800 !important;
+  line-height:1.1 !important;
+  white-space:nowrap !important;
+}
+#deals-panel .new {
+  font-size:19.5px !important;
+  font-weight:900 !important;
+  line-height:1.1 !important;
+  color:#0a4163 !important;
+  white-space:nowrap !important;
+}
+@media (max-width:390px) {
+  #deals-panel .deal-card {
+    grid-template-columns:29% 35% minmax(0,36%) !important;
+    min-height:148px !important;
+  }
+  #deals-panel .deal-photo {
+    min-height:134px !important;
+    width:calc(100% - 10px) !important;
+    height:calc(100% - 10px) !important;
+    margin:5px !important;
+  }
+  #deals-panel .deal-copy {padding:9px 6px !important;}
+  #deals-panel .deal-name {font-size:14.5px !important;}
+  #deals-panel .retailer {font-size:11.7px !important;}
+  #deals-panel .price-stack {padding:9px 3px !important; gap:9px !important;}
+  /* +4px relative to the old <=390px mobile price typography. */
+  #deals-panel .discount {font-size:15px !important;padding:7px 6px !important;}
+  #deals-panel .old {font-size:15px !important;}
+  #deals-panel .new {font-size:18.5px !important;}
+}
+</style>
 </head>
 <body>
 <div class="app">
