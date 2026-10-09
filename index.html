@@ -6159,7 +6159,7 @@ html,body{margin:0!important;padding:0!important}
   display:grid !important;
   grid-template-columns:30% 36% minmax(0,34%) !important;
   gap:0 !important;
-  min-height:156px !important;
+  min-height:118px !important;
   height:auto !important;
   padding:0 !important;
   align-items:stretch !important;
@@ -6176,7 +6176,7 @@ html,body{margin:0!important;padding:0!important}
   display:flex !important;
   width:calc(100% - 14px) !important;
   height:calc(100% - 14px) !important;
-  min-height:142px !important;
+  min-height:104px !important;
   margin:7px !important;
   align-items:center !important;
   justify-content:center !important;
@@ -6200,14 +6200,14 @@ html,body{margin:0!important;padding:0!important}
   align-items:flex-start !important;
   gap:5px !important;
   min-width:0 !important;
-  padding:12px 8px !important;
+  padding:8px 7px !important;
   border-left:1px solid #edf3f7 !important;
   background:#fff !important;
 }
 #deals-panel .deal-name {
   display:block !important;
   font-family:"Arial Rounded MT Bold","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif !important;
-  font-size:15.2px !important;
+  font-size:17.2px !important;
   font-weight:700 !important;
   line-height:1.17 !important;
   letter-spacing:-.012em !important;
@@ -6228,11 +6228,11 @@ html,body{margin:0!important;padding:0!important}
   flex-direction:column !important;
   justify-content:center !important;
   align-items:center !important;
-  gap:10px !important;
+  gap:6px !important;
   min-width:0 !important;
   max-width:none !important;
   width:100% !important;
-  padding:12px 6px !important;
+  padding:7px 4px !important;
   border-left:1px solid #edf3f7 !important;
   background:#fff !important;
   white-space:normal !important;
@@ -6262,22 +6262,56 @@ html,body{margin:0!important;padding:0!important}
 @media (max-width:390px) {
   #deals-panel .deal-card {
     grid-template-columns:29% 35% minmax(0,36%) !important;
-    min-height:148px !important;
+    min-height:112px !important;
   }
   #deals-panel .deal-photo {
-    min-height:134px !important;
+    min-height:102px !important;
     width:calc(100% - 10px) !important;
     height:calc(100% - 10px) !important;
     margin:5px !important;
   }
-  #deals-panel .deal-copy {padding:9px 6px !important;}
-  #deals-panel .deal-name {font-size:14.5px !important;}
+  #deals-panel .deal-copy {padding:7px 5px !important;}
+  #deals-panel .deal-name {font-size:16.5px !important;}
   #deals-panel .retailer {font-size:11.7px !important;}
-  #deals-panel .price-stack {padding:9px 3px !important; gap:9px !important;}
+  #deals-panel .price-stack {padding:7px 3px !important; gap:6px !important;}
   /* +4px relative to the old <=390px mobile price typography. */
   #deals-panel .discount {font-size:15px !important;padding:7px 6px !important;}
   #deals-panel .old {font-size:15px !important;}
   #deals-panel .new {font-size:18.5px !important;}
+}
+</style>
+
+<style id="gugu-product-photo-plus30-min-price-20261009">
+/* Enlarge deal images by 30% without changing the existing product-name
+   column width (36% normally; 35% at <=390px). Price retains a minimum
+   width and the image column uses the remaining available space. */
+#deals-panel .deal-card {
+  grid-template-columns: minmax(0, 1fr) 36% minmax(104px, calc(25% + 18px)) !important;
+  min-height: 144px !important;
+}
+#deals-panel .deal-photo {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  border-radius: 10px !important;
+}
+#deals-panel .deal-photo img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+#deals-panel .deal-copy { min-width:0 !important; }
+#deals-panel .price-stack {
+  min-width: 0 !important;
+  max-width: none !important;
+  white-space: nowrap !important;
+}
+@media (max-width: 390px) {
+  #deals-panel .deal-card {
+    grid-template-columns: minmax(0, 1fr) 35% minmax(96px, calc(27.3% + 13px)) !important;
+    min-height: max(112px, calc(37.7vw - 11px)) !important;
+  }
 }
 </style>
 </head>
