@@ -5126,7 +5126,7 @@ html,body{margin:0!important;padding:0!important}
 }
 
 /* Native radio labels: reliable taps on iOS, with strict split hitboxes. */
-.main-tabs .weekend-day-split > label.weekend-day-choice {
+.main-tabs .weekend-day-split > button.weekend-day-choice {
   display:flex !important;
   align-items:center !important;
   justify-content:center !important;
@@ -5151,10 +5151,10 @@ html,body{margin:0!important;padding:0!important}
   user-select:none;
   -webkit-tap-highlight-color:transparent;
 }
-.main-tabs .weekend-day-split > label.weekend-day-choice + label.weekend-day-choice {
+.main-tabs .weekend-day-split > button.weekend-day-choice + button.weekend-day-choice {
   border-left:1px solid rgba(255,255,255,.44) !important;
 }
-.main-tabs .weekend-day-split > label.weekend-day-choice.is-selected {
+.main-tabs .weekend-day-split > button.weekend-day-choice.is-selected {
   background:#075ba9 !important;
   box-shadow:inset 0 2px 0 #d8f3ff !important;
 }
@@ -5172,14 +5172,14 @@ html,body{margin:0!important;padding:0!important}
 @media(max-width:390px) {
   .main-tabs .weekend-combo-tab > label.weekend-main-hit,
   .main-tabs > label.tall-main-tab {font-size:12px !important;gap:3px !important}
-  .main-tabs .weekend-day-split > label.weekend-day-choice {font-size:10px !important}
+  .main-tabs .weekend-day-split > button.weekend-day-choice {font-size:10px !important}
   .main-tabs .weekend-combo-tab > label.weekend-main-hit .tab-icon,
   .main-tabs > label.tall-main-tab .tab-icon {width:16px !important;height:16px !important;flex:0 0 16px !important}
   .main-tabs .weekend-combo-tab > label.weekend-main-hit .tab-icon svg,
   .main-tabs > label.tall-main-tab .tab-icon svg {width:16px !important;height:16px !important}
 }
 @media(max-width:340px) {
-  .main-tabs .weekend-day-split > label.weekend-day-choice {font-size:9px !important}
+  .main-tabs .weekend-day-split > button.weekend-day-choice {font-size:9px !important}
   .main-tabs .weekend-combo-tab > label.weekend-main-hit,
   .main-tabs > label.tall-main-tab {font-size:11px !important}
 }
@@ -5401,7 +5401,7 @@ html,body{margin:0!important;padding:0!important}
   transform:rotate(180deg) !important;
 }
 /* Selected Saturday previously added another 2 px bright inset above its upper divider. */
-.main-tabs .weekend-day-split > label.weekend-day-choice.is-selected,
+.main-tabs .weekend-day-split > button.weekend-day-choice.is-selected,
 .main-tabs .weekend-day-choice.is-selected {box-shadow:none !important;}
 .main-tabs .weekend-day-split {border-top:1px solid rgba(255,255,255,.44) !important;}
 @media(max-width:560px){
@@ -5424,17 +5424,17 @@ html,body{margin:0!important;padding:0!important}
 </style><style id="gugu-tab-badges-and-guide-detail-icons-20261009">
 /* ===== GUGU October 2026 - improved main tabs & Family Guides ===== */
 /* Same blue fill in both day cells. Selected day has a subtle text cue only. */
-.main-tabs .weekend-day-split > label.weekend-day-choice,
-.main-tabs .weekend-day-split > label.weekend-day-choice.is-selected {
+.main-tabs .weekend-day-split > button.weekend-day-choice,
+.main-tabs .weekend-day-split > button.weekend-day-choice.is-selected {
   background:rgba(255,255,255,.14) !important;
   box-shadow:none !important;
 }
-.main-tabs .weekend-day-split > label.weekend-day-choice.is-selected {
+.main-tabs .weekend-day-split > button.weekend-day-choice.is-selected {
   text-decoration:underline !important;
   text-decoration-thickness:1.5px !important;
   text-underline-offset:2px !important;
 }
-.main-tabs .weekend-day-split > label.weekend-day-choice:not(.is-selected){text-decoration:none !important}
+.main-tabs .weekend-day-split > button.weekend-day-choice:not(.is-selected){text-decoration:none !important}
 /* 25% larger main label text; tile heights and click areas stay unchanged. */
 .main-tabs .weekend-combo-tab > label.weekend-main-hit,
 .main-tabs > label.tall-main-tab {font-size:16.25px !important;}
@@ -5495,8 +5495,8 @@ html,body{margin:0!important;padding:0!important}
 </style><style id="gugu-weekend-auto-halloween-autumn-and-clean-dots">
 /* ===== OCT 2026: automatic weekend day + matched Halloween visuals ===== */
 /* Neither day uses an underline; both retain the same blue fill and thin divider. */
-.main-tabs .weekend-day-split > label.weekend-day-choice,
-.main-tabs .weekend-day-split > label.weekend-day-choice.is-selected,
+.main-tabs .weekend-day-split > button.weekend-day-choice,
+.main-tabs .weekend-day-split > button.weekend-day-choice.is-selected,
 .main-tabs .weekend-day-choice.is-selected {
   text-decoration:none !important;
   text-decoration-line:none !important;
@@ -6314,6 +6314,236 @@ html,body{margin:0!important;padding:0!important}
   }
 }
 </style>
+
+<style id="gugu-unified-details-product-description-type-20261009">
+/* Unified regular-weight, rounded blue text in requested detail/description cells.
+   The embedded prices, date headings, event names and emoji icons retain their own styles.
+   Use ui-rounded and regular-face fallbacks rather than "Arial Rounded MT Bold". */
+#events-panel :is(#sat-panel, #sun-panel) .event-meta > div,
+#events-panel :is(#sat-panel, #sun-panel) .event-meta > div > strong,
+#guides-panel .family-guides .autumn-details-cell,
+#guides-panel .family-guides .autumn-details-cell .autumn-detail-line,
+#guides-panel .family-guides .autumn-details-cell .autumn-detail-line :is(strong, span:not(.gugu-detail-emoji), p, a),
+#deals-panel .deal-copy .deal-name,
+#deals-panel .deal-copy .deal-name span,
+#deals-panel .deal-copy .retailer {
+  font-family: ui-rounded, "SF Pro Rounded", "Avenir Next Rounded", "Avenir Next", "Trebuchet MS", Arial, sans-serif !important;
+  font-size: 15.2px !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  line-height: 1.18 !important;
+  letter-spacing: -.012em !important;
+  color: #0a4163 !important;
+}
+/* Native button behaviour on every main tab, including touch on iOS. */
+.main-tabs .weekend-day-split > button.weekend-day-choice {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  font-family: "Arial Rounded MT Bold", "Avenir Next Rounded", "Trebuchet MS", Arial, sans-serif !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+</style>
+
+<style id="gugu-native-day-navigation-fix-20261009">
+/* Both days are genuine, mutually exclusive main tabs. CSS alone switches the
+   visible panel when a user taps from Family Guides or Product Deals. */
+#tab-weekend-sat:checked ~ .panels > #events-panel,
+#tab-weekend-sun:checked ~ .panels > #events-panel {
+  display:block !important;
+}
+#tab-weekend-sat:checked ~ .panels > #events-panel #sat-panel,
+#tab-weekend-sun:checked ~ .panels > #events-panel #sun-panel {
+  display:block !important;
+}
+#tab-weekend-sat:checked ~ .panels > #events-panel #sun-panel,
+#tab-weekend-sun:checked ~ .panels > #events-panel #sat-panel {
+  display:none !important;
+}
+/* Event pane retains selected decoration when entered via either day. */
+#tab-weekend-sat:checked ~ .panels .main-tabs > .weekend-combo-tab,
+#tab-weekend-sun:checked ~ .panels .main-tabs > .weekend-combo-tab {
+  box-shadow:0 9px 20px rgba(7,59,82,.16) !important;
+}
+/* Make the entire day control genuinely tappable on touch screens, not just
+   a narrow 24px strip. The 44px row meets mobile touch-target guidelines. */
+.main-tabs > .weekend-combo-tab,
+.main-tabs > label.tall-main-tab {
+  height:90px !important;
+  min-height:90px !important;
+}
+.main-tabs > .weekend-combo-tab {
+  grid-template-rows:minmax(0,1fr) 44px !important;
+}
+.main-tabs .weekend-day-split > label.weekend-day-choice {
+  -webkit-appearance:none !important;
+  appearance:none !important;
+  box-sizing:border-box !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:100% !important;
+  min-width:0 !important;
+  height:44px !important;
+  min-height:44px !important;
+  margin:0 !important;
+  padding:0 2px !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:rgba(255,255,255,.14) !important;
+  color:white !important;
+  font-family:"Arial Rounded MT Bold","Avenir Next Rounded","SF Pro Rounded",Arial,sans-serif !important;
+  font-size:11.5px !important;
+  font-weight:900 !important;
+  line-height:1 !important;
+  text-decoration:none !important;
+  box-shadow:none !important;
+  cursor:pointer !important;
+  touch-action:manipulation;
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.main-tabs .weekend-day-split > label.weekend-day-choice + label.weekend-day-choice {
+  border-left:1px solid rgba(255,255,255,.44) !important;
+}
+/* Active day indication works without JS and stays synchronized across tabs. */
+#tab-weekend-sat:checked ~ .panels .weekend-day-choice[for="tab-weekend-sat"],
+#tab-weekend-sun:checked ~ .panels .weekend-day-choice[for="tab-weekend-sun"] {
+  background:rgba(255,255,255,.23) !important;
+}
+.main-tabs .weekend-day-split > label.weekend-day-choice:focus-visible {
+  outline:2px solid white !important;
+  outline-offset:-2px !important;
+}
+@media(max-width:390px) {
+  .main-tabs > .weekend-combo-tab,
+  .main-tabs > label.tall-main-tab {
+    height:90px !important;
+    min-height:90px !important;
+  }
+  .main-tabs .weekend-day-split > label.weekend-day-choice {
+    font-size:11px !important;
+  }
+}
+</style>
+
+<style id="gugu-main-tabs-minus35-percent-20261009">
+/* 90 px -> 58.5 px: exactly 35% thinner, on all three replicated tab bars.
+   Radio/label targets and the native no-JS day switching remain untouched. */
+.main-tabs > .weekend-combo-tab,
+.main-tabs > label.tall-main-tab {
+  height:58.5px !important;
+  min-height:58.5px !important;
+  max-height:58.5px !important;
+}
+/* Allow a legible single-line Weekend Plans title and distinct large day targets. */
+.main-tabs > .weekend-combo-tab {
+  grid-template-rows:minmax(0,1fr) 39px !important;
+}
+.main-tabs .weekend-day-split > label.weekend-day-choice {
+  height:39px !important;
+  min-height:39px !important;
+}
+.main-tabs .weekend-combo-tab > label.weekend-main-hit {
+  font-size:10.5px !important;
+  line-height:1 !important;
+  gap:3px !important;
+  padding:0 1px !important;
+  white-space:nowrap !important;
+}
+.main-tabs .weekend-combo-tab > label.weekend-main-hit .tab-icon,
+.main-tabs .weekend-combo-tab > label.weekend-main-hit .tab-icon svg {
+  width:11px !important;
+  height:11px !important;
+  flex-basis:11px !important;
+}
+/* Keep two-line Family Guides and Product Deals titles centered within 58.5 px. */
+.main-tabs > label.tall-main-tab {
+  font-size:12px !important;
+  line-height:1.05 !important;
+  gap:4px !important;
+  padding:2px 3px !important;
+}
+@media(max-width:390px) {
+  .main-tabs > .weekend-combo-tab,
+  .main-tabs > label.tall-main-tab {
+    height:58.5px !important;
+    min-height:58.5px !important;
+    max-height:58.5px !important;
+  }
+  .main-tabs .weekend-combo-tab > label.weekend-main-hit {
+    font-size:10px !important;
+    gap:2px !important;
+  }
+  .main-tabs > label.tall-main-tab {font-size:11px !important;gap:3px !important;}
+}
+</style>
+
+<style id="gugu-main-tab-balanced-half-height-20261009">
+/* Keep the existing three 58.5px main tiles and native radio tab navigation.
+   The Weekend Plans tile now devotes exactly half its interior height to
+   the large title and the other half to Saturday/Sunday side by side. */
+.main-tabs > .weekend-combo-tab {
+  grid-template-rows:minmax(0,1fr) minmax(0,1fr) !important;
+}
+.main-tabs .weekend-combo-tab > label.weekend-main-hit {
+  font-size:15.5px !important; /* former 10.5px + 5 */
+  line-height:.70 !important;
+  white-space:normal !important;
+  gap:3px !important;
+  padding:0 1px !important;
+}
+.main-tabs .weekend-combo-tab > label.weekend-main-hit .tab-text {
+  display:inline-block !important;
+  flex:0 1 auto !important;
+  min-width:0 !important;
+  text-align:center !important;
+}
+.main-tabs .weekend-day-split {
+  min-height:0 !important;
+  height:100% !important;
+}
+.main-tabs .weekend-day-split > label.weekend-day-choice {
+  height:100% !important;
+  min-height:0 !important;
+  padding:0 1px !important;
+}
+/* Family Guides and Product Deals +5px; button styling/targets remain as-is. */
+.main-tabs > label.tall-main-tab {
+  font-size:17px !important; /* former 12px + 5 */
+  line-height:1.05 !important;
+}
+@media(max-width:390px) {
+  .main-tabs .weekend-combo-tab > label.weekend-main-hit {
+    font-size:15px !important; /* former 10px + 5 */
+    line-height:.70 !important;
+  }
+  .main-tabs > label.tall-main-tab {font-size:16px !important; /* former 11px + 5 */}
+}
+</style>
+<style id="gugu-weekend-calendar-icon-match-20261009">
+/* Only enlarge the Weekend Plans calendar to the same size as Family Guides.
+   No changes to click targets, tab states, or Saturday/Sunday radio navigation. */
+.main-tabs .weekend-combo-tab > label.weekend-main-hit .tab-icon,
+.main-tabs .weekend-combo-tab > label.weekend-main-hit .tab-icon svg {
+  width:18px !important;
+  height:18px !important;
+}
+.main-tabs .weekend-combo-tab > label.weekend-main-hit .tab-icon {
+  flex:0 0 18px !important;
+}
+@media(max-width:390px) {
+  .main-tabs .weekend-combo-tab > label.weekend-main-hit .tab-icon,
+  .main-tabs .weekend-combo-tab > label.weekend-main-hit .tab-icon svg {
+    width:16px !important;
+    height:16px !important;
+  }
+  .main-tabs .weekend-combo-tab > label.weekend-main-hit .tab-icon {
+    flex:0 0 16px !important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -6322,12 +6552,14 @@ html,body{margin:0!important;padding:0!important}
 <input class="menu-toggle" id="menu-toggle" type="checkbox"/>
 <label aria-label="Open navigation" class="menu-button" for="menu-toggle"></label>
 <div class="nav-pop">
-<label for="tab-events">Weekend Plans</label>
+<label for="tab-events">Activities</label>
 <label for="tab-guides">Family Guides</label>
 <label for="tab-deals">Product Deals</label>
 </div>
 </div>
 <input checked="checked" class="radio" id="tab-events" name="main" type="radio"/>
+<input class="radio" id="tab-weekend-sat" name="main" type="radio"/>
+<input class="radio" id="tab-weekend-sun" name="main" type="radio"/>
 <input class="radio" id="tab-deals" name="main" type="radio"/>
 <input class="radio" id="tab-guides" name="main" type="radio"/>
 <div class="panels">
@@ -6335,10 +6567,10 @@ html,body{margin:0!important;padding:0!important}
 <!-- White “Weekend plans & Family deals” banner intentionally removed -->
 <nav aria-label="Gugu Basel sections" class="main-tabs">
 <div class="weekend-combo-tab">
-<label class="weekend-main-hit" for="tab-events"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><rect height="16" rx="3" width="18" x="3" y="5"></rect><path d="M8 3v4M16 3v4M3 9.5h18"></path></svg></span><span class="tab-text">Weekend<br/>Plans</span></label>
+<label class="weekend-main-hit" for="tab-events"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><rect height="16" rx="3" width="18" x="3" y="5"></rect><path d="M8 3v4M16 3v4M3 9.5h18"></path></svg></span><span class="tab-text">Activities</span></label>
 <div aria-label="Choose a weekend day" class="weekend-day-split" role="group">
-<label aria-label="Show Saturday weekend plans" class="weekend-day-choice is-selected" data-weekend-day="sat" for="day-sat">Saturday</label>
-<label aria-label="Show Sunday weekend plans" class="weekend-day-choice" data-weekend-day="sun" for="day-sun">Sunday</label>
+<label aria-label="Show Saturday weekend plans" class="weekend-day-choice" for="tab-weekend-sat" data-weekend-day="sat">Saturday</label>
+<label aria-label="Show Sunday weekend plans" class="weekend-day-choice" for="tab-weekend-sun" data-weekend-day="sun">Sunday</label>
 </div>
 </div>
 <label class="tall-main-tab" for="tab-guides"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><path d="M4 5.5h6.5c1.5 0 2.5.6 3.5 1.6 1-1 2-1.6 3.5-1.6H20v13h-2.5c-1.5 0-2.5.5-3.5 1.5-1-1-2-1.5-3.5-1.5H4Z"></path><path d="M12 7v12"></path></svg></span><span class="tab-text">Family<br/>Guides</span></label>
@@ -6403,10 +6635,10 @@ html,body{margin:0!important;padding:0!important}
 <section class="panel" id="deals-panel">
 <nav aria-label="Gugu Basel sections" class="main-tabs">
 <div class="weekend-combo-tab">
-<label class="weekend-main-hit" for="tab-events"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><rect height="16" rx="3" width="18" x="3" y="5"></rect><path d="M8 3v4M16 3v4M3 9.5h18"></path></svg></span><span class="tab-text">Weekend<br/>Plans</span></label>
+<label class="weekend-main-hit" for="tab-events"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><rect height="16" rx="3" width="18" x="3" y="5"></rect><path d="M8 3v4M16 3v4M3 9.5h18"></path></svg></span><span class="tab-text">Activities</span></label>
 <div aria-label="Choose a weekend day" class="weekend-day-split" role="group">
-<label aria-label="Show Saturday weekend plans" class="weekend-day-choice is-selected" data-weekend-day="sat" for="day-sat">Saturday</label>
-<label aria-label="Show Sunday weekend plans" class="weekend-day-choice" data-weekend-day="sun" for="day-sun">Sunday</label>
+<label aria-label="Show Saturday weekend plans" class="weekend-day-choice" for="tab-weekend-sat" data-weekend-day="sat">Saturday</label>
+<label aria-label="Show Sunday weekend plans" class="weekend-day-choice" for="tab-weekend-sun" data-weekend-day="sun">Sunday</label>
 </div>
 </div>
 <label class="tall-main-tab" for="tab-guides"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><path d="M4 5.5h6.5c1.5 0 2.5.6 3.5 1.6 1-1 2-1.6 3.5-1.6H20v13h-2.5c-1.5 0-2.5.5-3.5 1.5-1-1-2-1.5-3.5-1.5H4Z"></path><path d="M12 7v12"></path></svg></span><span class="tab-text">Family<br/>Guides</span></label>
@@ -6641,10 +6873,10 @@ html,body{margin:0!important;padding:0!important}
 <section class="panel" id="guides-panel">
 <nav aria-label="Gugu Basel sections" class="main-tabs">
 <div class="weekend-combo-tab">
-<label class="weekend-main-hit" for="tab-events"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><rect height="16" rx="3" width="18" x="3" y="5"></rect><path d="M8 3v4M16 3v4M3 9.5h18"></path></svg></span><span class="tab-text">Weekend<br/>Plans</span></label>
+<label class="weekend-main-hit" for="tab-events"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><rect height="16" rx="3" width="18" x="3" y="5"></rect><path d="M8 3v4M16 3v4M3 9.5h18"></path></svg></span><span class="tab-text">Activities</span></label>
 <div aria-label="Choose a weekend day" class="weekend-day-split" role="group">
-<label aria-label="Show Saturday weekend plans" class="weekend-day-choice is-selected" data-weekend-day="sat" for="day-sat">Saturday</label>
-<label aria-label="Show Sunday weekend plans" class="weekend-day-choice" data-weekend-day="sun" for="day-sun">Sunday</label>
+<label aria-label="Show Saturday weekend plans" class="weekend-day-choice" for="tab-weekend-sat" data-weekend-day="sat">Saturday</label>
+<label aria-label="Show Sunday weekend plans" class="weekend-day-choice" for="tab-weekend-sun" data-weekend-day="sun">Sunday</label>
 </div>
 </div>
 <label class="tall-main-tab" for="tab-guides"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><path d="M4 5.5h6.5c1.5 0 2.5.6 3.5 1.6 1-1 2-1.6 3.5-1.6H20v13h-2.5c-1.5 0-2.5.5-3.5 1.5-1-1-2-1.5-3.5-1.5H4Z"></path><path d="M12 7v12"></path></svg></span><span class="tab-text">Family<br/>Guides</span></label>
@@ -6814,45 +7046,40 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 </script>
 <script>
-/* Saturday/Sunday tap targets share one Weekend Plans tile.
-   Visitor-local date chooses the default: Sunday = Sunday, all other days = Saturday.
-   A direct Saturday/Sunday tap always overrides it until Weekend Plans is reopened. */
+/* Native (CSS-first) weekend day tabs.  These radios share the main tab group
+   with Family Guides and Product Deals, so direct day selection does not depend
+   on JavaScript running in a mobile preview or Safari. */
 document.addEventListener('DOMContentLoaded',function(){
   var events=document.getElementById('tab-events');
-  var saturday=document.getElementById('day-sat');
-  var sunday=document.getElementById('day-sun');
-  if(!events || !saturday || !sunday) return;
-  function preferredDay(){return (new Date().getDay() === 0) ? sunday : saturday;}
-  function syncWeekendButtons(){
-    document.querySelectorAll('.weekend-day-choice').forEach(function(button){
-      var active=(button.dataset.weekendDay==='sat') ? saturday.checked : sunday.checked;
-      button.classList.toggle('is-selected',active);
-      button.setAttribute('aria-current',active?'true':'false');
-      button.setAttribute('aria-pressed',active?'true':'false');
+  var sat=document.getElementById('tab-weekend-sat');
+  var sun=document.getElementById('tab-weekend-sun');
+  var daySat=document.getElementById('day-sat');
+  var daySun=document.getElementById('day-sun');
+  if(!events || !sat || !sun || !daySat || !daySun) return;
+
+  function sync(){
+    var selectedDay=sun.checked ? 'sun' : sat.checked ? 'sat' : daySun.checked ? 'sun' : 'sat';
+    document.querySelectorAll('.weekend-day-choice').forEach(function(item){
+      var selected=item.dataset.weekendDay===selectedDay;
+      item.classList.toggle('is-selected',selected);
+      item.setAttribute('aria-current',selected?'true':'false');
     });
   }
-  function selectPreferredDay(){
-    preferredDay().checked=true;
-    syncWeekendButtons();
+  /* Preserve the initial visitor-local preference when the main Weekend Plans
+     title is clicked, but do not override an explicit Saturday/Sunday selection. */
+  function preferredDay(){
+    var isSunday=new Date().getDay()===0;
+    daySun.checked=isSunday;
+    daySat.checked=!isSunday;
+    sync();
   }
-  document.querySelectorAll('.weekend-day-choice').forEach(function(button){
-    button.addEventListener('click',function(){
-      (button.dataset.weekendDay==='sun' ? sunday : saturday).checked=true;
-      events.checked=true;
-      syncWeekendButtons();
-    });
-  });
-  /* Both the upper tile and hamburger's Weekend Plans link use local day. */
+  sat.addEventListener('change',function(){if(sat.checked){daySat.checked=true;sync();}});
+  sun.addEventListener('change',function(){if(sun.checked){daySun.checked=true;sync();}});
   document.querySelectorAll('label[for="tab-events"]').forEach(function(label){
-    label.addEventListener('click',selectPreferredDay);
+    label.addEventListener('click',preferredDay);
   });
-  saturday.addEventListener('change',syncWeekendButtons);
-  sunday.addEventListener('change',syncWeekendButtons);
-  selectPreferredDay();
-  window.addEventListener('pageshow',function(){
-    /* Re-evaluate the date after a cached page is restored. */
-    selectPreferredDay();
-  });
+  preferredDay();
+  window.addEventListener('pageshow',sync);
 });
 </script>
 <script id="gugu-guide-accordion-demand-20261009">
