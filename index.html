@@ -187,15 +187,20 @@ body{margin:0;background:#eaf8ff;color:var(--ink);font-family:"Arial Rounded MT 
 
 /* footer */
 .site-footer{padding:16px 12px 24px}
-.contact{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:13px;text-decoration:none;margin-bottom:10px}
-.ig{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);display:grid;place-items:center;color:#fff;font-size:20px}
-.contact small{display:block;color:#718793;margin-top:2px}
 .legal{background:#fff;border:1px solid var(--line);border-radius:20px;padding:0 12px}
 .legal details+details{border-top:1px solid #e7eef2}
 .legal summary{padding:13px 2px;list-style:none;cursor:pointer;font-weight:900;position:relative}
 .legal summary::after{content:"+";position:absolute;right:4px} .legal details[open] summary::after{content:"−"}
 .legal div{padding:0 2px 13px;color:#687f8c;font-size:12px;line-height:1.5}
 .copyright{text-align:center;color:#8a9aa3;font-size:11px;margin:12px 0 0}
+.social-icon-bar{margin:16px 0 6px;background:linear-gradient(135deg,#fff,#eaf8ff);border:1px solid var(--line);border-radius:20px;padding:14px 16px;display:flex;align-items:center;justify-content:center;gap:25px;box-shadow:0 4px 12px rgba(7,59,82,.035)}
+.social-icon-link{display:inline-flex;align-items:center;justify-content:center;width:62px;height:62px;border-radius:16px;background:#eaf8ff;border:1px solid #c7e6f5;text-decoration:none;color:#0d7ddb;transition:transform .15s ease,background-color .15s ease,color .15s ease}
+.social-icon-link.facebook{color:#06456e}
+.social-icon-link.email{color:#0d7ddb}
+.social-icon-link:hover,.social-icon-link:focus-visible{transform:translateY(-2px);background:#d9f2fc;color:#06456e;outline-offset:3px}
+.social-icon-link svg{width:38px;height:38px;fill:currentColor;stroke:currentColor}
+.social-icon-link.email svg{fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:390px){.social-icon-bar{gap:18px;padding:12px}.social-icon-link{width:58px;height:58px}.social-icon-link svg{width:36px;height:36px}}
 
 /* Family Deals disclaimer */
 #deals-panel .deals-disclaimer{
@@ -7447,11 +7452,9 @@ html,body{margin:0!important;padding:0!important}
 </section>
 <!-- FAMILY GUIDES END -->
 </div>
-<footer class="site-footer"><a class="contact" href="https://www.instagram.com/gugubasel" rel="noopener" target="_blank">
-<span class="ig">◎</span><span><strong>Follow Gugu Basel on Instagram @gugubasel</strong><small>Send us a DM</small></span>
-</a>
+<footer class="site-footer">
 <section class="legal">
-<details id="about"><summary>About Gugu Basel</summary><div>
+<details id="about"><summary>About us</summary><div>
 <p><strong>Gugu Basel</strong> was created and is managed by <strong>Kübra Bulut Sengupta</strong> in Basel, Switzerland.</p>
 <p>It brings together weekend activities in and around Basel, practical family guides and Swiss-wide family deals — independently curated to make family planning easier.</p>
 </div></details>
@@ -7467,7 +7470,27 @@ html,body{margin:0!important;padding:0!important}
 <p><strong>Contact:</strong> Instagram DM <a href="https://www.instagram.com/gugubasel/" target="_blank" rel="noopener">@gugubasel</a></p>
 </div></details>
 </section>
-<p class="copyright">© 2026 Gugu Basel. All rights reserved.<span style="display:block;margin-top:5px">Created &amp; managed by Kübra Bulut Sengupta</span></p>
+<div class="social-icon-bar" aria-label="Gugu Basel social and contact links">
+<a class="social-icon-link instagram" href="https://instagram.com/gugubasel?psln=dWRmODBqeTBtazM5&amp;utm_source=qr" target="_blank" rel="noopener" aria-label="Gugu Basel on Instagram">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+  <rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="none" stroke-width="1.8"></rect>
+  <circle cx="12" cy="12" r="4.2" fill="none" stroke-width="1.8"></circle>
+  <circle cx="17.2" cy="6.8" r="1.2"></circle>
+</svg>
+</a>
+<a class="social-icon-link facebook" href="https://www.facebook.com/share/1FoBXUrEfG/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Gugu Basel on Facebook">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M13.2 21v-7.2h2.4l.4-2.9h-2.8V9c0-.8.2-1.4 1.4-1.4H16V5.1c-.2 0-1-.1-1.9-.1-1.9 0-3.2 1.1-3.2 3.3v2.5H8.5v2.9h2.4V21h2.3z"></path>
+</svg>
+</a>
+<a class="social-icon-link email" href="mailto:gugubasel@hotmail.com" aria-label="Email Gugu Basel">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+  <rect x="3.2" y="5.8" width="17.6" height="12.4" rx="2.2" ry="2.2"></rect>
+  <path d="M4.5 7.2 12 13l7.5-5.8"></path>
+</svg>
+</a>
+</div>
+<p class="copyright">© 2026 Gugu Basel. All rights reserved.</p>
 </footer>
 </div>
 <script>
