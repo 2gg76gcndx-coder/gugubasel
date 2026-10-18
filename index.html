@@ -6987,14 +6987,30 @@ html,body{margin:0!important;padding:0!important}
   display:none !important;
 }
 </style>
+<style id="gugu-bilingual-language-css">
+.gugu-language-controls{display:flex;gap:6px;padding:5px;background:#eef8fc;border-radius:12px}
+.gugu-language-controls .gugu-lang{flex:1;border:1px solid #b8dbe9;background:white;border-radius:9px;min-height:34px;color:#0a4163;font:900 14px Arial,sans-serif;cursor:pointer}
+.gugu-language-controls .gugu-lang.active{background:#0d7ddb;color:white;border-color:#0d7ddb}
+#gugu-translate-credit{font-size:10px;color:#647d8b;text-align:center}
+#gugu-translate-wrapper{position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden}
+body{top:0!important}
+
+/* Always-visible bilingual selector beside the navigation button. */
+.gugu-language-header{position:absolute;top:12px;right:69px;z-index:11;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px;border:1px solid #c7e6f5;border-radius:13px;background:rgba(255,255,255,.97);box-shadow:0 3px 10px rgba(7,59,82,.12)}
+.gugu-language-header .gugu-lang{flex:none;width:38px;min-height:32px;border-radius:9px;font-size:13px}
+@media(max-width:390px){.gugu-language-header{top:12px;right:66px}.gugu-language-header .gugu-lang{width:34px;min-height:30px}}
+</style>
 </head>
 <body>
+<div id="gugu-translate-wrapper"><div id="google_translate_element"></div></div>
 <div class="app">
 <div style="position:relative">
 <img alt="Header" class="hero-art" data-image-name="Header" decoding="async" fetchpriority="high" src="./assets/Header.PNG?v=20260914-1"/>
 <input class="menu-toggle" id="menu-toggle" type="checkbox"/>
 <label aria-label="Open navigation" class="menu-button" for="menu-toggle"></label>
+<div class="gugu-language-controls gugu-language-header notranslate" aria-label="Website language" translate="no"><button class="gugu-lang active" type="button" data-site-language="en" aria-pressed="true">EN</button><button class="gugu-lang" type="button" data-site-language="de" aria-pressed="false">DE</button></div>
 <div class="nav-pop">
+<div id="gugu-translate-credit" class="notranslate" translate="no" hidden>German translation by Google Translate</div>
 <label for="tab-events">Activities</label>
 <label for="tab-guides">Family Guides</label>
 <label for="tab-deals">Deals</label>
@@ -7349,6 +7365,66 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+</script>
+<script id="gugu-page-wide-en-de-20261018">
+/* English is the authoritative default. Google Translate provides full-page
+   German on demand without modifying original event names, links or data. */
+(function(){
+  'use strict';
+  var target='en',requested=false,loading=false;
+  var controls;
+  function setButtons(lang){
+    document.documentElement.lang=lang;
+    if(!controls) return;
+    controls.querySelectorAll('[data-site-language]').forEach(function(b){
+      var active=b.getAttribute('data-site-language')===lang;
+      b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));
+    });
+    var credit=document.getElementById('gugu-translate-credit');
+    if(credit) credit.hidden=(lang!=='de');
+  }
+  function applyLanguage(lang){
+    var select=document.querySelector('.goog-te-combo');
+    if(!select){return false;}
+    select.value=lang==='de'?'de':'en';
+    select.dispatchEvent(new Event('change',{bubbles:true}));
+    return true;
+  }
+  window.googleTranslateElementInit=function(){
+    if(!window.google || !window.google.translate) return;
+    new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'de',autoDisplay:false},'google_translate_element');
+    if(target==='de') {var attempts=0;var retry=function(){if(applyLanguage('de'))return;if(++attempts<35)setTimeout(retry,150);};retry();}
+  };
+  function enableGerman(){
+    target='de';setButtons('de');
+    if(applyLanguage('de'))return;
+    if(loading)return;
+    loading=true;
+    var src=document.createElement('script');
+    src.src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    src.async=true;
+    src.onerror=function(){loading=false;target='en';setButtons('en');alert('German translation is temporarily unavailable. Please check your internet connection and try again.');};
+    document.head.appendChild(src);
+  }
+  function enableEnglish(){
+    target='en';setButtons('en');
+    if(requested){
+      // Restoring English through the existing translate widget is safest.
+      if(!applyLanguage('en'))window.location.reload();
+    }
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    controls=document.querySelector('.gugu-language-controls');
+    if(!controls)return;
+    controls.addEventListener('click',function(e){
+      var button=e.target.closest('[data-site-language]');if(!button)return;
+      requested=true;
+      button.getAttribute('data-site-language')==='de'?enableGerman():enableEnglish();
+      var menu=document.getElementById('menu-toggle');if(menu)menu.checked=false;
+    });
+    setButtons('en');
+  });
+})();
 </script>
 </body>
 </html>
