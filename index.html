@@ -7107,9 +7107,9 @@ body{top:0!important}
 <input checked="checked" class="radio" id="day-sat" name="day" type="radio"/>
 <input class="radio" id="day-sun" name="day" type="radio"/>
 <script>
-/* Open Weekend Plans on Saturday by default. */
+/* Open Sunday on Sundays in Basel; otherwise open Saturday. */
 (function(){
-  var sunday=false;
+  var sunday=new Intl.DateTimeFormat('en-US',{timeZone:'Europe/Zurich',weekday:'short'}).format(new Date())==='Sun';
   var sat=document.getElementById('day-sat');
   var sun=document.getElementById('day-sun');
   var main=document.getElementById('tab-events');
@@ -7397,9 +7397,9 @@ document.addEventListener('DOMContentLoaded',function(){
       item.setAttribute('aria-current',selected?'true':'false');
     });
   }
-  /* Opening Weekend Plans resets the day to Saturday. */
+  /* Opening Weekend Plans selects the current default day in Basel. */
   function preferredDay(){
-    var isSunday=false;
+    var isSunday=new Intl.DateTimeFormat('en-US',{timeZone:'Europe/Zurich',weekday:'short'}).format(new Date())==='Sun';
     sat.checked=false;sun.checked=false;
     daySun.checked=isSunday;
     daySat.checked=!isSunday;
@@ -7411,7 +7411,7 @@ document.addEventListener('DOMContentLoaded',function(){
     label.addEventListener('click',preferredDay);
   });
   preferredDay();
-  window.addEventListener('pageshow',sync);
+  window.addEventListener('pageshow',preferredDay);
 });
 </script>
 <script id="gugu-guide-accordion-demand-20261009">
