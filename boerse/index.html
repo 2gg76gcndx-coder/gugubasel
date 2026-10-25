@@ -87,49 +87,37 @@ footer{display:none}
 </div>
 <div class="hero-content">
 <h1>Gugu Börse</h1>
-<p class="intro">A platform for searching and selling second-hand kids’ items, exclusively accessible to the GUGU Basel WhatsApp Community.</p>
+<p class="intro">A family marketplace for discovering and selling second-hand kids’ items. Browse freely, or create an account to sell.</p>
 </div>
 </section>
 <section id="access">
-<p>Use your approved WhatsApp number and your passkey to sign in.</p>
+<h2>Welcome to GUGU Börse</h2>
+<p>Sign in securely using your username and passkey.</p>
 <form id="login">
-<label for="phone" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">WhatsApp number</label>
-<input autocomplete="tel" id="phone" name="phone" placeholder="+41 79 123 45 67" required="" type="tel"/>
+<label for="username">Username</label>
+<input autocomplete="username" id="username" name="username" minlength="3" maxlength="30" required placeholder="Your username"/>
 <button>Sign in with a passkey</button>
 </form>
 <div class="action-row">
-<button class="secondary" id="open-register" type="button">New member? Register</button>
-<button class="secondary" id="open-recovery" type="button">Lost your passkey?</button>
+<button class="secondary" id="open-register" type="button">Create an account</button>
 </div>
-<p class="small spacer-top">Community admission is checked by your admin. Passkeys protect account access</p>
+<p class="small spacer-top">No WhatsApp membership, phone number or password required. Keep your passkey backed up on your device or password manager.</p>
 </section>
-<section hidden="" id="registration">
-<h2 id="register-heading">Join Gugu Börse</h2>
-<p id="register-explanation">Create a passkey, then send your registration reference privately to the community admin on WhatsApp. You can sign in after approval.</p>
+<section hidden id="registration">
+<h2 id="register-heading">Join GUGU Börse</h2>
+<p id="register-explanation">Choose a username and create a secure passkey. Your account will be ready immediately.</p>
 <form id="register">
 <label for="name">Display name</label>
-<input autocomplete="nickname" id="name" maxlength="80" name="name" required=""/>
-<label for="register-phone">Your WhatsApp number</label>
-<input autocomplete="tel" id="register-phone" name="phone" placeholder="+41 79 123 45 67" required="" type="tel"/>
-<button>Create my passkey</button>
+<input autocomplete="nickname" id="name" maxlength="80" name="name" required/>
+<label for="register-username">Username</label>
+<input autocomplete="username" id="register-username" minlength="3" maxlength="30" name="username" pattern="[A-Za-z0-9][A-Za-z0-9._-]{2,29}" required placeholder="e.g. baselparent"/>
+<button>Create account with passkey</button>
 </form>
 <div class="spacer-top"><button class="secondary" id="back" type="button">Back to sign in</button></div>
 </section>
-<section hidden="" id="pending">
-<h2>One last step: WhatsApp approval</h2>
-<p>Send this reference from the WhatsApp number you registered. Your admin will check the sender and approve this exact registration.</p>
-<p class="reference" id="reference"></p>
-<p class="small">Reference expires after 48 hours. Keep it until approval.</p>
-<a class="button" id="whatsapp" rel="noopener noreferrer" target="_blank">Send reference on WhatsApp</a>
-<div class="action-row spacer-top">
-<button class="secondary" id="copy" type="button">Copy reference</button>
-<button class="secondary" id="pending-login" type="button">Go to sign in</button>
-</div>
-<p class="small spacer-top">If WhatsApp opens on another account, switch to your registered number before sending.</p>
-</section>
 <section hidden="" id="account">
 <h2 id="welcome"></h2>
-<p class="badge">Community-approved · Passkey protected</p>
+<p class="badge">Registered member · Passkey protected</p>
 <div class="market-shell" id="marketplace">
 <div class="market-head">
 <div>
@@ -240,23 +228,10 @@ footer{display:none}
 </div>
 <div class="spacer-top"><button class="secondary" id="logout">Log out</button></div>
 </section>
-<section hidden="" id="admin">
-<h2>Approve a registration</h2>
-<p>Open the private WhatsApp message. Check the actual sender number and their community membership. Then enter the reference from that message.</p>
-<form id="approve">
-<label for="approval-ref">Registration reference from WhatsApp</label>
-<input autocomplete="off" id="approval-ref" maxlength="30" name="reference" required=""/>
-<label for="sender-phone">Actual WhatsApp sender number</label>
-<input autocomplete="off" id="sender-phone" name="senderPhone" placeholder="+41 79 123 45 67" required="" type="tel"/>
-<label class="check"><input id="community-confirmed" required="" type="checkbox"/> I checked the actual WhatsApp sender and their community membership.</label>
-<label class="check"><input id="recovery" type="checkbox"/> Passkey recovery: replace their existing passkey and end all sessions.</label>
-<button>Approve this registration</button>
-</form>
-<h3 class="spacer-top">Pending registrations</h3>
-<p class="small">A submitted number or display name is unverified until you check WhatsApp. Do not approve from this list alone.</p>
-<button class="secondary" id="refresh" type="button">Refresh lists</button>
-<div id="registrations"></div>
-<h3 class="spacer-top">Approved members</h3>
+<section hidden id="admin">
+<h2>Member administration</h2>
+<p>Review accounts and deactivate access when necessary.</p>
+<button class="secondary" id="refresh" type="button">Refresh members</button>
 <div id="members"></div>
 </section>
 <p aria-live="polite" id="message" role="status"></p>
