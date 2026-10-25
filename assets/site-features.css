@@ -209,3 +209,16 @@ article.pin-host .event-meta,article.pin-host>.autumn-details-cell,article.pin-h
 #guides-panel .family-guides .guides-heading.guides-heading-slogan p{
  font:400 15.2px/1.18 ui-rounded,"SF Pro Rounded","Avenir Next Rounded","Avenir Next","Trebuchet MS",Arial,sans-serif!important;color:#0a4163!important;letter-spacing:-.012em!important;font-stretch:normal!important;
 }
+
+/* Compact both offer lists while preserving the pin-button clearance. */
+#deals-panel :is(#kids-deals-content,#family-deals-content) .deal-list{gap:4px!important}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card{padding:6px!important;min-height:0!important;height:auto!important;grid-template-rows:auto auto!important}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.deal-copy{gap:3px!important;padding-top:26px!important;padding-bottom:4px!important}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack{gap:4px!important;padding-top:4px!important;justify-content:flex-start!important}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.deal-photo{min-height:104px!important;margin-block:4px!important;height:calc(100% - 8px)!important}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.deal-photo img{min-height:104px!important}
+#deals-panel #family-deals-content .family-offer-notes{margin-top:2px!important;padding-top:3px!important}
+#deals-panel #family-deals-content .family-offer-note+.family-offer-note{margin-top:3px!important}
+/* Use the cafe cards' 9px photo inset: neighbouring pictures have breathing room. */
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-row>.autumn-photo-cell{padding:9px!important;box-sizing:border-box!important}
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-photo-frame{min-height:155px!important;box-sizing:border-box!important;border-radius:15px!important}
