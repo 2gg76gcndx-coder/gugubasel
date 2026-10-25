@@ -7,6 +7,11 @@ export function phone(value) {
   if (!/^\+[1-9]\d{7,14}$/.test(result)) throw new Error('Use the international phone format, e.g. +41791234567.');
   return result;
 }
+export function username(value) {
+  const name=String(value??'').trim().toLowerCase();
+  if(!/^[a-z0-9][a-z0-9._-]{2,29}$/.test(name)) throw fail('Choose a username of 3–30 letters, digits, dots, underscores or hyphens.',400);
+  return name;
+}
 export function opaque(value) {
   if (typeof value !== 'string' || !/^[A-Za-z0-9_-]{43}$/.test(value)) throw new Error('Invalid or expired access details.');
   return value;
@@ -23,7 +28,7 @@ export function reference(value) {
 export function liveRegistration(r, state='pending') {
   return !!r && r.STATUS===state && new Date(r.EXPIRES_AT)>new Date();
 }
-export function fail(message='Access unavailable. Contact your Gugu community admin.',status=403) {
+export function fail(message='Access unavailable. Please sign in or register.',status=403) {
   const error=new Error(message);error.status=status;return error;
 }
 export const cookie = (value, age) => `__Host-gugu_session=${value}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${age}`;
