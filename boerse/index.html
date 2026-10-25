@@ -50,7 +50,7 @@ button.secondary{background:linear-gradient(#cbf6f0,#a9ebe5);color:var(--navy);b
 .market-head .panel-tag{display:none}
 .market-title{margin:0;font-size:16px;font-weight:840}
 .market-subtitle{font-size:12px;margin:3px 0 0;color:#366b87}
-.market-tabs{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:0 0 10px}
+.market-tabs{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:0 0 10pxmargin-top:0;}
 .market-tab{width:100%;min-width:0;border-radius:14px;background:linear-gradient(#ffe86d,#ffcf31);border:2px solid var(--yellowline);box-shadow:0 3px 0 #d59b18;color:var(--navy);font-size:15px}
 .market-tab.active{background:linear-gradient(#33a4ff,#1887e6);border-color:#0870c9;box-shadow:0 3px 0 #095fa4;color:white}
 .market-panel{padding:11px 10px;background:#f9fdff;border:1px solid #c5e6f3;border-radius:15px;min-width:0}
@@ -139,16 +139,9 @@ section#account{padding:10px 8px}
 <div class="spacer-top"><button class="secondary" id="back" type="button">Back to sign in</button></div>
 </section>
 <section hidden="" id="account">
-<h2 id="welcome"></h2>
-<p class="badge">Registered member · Passkey protected</p>
+
+
 <div class="market-shell" id="marketplace">
-<div class="market-head">
-<div>
-<p class="panel-tag" style="background:#fff6dc;border:1px solid #f1de96;color:#836100;margin:0 0 8px;">Marketplace</p>
-<p class="market-title">Browse or post an item</p>
-<p class="market-subtitle">Find little treasures or pass yours along.</p>
-</div>
-</div>
 <div aria-label="Marketplace" class="market-tabs" role="tablist">
 <button aria-controls="search-panel" aria-selected="true" class="market-tab active" id="tab-search" role="tab" type="button">🔎 Search</button>
 <button aria-controls="sell-panel" aria-selected="false" class="market-tab secondary" id="tab-sell" role="tab" type="button">＋ Sell</button>
