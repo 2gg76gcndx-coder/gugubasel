@@ -170,7 +170,7 @@ export function createService({transaction,rateTransaction,webauthn,secret}) {
         throw fail('Select Boy, Girl or Unisex.',400);
       if (size.length > 50)
         throw fail('Size must be 50 characters or fewer.',400);
-      if (postcode && !/^\\d{4}$/.test(postcode))
+      if (postcode && !/^\d{4}$/.test(postcode))
         throw fail('Enter a valid four-digit Swiss postcode.',400);
       if (![0,1].includes(twint))
         throw fail('Select whether TWINT is available.',400);
