@@ -59,7 +59,6 @@ export function createHandler({service,marketplace,origin,trustLocalProxy=false}
     }
     const session=sessionCookie(req.headers.cookie);
     if(req.method==='GET' && path==='/api/me') return json(200,await service.me(session));
-    if(req.method==='GET' && path==='/api/admin/registrations') return json(200,await service.pending(session));
     if(req.method==='GET' && path==='/api/admin/members') return json(200,await service.members(session));
     if(req.method!=='POST' || !path.startsWith('/api/')) return json(404,{error:'Not found.'});
     if(req.headers.origin!==origin || req.headers['x-gugu-request']!=='1' || !(req.headers['content-type']??'').startsWith('application/json')) return json(403,{error:'Request not allowed.'});
@@ -87,8 +86,6 @@ export function createHandler({service,marketplace,origin,trustLocalProxy=false}
       const result = await service.createListing(session,input);
       return json(201,result);
     }
-    if(path==='/api/admin/approve') return json(200,await service.approve(session,input));
-    if(path==='/api/admin/reject') return json(200,await service.reject(session,input));
     if(path==='/api/admin/deactivate') return json(200,await service.deactivate(session,input));
     return json(404,{error:'Not found.'});
   } catch(e) {
