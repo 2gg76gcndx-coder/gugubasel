@@ -7220,7 +7220,8 @@ html {overflow-y:scroll;scrollbar-gutter:stable;scrollbar-color:#1085b9 #eaf8ff}
 .page-scrollbar {position:fixed;z-index:100;right:1px;top:25vh;height:50vh;width:16px;margin:0;writing-mode:vertical-lr;direction:ltr;accent-color:#1085b9;cursor:pointer;opacity:.85;touch-action:none}
 .page-scrollbar[hidden]{display:none}
 
-#deals-panel #family-deals-content .family-deal-card {padding:6px!important;grid-template-rows:auto!important}
-#deals-panel #family-deals-content .family-deal-card>.deal-photo {grid-column:1!important;grid-row:1!important;min-height:104px!important}
+/* Match Kids: equal image / information columns, with prices below details. */
+#deals-panel #family-deals-content .family-deal-card {padding:6px!important;grid-template-columns:minmax(0,50%) minmax(0,50%)!important;grid-template-rows:auto 1fr!important}
+#deals-panel #family-deals-content .family-deal-card>.deal-photo {grid-column:1!important;grid-row:1 / span 2!important;min-height:148px!important}
 #deals-panel #family-deals-content .family-deal-card>.deal-copy {grid-column:2!important;grid-row:1!important}
-#deals-panel #family-deals-content .family-deal-card>.price-stack {grid-column:3!important;grid-row:1!important}
+#deals-panel #family-deals-content .family-deal-card>.price-stack {grid-column:2!important;grid-row:2!important}
