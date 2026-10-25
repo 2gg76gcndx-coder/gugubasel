@@ -129,3 +129,26 @@ article.pin-host .event-meta,article.pin-host>.autumn-details-cell,article.pin-h
 .main-tabs .subtab-text{display:inline-block;flex:0 0 auto;white-space:nowrap;transform-origin:center}
 .main-tabs .weekend-main-hit,.main-tabs .deals-main-hit,.main-tabs>label[for="tab-guides"]{flex-direction:column!important;gap:2px!important}
 .main-tabs .tab-icon,.main-tabs .tab-icon svg{width:14px!important;height:14px!important;flex-basis:14px!important}
+/* Mathematical bold serif chapter names, independent of operating-system font. */
+.event-category,.category-head strong,.guide-chapter-title,.guide-link-label,
+.autumn-category>summary,.main-tabs .tab-text,.main-tabs .subtab-text{
+ font-family:"Cambria Math","STIX Two Math","Times New Roman",serif!important;
+}
+.gugu-lang{font-family:Arial,sans-serif!important;font-size:21px!important;line-height:1!important}
+/* The guide slogan matches the Familienpass introduction exactly. */
+#guides-panel .family-guides .guides-heading.guides-heading-slogan p{
+ font-family:"Arial Rounded MT Bold","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif!important;
+ font-size:14px!important;font-weight:900!important;font-style:normal!important;line-height:1.45!important;color:var(--ink,#083b59)!important;
+}
+/* Every Herbstmesse image is bounded by its half-width column, with the full photo visible. */
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-row>.autumn-photo-cell{
+ position:relative!important;align-self:stretch!important;display:flex!important;min-width:0!important;min-height:180px!important;height:auto!important;padding:0!important;overflow:hidden!important;
+}
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-photo-frame{
+ position:relative!important;display:block!important;flex:1 1 auto!important;width:100%!important;height:100%!important;min-height:180px!important;margin:0!important;padding:0!important;overflow:hidden!important;aspect-ratio:auto!important;
+}
+#guides-panel .family-guides #herbstmesse-2026-guide img.autumn-photo{
+ position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:none!important;min-height:0!important;margin:0!important;object-fit:contain!important;object-position:center!important;aspect-ratio:auto!important;
+}
+.gugu-language-header .gugu-lang,.languages .gugu-lang{font-size:21px!important;line-height:1!important}
+.app .panels .panel .main-tabs .tab-text,.app .panels .panel .main-tabs .subtab-text{font-family:"Cambria Math","STIX Two Math","Times New Roman",serif!important}

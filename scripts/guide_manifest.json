@@ -65,21 +65,6 @@
     "indexable": true
   },
   {
-    "path": "things-to-do/index.html",
-    "language": "en",
-    "indexable": false
-  },
-  {
-    "path": "family-life/index.html",
-    "language": "en",
-    "indexable": false
-  },
-  {
-    "path": "trips-outdoors/index.html",
-    "language": "en",
-    "indexable": false
-  },
-  {
     "path": "family-guides/index.html",
     "language": "en",
     "indexable": true

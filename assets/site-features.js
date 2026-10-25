@@ -57,6 +57,21 @@
       Object.entries(attributeOriginals.get(el)).forEach(([attr, english]) => el.setAttribute(attr, language === 'de' ? translated(english) : english));
     });
   }
+  function styleChapterNames(root) {
+    const selectors='.event-category,.category-head strong,.guide-chapter-title,.guide-link-label,.autumn-category>summary,.main-tabs .tab-text,.main-tabs .subtab-text';
+    root.querySelectorAll(selectors).forEach(el=>{
+      const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let node;
+      while((node=walker.nextNode())){
+        if(node.parentElement.closest('.rainy-new-pill,.evergreen-new,.guide-new-cloud,.plan-count-pill,.rainy-chapter-total,.autumn-category-icon,.guide-sub-emoji'))continue;
+        node.textContent=[...node.textContent.normalize('NFKC').normalize('NFD')].map(char=>{
+          const n=char.codePointAt(0);
+          if(n>=65&&n<=90)return String.fromCodePoint(0x1D400+n-65);
+          if(n>=97&&n<=122)return String.fromCodePoint(0x1D41A+n-97);
+          return char;
+        }).join('');
+      }
+    });
+  }
   function fitMainTabs() {
     const nav=[...document.querySelectorAll('.main-tabs')].find(el=>el.getBoundingClientRect().width>0);
     if(!nav)return;
@@ -64,6 +79,7 @@
     document.querySelectorAll('.main-tabs .weekend-day-choice,.main-tabs .deals-subtab-choice').forEach(label=>{
       if(!label.querySelector('.subtab-text')){const span=document.createElement('span');span.className='subtab-text';span.append(...label.childNodes);label.append(span);}
     });
+    styleChapterNames(document.body);
     nav.querySelectorAll('.subtab-text').forEach(span=>{
       span.style.transform='none';const available=span.parentElement.clientWidth-6;
       const range=document.createRange();range.selectNodeContents(span);const width=range.getBoundingClientRect().width;
@@ -80,7 +96,7 @@
     });
     document.querySelectorAll('label[for=tab-guides] .tab-text').forEach(el=>{el.innerHTML=language==='de'?'Familien<br>ratgeber':'Family<br>Guides';});
     if (persist) writeStorage(languageKey, language);
-    syncButtons();requestAnimationFrame(fitMainTabs);
+    styleChapterNames(document.body);syncButtons();requestAnimationFrame(fitMainTabs);
   }
   function titleElement(el) {
     if (el.tagName === 'DETAILS') {
