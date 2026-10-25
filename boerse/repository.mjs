@@ -34,6 +34,7 @@ export function repository(db) {
   consumeLogin:h=>db.run('UPDATE gb_login_challenges SET used_at=SYSTIMESTAMP WHERE token_hash=:h',{h}),
   cancelLogins:id=>db.run('UPDATE gb_login_challenges SET used_at=SYSTIMESTAMP WHERE member_id=:id AND used_at IS NULL',{id}),
   members:()=>db.all('SELECT id,username,display_name,role,status FROM gb_members ORDER BY created_at DESC FETCH FIRST 500 ROWS ONLY'),
+  promoteAdmin:id=>db.run("UPDATE gb_members SET role='admin' WHERE id=:id AND role='member'",{id}),
   adminExists:()=>db.one("SELECT id FROM gb_members WHERE role='admin' FETCH FIRST 1 ROW ONLY"),
   activeCategory:id=>db.one(
     'SELECT id FROM gb_categories WHERE id=:id AND active=1',{id}),
