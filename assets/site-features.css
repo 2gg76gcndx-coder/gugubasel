@@ -264,3 +264,21 @@ article.pin-host .event-meta,article.pin-host>.autumn-details-cell,article.pin-h
  font-family:"Arial Rounded MT Bold","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif!important;
  font-size:12px!important;font-weight:700!important;line-height:1.4!important;color:#718793!important;font-style:normal!important;letter-spacing:normal!important;
 }
+
+/* Birthday and farm titles grow naturally before the details row begins. */
+#guides-panel .family-guides :is(#birthday-venues,#family-guide-farms) .autumn-row{grid-template-rows:auto auto!important;height:auto!important;max-height:none!important}
+#guides-panel .family-guides :is(#birthday-venues,#family-guide-farms) .autumn-row>.autumn-name-cell{
+ display:block!important;position:static!important;align-self:start!important;min-width:0!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding-bottom:7px!important;
+}
+#guides-panel .family-guides :is(#birthday-venues,#family-guide-farms) .autumn-name-cell .autumn-name-link{
+ display:block!important;position:static!important;width:100%!important;min-width:0!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;white-space:normal!important;overflow-wrap:anywhere!important;transform:none!important;
+}
+#guides-panel .family-guides :is(#birthday-venues,#family-guide-farms) .autumn-row>.autumn-details-cell{position:static!important;align-self:start!important;height:auto!important;max-height:none!important;padding-top:4px!important;padding-bottom:43px!important}
+#guides-panel .family-guides :is(#birthday-venues,#family-guide-farms) .autumn-details-cell .autumn-detail-line{
+ display:block!important;position:static!important;height:auto!important;min-height:0!important;max-height:none!important;line-height:1.35!important;white-space:normal!important;overflow-wrap:anywhere!important;margin:0 0 5px!important;
+}
+#guides-panel .family-guides :is(#birthday-venues,#family-guide-farms) .autumn-detail-line :is(span,strong,a){line-height:1.35!important}
+/* Delicacy numbers begin at the same left edge as the title text. */
+#guides-panel .family-guides #herbstmesse-delicacies-2026-guide .autumn-row>.autumn-name-cell{display:block!important;justify-content:flex-start!important;align-items:flex-start!important;text-align:left!important}
+#guides-panel .family-guides #herbstmesse-delicacies-2026-guide .autumn-name-link{display:block!important;width:100%!important;min-width:0!important;text-align:left!important;text-indent:0!important;margin-inline:0!important;padding-inline:0!important}
+#guides-panel .family-guides #herbstmesse-delicacies-2026-guide .autumn-entry-index{position:static!important;float:none!important;margin-left:0!important;text-indent:0!important;transform:none!important}
