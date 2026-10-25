@@ -1,40 +1,21 @@
 import {randomBytes,randomUUID} from 'node:crypto';
 import {writeFile,unlink} from 'node:fs/promises';
-import {token,hash,phone,opaque,text,reference,liveRegistration,fail,bucket,publicMember} from './security.mjs';
+import {token,hash,opaque,text,username,reference,liveRegistration,fail,bucket,publicMember} from './security.mjs';
 
-// Caller holds a transaction; only admin API or private bootstrap may invoke this.
-export async function approveRegistration(repo,ref,senderPhone,{role='member',actor=null,recovery=false}={}) {
-  // Read immutable number first; acquire member before registration lock if it exists.
-  const initial=await repo.registrationByReference(ref);
-  if(!liveRegistration(initial)) throw fail('Registration is unavailable or expired.');
-  if(initial.PHONE!==senderPhone) throw fail('The WhatsApp sender number does not match this registration.',400);
-  let member=await repo.memberByPhone(initial.PHONE,true);
+// Private operator bootstrap is the only route to grant the admin role.
+export async function approveRegistration(repo,ref,{role='admin'}={}) {
+  if(role!=='admin') throw fail('Only operator bootstrap may use this function.',403);
   const r=await repo.registrationByReference(ref,true);
-  if(!liveRegistration(r)) throw fail('Registration is unavailable or expired.');
-  const key=await repo.registrationKey(r.ID);
-  if(!key || key.MEMBER_ID || key.REVOKED_AT) throw fail();
-  if(member) {
-    if(role==='admin') throw fail('Owner number already exists. Private operator enrollment is required.');
-    if(member.STATUS==='blocked') throw fail('This number is blocked. Review it separately before restoring access.');
-    if(member.ROLE==='admin') throw fail('Admin passkey recovery requires private operator assistance.');
-    if(member.STATUS==='active' && !recovery) throw fail('This number already has access. Select passkey recovery only after checking the WhatsApp sender.',409);
-    await repo.revokeKeys(member.ID);
-    await repo.deleteSessions(member.ID);
-    await repo.cancelLogins(member.ID);
-    await repo.activateMember(member.ID,r.DISPLAY_NAME);
-    member={...member,STATUS:'active',DISPLAY_NAME:r.DISPLAY_NAME};
-  } else {
-    member={ID:randomUUID(),PHONE:r.PHONE,DISPLAY_NAME:r.DISPLAY_NAME,ROLE:role,STATUS:'active'};
-    await repo.createMember({id:member.ID,p:member.PHONE,name:member.DISPLAY_NAME,role});
-  }
-  await repo.attachKey(r.ID,member.ID);
-  await repo.markApproved(r.ID);
-  await repo.rejectOtherRegistrations(r.PHONE,r.ID);
-  await repo.audit(actor??member.ID,recovery?'recover-passkey':'approve-registration',member.ID);
-  return publicMember(member);
+  if(!liveRegistration(r,'approved')) throw fail('Registration must be completed first.');
+  const member=await repo.memberByUsername(r.USERNAME,true);
+  if(!member || member.ROLE!=='member') throw fail('Account unavailable.');
+  if(await repo.adminExists()) throw fail('An administrator already exists.');
+  await repo.promoteAdmin(member.ID);
+  await repo.audit(member.ID,'bootstrap-admin',member.ID);
+  return publicMember({...member,ROLE:'admin'});
 }
 
-export function createService({transaction,rateTransaction,webauthn,secret,adminWhatsApp}) {
+export function createService({transaction,rateTransaction,webauthn,secret}) {
   const limited=(key,max,minutes)=>rateTransaction(bucket(secret,key),max,minutes);
   async function current(repo,raw,admin=false,lock=false) {
     if(!raw) throw fail();
@@ -46,18 +27,19 @@ export function createService({transaction,rateTransaction,webauthn,secret,admin
   }
   return {
     async registerOptions(input,ip) {
-      await limited(`register-ip:${ip}`,20,60);
-      const p=phone(input.phone),name=text(input.name,80);
-      await limited(`register-phone:${p}`,10,1440);
+      await limited(`register-ip:${ip}`,10,60);
+      const user=username(input.username),name=text(input.name,80);
       const id=randomUUID(),raw=token(),ref=randomBytes(10).toString('hex').toUpperCase();
-      const options=await webauthn.registrationOptions({id,phone:p});
-      await transaction(repo=>repo.createRegistration({id,h:hash(raw),ref,p,name,challenge:options.challenge}));
+      const options=await webauthn.registrationOptions({id,username:user});
+      await transaction(async repo=>{
+        if(await repo.memberByUsername(user)) throw fail('Username is already taken.',409);
+        await repo.createRegistration({id,h:hash(raw),ref,username:user,name,challenge:options.challenge});
+      });
       return {ceremony:raw,options};
     },
     async registerFinish(input,ip) {
-      await limited(`register-check-ip:${ip}`,40,60);
+      await limited(`register-check-ip:${ip}`,25,60);
       const h=hash(opaque(input.ceremony));
-      // Consume registration even if cryptographic verification fails: no challenge retries.
       const r=await transaction(async repo=>{
         const r=await repo.registration(h,true);
         if(!liveRegistration(r,'started') || new Date(r.CHALLENGE_EXPIRES_AT)<=new Date()) throw fail();
@@ -65,21 +47,26 @@ export function createService({transaction,rateTransaction,webauthn,secret,admin
         return r;
       });
       const key=await webauthn.verifyRegistration(input.response,r.CHALLENGE);
-      await transaction(async repo=>{
+      const member=await transaction(async repo=>{
+        if(await repo.memberByUsername(r.USERNAME)) throw fail('Username is already taken.',409);
         const live=await repo.registration(h,true);
         if(!live || live.STATUS!=='verifying' || new Date(live.EXPIRES_AT)<=new Date()) throw fail();
+        const m={ID:randomUUID(),USERNAME:r.USERNAME,DISPLAY_NAME:r.DISPLAY_NAME,ROLE:'member',STATUS:'active'};
+        await repo.createMember({id:m.ID,username:m.USERNAME,name:m.DISPLAY_NAME,role:'member'});
         await repo.createKey({id:key.id,registration:r.ID,publicKey:key.publicKey,counter:key.counter,transports:JSON.stringify(key.transports)});
-        await repo.markPending(r.ID);
+        await repo.attachKey(r.ID,m.ID);
+        await repo.markApproved(r.ID);
+        await repo.rejectOtherRegistrations(r.USERNAME,r.ID);
+        await repo.audit(m.ID,'self-register',m.ID);
+        return publicMember(m);
       });
-      const formatted=r.REFERENCE.match(/.{1,4}/g).join('-');
-      const message=`Please approve my Gugu Börse registration. Reference: ${formatted}. Registered number: ${r.PHONE}.`;
-      return {reference:formatted,expiresInHours:48,whatsappUrl:`https://wa.me/${adminWhatsApp.slice(1)}?text=${encodeURIComponent(message)}`};
+      return {member};
     },
     async loginOptions(input,ip) {
       await limited(`login-ip:${ip}`,40,60);
-      const p=phone(input.phone);
+      const user=username(input.username);
       const details=await transaction(async repo=>{
-        const m=await repo.memberByPhone(p);
+        const m=await repo.memberByUsername(user);
         if(!m || m.STATUS!=='active') throw fail();
         const keys=await repo.keys(m.ID);
         if(!keys.length) throw fail();
@@ -92,7 +79,6 @@ export function createService({transaction,rateTransaction,webauthn,secret,admin
     async loginFinish(input,ip) {
       await limited(`login-check-ip:${ip}`,60,60);
       const h=hash(opaque(input.ceremony));
-      // Commit consumption before checking signatures so failed ceremonies cannot be replayed.
       const c=await transaction(async repo=>{
         const c=await repo.loginChallenge(h,true);
         if(!c || c.USED_AT || new Date(c.EXPIRES_AT)<=new Date()) throw fail();
@@ -234,25 +220,6 @@ export function createService({transaction,rateTransaction,webauthn,secret,admin
     async me(raw){return transaction(async repo=>publicMember(await current(repo,raw)));},
     async logout(raw){if(raw)await transaction(repo=>repo.deleteSession(hash(raw)));},
     async members(raw){return transaction(async repo=>{await current(repo,raw,true);return repo.members();});},
-    async pending(raw){return transaction(async repo=>{await current(repo,raw,true);return repo.registrations();});},
-    async approve(raw,input){
-      const ref=reference(input.reference),sender=phone(input.senderPhone);
-      if(input.communityConfirmed!==true) throw fail('Confirm the WhatsApp sender belongs to your approved community.',400);
-      return transaction(async repo=>{
-        const admin=await current(repo,raw,true,true);
-        return approveRegistration(repo,ref,sender,{actor:admin.ID,recovery:input.recovery===true});
-      });
-    },
-    async reject(raw,input){
-      const ref=reference(input.reference);
-      return transaction(async repo=>{
-        const admin=await current(repo,raw,true,true);
-        const r=await repo.registrationByReference(ref,true);
-        if(!r || !['started','verifying','pending'].includes(r.STATUS)) throw fail();
-        await repo.rejectRegistration(r.ID);await repo.audit(admin.ID,'reject-registration',null);
-        return {ok:true};
-      });
-    },
     async deactivate(raw,input){
       const id=text(input.id,36);
       return transaction(async repo=>{
@@ -260,7 +227,7 @@ export function createService({transaction,rateTransaction,webauthn,secret,admin
         const m=await repo.member(id,true);
         if(!m || m.ROLE==='admin') throw fail('Admin accounts require private operator assistance.');
         await repo.blockMember(id);await repo.revokeKeys(id);await repo.deleteSessions(id);await repo.cancelLogins(id);
-        await repo.rejectOtherRegistrations(m.PHONE,'none');
+        await repo.rejectOtherRegistrations(m.USERNAME,'none');
         await repo.audit(admin.ID,'deactivate',id);return {ok:true};
       });
     },
