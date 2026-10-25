@@ -30,7 +30,7 @@ export function createHandler({service,marketplace,origin,trustLocalProxy=false}
     }
     if(req.method==='GET' && path==='/boerse') {res.writeHead(302,{Location:'/boerse/'});return res.end();}
     if(req.method==='GET' && publicFiles.has(path)) {
-      const [file,type]=publicFiles.get(path);res.writeHead(200,{'Content-Type':type});return res.end(await readFile(new URL(`../public/${file}`,import.meta.url)));
+      const [file,type]=publicFiles.get(path);res.writeHead(200,{'Content-Type':type});return res.end(await readFile(new URL(`./${file}`,import.meta.url)));
     }
     if(req.method==='GET' && path==='/boerse/webauthn.js') {
       res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8'});
