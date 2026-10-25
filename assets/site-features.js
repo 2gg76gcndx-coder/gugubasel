@@ -58,15 +58,15 @@
     });
   }
   function styleChapterNames(root) {
-    const selectors='.event-category,.category-head strong,.guide-chapter-title,.guide-link-label,.autumn-category>summary,.main-tabs .tab-text,.main-tabs .subtab-text';
+    const selectors='.event-category,.category-head strong,.guide-chapter-title,.guide-link-label,.autumn-category>summary';
     root.querySelectorAll(selectors).forEach(el=>{
       const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let node;
       while((node=walker.nextNode())){
         if(node.parentElement.closest('.rainy-new-pill,.evergreen-new,.guide-new-cloud,.plan-count-pill,.rainy-chapter-total,.autumn-category-icon,.guide-sub-emoji'))continue;
         node.textContent=[...node.textContent.normalize('NFKC').normalize('NFD')].map(char=>{
           const n=char.codePointAt(0);
-          if(n>=65&&n<=90)return String.fromCodePoint(0x1D400+n-65);
-          if(n>=97&&n<=122)return String.fromCodePoint(0x1D41A+n-97);
+          if(n>=65&&n<=90)return String.fromCodePoint(0x1D5D4+n-65);
+          if(n>=97&&n<=122)return String.fromCodePoint(0x1D5EE+n-97);
           return char;
         }).join('');
       }

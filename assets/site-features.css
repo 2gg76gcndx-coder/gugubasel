@@ -173,3 +173,39 @@ article.pin-host .event-meta,article.pin-host>.autumn-details-cell,article.pin-h
 }
 
 #guides-panel .family-guides :is(#family-friendly-brunch-restaurants,#family-friendly-cafes) .autumn-row>.autumn-details-cell{padding-bottom:43px!important}
+/* Stack the two language choices in the upper-left corner. */
+.gugu-language-header{flex-direction:column!important;align-items:center!important}
+.shell>.topbar{padding-top:96px!important}
+.shell>.topbar>.languages{display:grid!important;grid-template-columns:38px minmax(0,1fr) 38px;grid-template-rows:38px 38px;gap:4px}
+.shell>.topbar>.languages [data-site-language=en]{grid-column:1;grid-row:1}
+.shell>.topbar>.languages [data-site-language=de]{grid-column:1;grid-row:2}
+.shell>.topbar>.languages .pins-launcher{grid-column:3;grid-row:1;margin-left:0}
+.languages .gugu-lang{width:38px!important;height:38px!important;min-height:38px!important;padding:0!important}
+/* Restore Unicode mathematical bold sans serif for category headings. */
+.event-category,.category-head strong,.guide-chapter-title,.guide-link-label,.autumn-category>summary{
+ font-family:"Arial Rounded MT Bold","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif!important;
+}
+/* Main tiles use the rounded bold face and the exact white/navy color roles of the reference. */
+.app .panels .panel .main-tabs .tab-text,
+.app .panels .panel .main-tabs .subtab-text,
+.app .panels .panel .main-tabs .weekend-day-split>label.weekend-day-choice,
+.app .panels .panel .main-tabs .deals-subtab-split>label.deals-subtab-choice{
+ font-family:"Arial Rounded MT Bold","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif!important;font-weight:900!important;font-style:normal!important;
+}
+.app .panels .panel .main-tabs .weekend-main-hit .tab-text,
+.app .panels .panel .main-tabs .weekend-day-split>label.weekend-day-choice,
+.app .panels .panel .main-tabs .weekend-day-split .subtab-text{color:#fff!important}
+.app .panels .panel .main-tabs label[for=tab-guides] .tab-text,
+.app .panels .panel .main-tabs .deals-main-hit .tab-text,
+.app .panels .panel .main-tabs .deals-subtab-split>label.deals-subtab-choice,
+.app .panels .panel .main-tabs .deals-subtab-split .subtab-text{color:#083b59!important}
+/* Match the actual cafe description span, rather than its smaller line container. */
+#guides-panel .family-guides :is(#herbstmesse-2026-guide,#herbstmesse-delicacies-2026-guide).autumn-aligned-guide .autumn-details-cell,
+#guides-panel .family-guides :is(#herbstmesse-2026-guide,#herbstmesse-delicacies-2026-guide).autumn-aligned-guide .autumn-detail-line,
+#guides-panel .family-guides :is(#herbstmesse-2026-guide,#herbstmesse-delicacies-2026-guide).autumn-aligned-guide .autumn-details-cell .autumn-detail-line *,
+#guides-panel .family-guides :is(#herbstmesse-2026-guide,#herbstmesse-delicacies-2026-guide).autumn-aligned-guide .evergreen-intro p,
+#guides-panel .family-guides :is(#herbstmesse-2026-guide,#herbstmesse-delicacies-2026-guide).autumn-aligned-guide .evergreen-intro p *,
+#guides-panel .family-guides :is(#herbstmesse-2026-guide,#herbstmesse-delicacies-2026-guide).autumn-aligned-guide .autumn-hours-strip,
+#guides-panel .family-guides .guides-heading.guides-heading-slogan p{
+ font:400 15.2px/1.18 ui-rounded,"SF Pro Rounded","Avenir Next Rounded","Avenir Next","Trebuchet MS",Arial,sans-serif!important;color:#0a4163!important;letter-spacing:-.012em!important;font-stretch:normal!important;
+}
