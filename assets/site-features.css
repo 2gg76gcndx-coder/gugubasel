@@ -254,3 +254,13 @@ article.pin-host .event-meta,article.pin-host>.autumn-details-cell,article.pin-h
  #deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack>.new{font-size:14px!important;padding-inline:4px!important}
  #deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack>.old{font-size:13px!important}
 }
+
+/* Final price above the reference-price / discount row. */
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack>.new{grid-column:1 / -1!important;grid-row:1!important;justify-self:center!important}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack>.old{grid-column:1!important;grid-row:2!important;justify-self:end!important}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack>.discount{grid-column:2!important;grid-row:2!important;justify-self:start!important}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack:not(:has(.old))>.discount{grid-column:1 / -1!important;justify-self:center!important}
+.copyright{
+ font-family:"Arial Rounded MT Bold","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif!important;
+ font-size:12px!important;font-weight:700!important;line-height:1.4!important;color:#718793!important;font-style:normal!important;letter-spacing:normal!important;
+}
