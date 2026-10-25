@@ -205,7 +205,7 @@ export function createService({transaction,rateTransaction,webauthn,secret}) {
           image1Path:imagePaths[0] ?? null,
           image2Path:imagePaths[1] ?? null
         });
-        await repo.audit(member.ID,'create-listing',id);
+        await repo.audit(member.ID,'create-listing',null);
         return {ok:true,id};
       });
       } catch (error) {
