@@ -104,3 +104,28 @@ article.pin-host .event-meta,article.pin-host>.autumn-details-cell,article.pin-h
 @media(max-width:350px){.app .panels .panel .main-tabs .weekend-day-split>label.weekend-day-choice,.app .panels .panel .main-tabs .deals-subtab-split>label.deals-subtab-choice{letter-spacing:-.11em!important}}
 .gugu-language-header{align-items:start!important}
 .gugu-language-header .gugu-lang,.pins-launcher{width:38px!important;height:38px!important;min-height:38px!important}
+/* Equal section tiles; one shared font size is fitted to the available width. */
+.main-tabs{grid-template-columns:repeat(3,minmax(0,1fr))!important;margin-left:0!important;margin-right:0!important;gap:6px!important}
+.main-tabs>.weekend-combo-tab,.main-tabs>.deals-combo-tab,.main-tabs>label[for="tab-guides"]{height:78px!important;min-height:78px!important;min-width:0!important}
+.app .panels .panel .main-tabs .tab-text,
+.app .panels .panel .main-tabs .weekend-day-split>label.weekend-day-choice,
+.app .panels .panel .main-tabs .deals-subtab-split>label.deals-subtab-choice{font-size:var(--main-tab-font,13px)!important;line-height:1.08!important;letter-spacing:-.025em!important}
+.main-tabs .weekend-main-hit,.main-tabs .deals-main-hit,.main-tabs>label[for="tab-guides"]{padding-left:3px!important;padding-right:3px!important}
+.gugu-language-header{left:4px!important;right:auto!important;top:2px!important;display:flex!important;flex-direction:row!important;align-items:center!important;gap:4px!important}
+.hero-pins.pins-launcher{position:absolute!important;right:8px!important;top:6px!important;z-index:12}
+.shell>.topbar{position:relative;padding-top:58px!important}
+.shell>.topbar>.languages{position:absolute;top:8px;left:12px;right:12px;display:flex;align-items:center;justify-content:flex-start;gap:4px}
+.shell>.topbar>.languages [data-site-language=en]{order:0}
+.shell>.topbar>.languages [data-site-language=de]{order:1}
+.shell>.topbar>.languages .pins-launcher{order:2;margin-left:auto}
+.app .panels .panel .main-tabs .weekend-day-split>label.weekend-day-choice,
+.app .panels .panel .main-tabs .deals-subtab-split>label.deals-subtab-choice{letter-spacing:-.1em!important}
+.app .panels .panel .main-tabs .tab-text,
+.app .panels .panel .main-tabs .weekend-day-split>label.weekend-day-choice,
+.app .panels .panel .main-tabs .deals-subtab-split>label.deals-subtab-choice{font-family:Arial,Helvetica,sans-serif!important;font-weight:700!important;letter-spacing:-.025em!important}
+.app .panels .panel .main-tabs .tab-text,
+.app .panels .panel .main-tabs .weekend-day-split>label.weekend-day-choice,
+.app .panels .panel .main-tabs .deals-subtab-split>label.deals-subtab-choice{font-size:14px!important;font-family:"Arial Rounded MT Bold","Avenir Next Rounded","SF Pro Rounded",Arial,sans-serif!important;font-weight:900!important;letter-spacing:-.025em!important}
+.main-tabs .subtab-text{display:inline-block;flex:0 0 auto;white-space:nowrap;transform-origin:center}
+.main-tabs .weekend-main-hit,.main-tabs .deals-main-hit,.main-tabs>label[for="tab-guides"]{flex-direction:column!important;gap:2px!important}
+.main-tabs .tab-icon,.main-tabs .tab-icon svg{width:14px!important;height:14px!important;flex-basis:14px!important}

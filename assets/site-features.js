@@ -57,6 +57,19 @@
       Object.entries(attributeOriginals.get(el)).forEach(([attr, english]) => el.setAttribute(attr, language === 'de' ? translated(english) : english));
     });
   }
+  function fitMainTabs() {
+    const nav=[...document.querySelectorAll('.main-tabs')].find(el=>el.getBoundingClientRect().width>0);
+    if(!nav)return;
+    document.documentElement.style.setProperty('--main-tab-font','14px');
+    document.querySelectorAll('.main-tabs .weekend-day-choice,.main-tabs .deals-subtab-choice').forEach(label=>{
+      if(!label.querySelector('.subtab-text')){const span=document.createElement('span');span.className='subtab-text';span.append(...label.childNodes);label.append(span);}
+    });
+    nav.querySelectorAll('.subtab-text').forEach(span=>{
+      span.style.transform='none';const available=span.parentElement.clientWidth-6;
+      const range=document.createRange();range.selectNodeContents(span);const width=range.getBoundingClientRect().width;
+      span.style.transform='scaleX('+Math.min(1,available/Math.max(width,1))+')';
+    });
+  }
   function setLanguage(next, persist) {
     language = next === 'de' ? 'de' : 'en';
     document.documentElement.lang = language;
@@ -67,7 +80,7 @@
     });
     document.querySelectorAll('label[for=tab-guides] .tab-text').forEach(el=>{el.innerHTML=language==='de'?'Familien<br>ratgeber':'Family<br>Guides';});
     if (persist) writeStorage(languageKey, language);
-    syncButtons();
+    syncButtons();requestAnimationFrame(fitMainTabs);
   }
   function titleElement(el) {
     if (el.tagName === 'DETAILS') {
@@ -182,6 +195,8 @@
     if(query.get('tab')==='pinned')openPins();
     if(query.get('pin'))reveal(query.get('pin'));
     window.addEventListener('storage',event=>{if(event.key===pinsKey){try{const saved=JSON.parse(event.newValue||'[]');if(Array.isArray(saved))pins=new Set(saved.filter(x=>typeof x==='string'&&x.startsWith('pin-')));}catch(_){}renderPins();syncButtons();}if(event.key===languageKey)setLanguage(event.newValue,false);});
+    window.addEventListener('resize',()=>requestAnimationFrame(fitMainTabs));
+    document.addEventListener('change',event=>{if(event.target.matches('input[name=main]'))requestAnimationFrame(fitMainTabs);});
     window.GuguSite={setLanguage,getLanguage:()=>language,getPins:()=>[...pins]};
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
