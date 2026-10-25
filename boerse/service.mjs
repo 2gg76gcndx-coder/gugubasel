@@ -3,11 +3,9 @@ import {writeFile,unlink} from 'node:fs/promises';
 import {token,hash,opaque,text,username,reference,liveRegistration,fail,bucket,publicMember} from './security.mjs';
 
 // Private operator bootstrap is the only route to grant the admin role.
-export async function approveRegistration(repo,ref,{role='admin'}={}) {
+export async function approveRegistration(repo,user,{role='admin'}={}) {
   if(role!=='admin') throw fail('Only operator bootstrap may use this function.',403);
-  const r=await repo.registrationByReference(ref,true);
-  if(!liveRegistration(r,'approved')) throw fail('Registration must be completed first.');
-  const member=await repo.memberByUsername(r.USERNAME,true);
+  const member=await repo.memberByUsername(username(user),true);
   if(!member || member.ROLE!=='member') throw fail('Account unavailable.');
   if(await repo.adminExists()) throw fail('An administrator already exists.');
   await repo.promoteAdmin(member.ID);
