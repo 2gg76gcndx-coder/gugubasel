@@ -89,7 +89,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="styles.css?v=20261025-family-two-columns"/>
 
 
 
@@ -193,6 +193,13 @@
 
 <link rel="stylesheet" href="assets/site-features.css?v=20261025-8"/>
 <script src="assets/site-languages.js?v=20261025-8" defer></script><script src="assets/site-features.js?v=20261025-8" defer></script>
+<style id="family-offers-two-column-layout">
+/* Keep the Family layout in the page as well as the shared stylesheet. */
+#deals-panel #family-deals-content .family-deal-card{padding:6px!important;grid-template-columns:minmax(0,50%) minmax(0,50%)!important;grid-template-rows:auto 1fr!important}
+#deals-panel #family-deals-content .family-deal-card>.deal-photo{grid-column:1!important;grid-row:1 / span 2!important;min-height:148px!important}
+#deals-panel #family-deals-content .family-deal-card>.deal-copy{grid-column:2!important;grid-row:1!important}
+#deals-panel #family-deals-content .family-deal-card>.price-stack{grid-column:2!important;grid-row:2!important}
+</style>
 </head>
 <body>
 
