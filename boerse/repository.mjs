@@ -3,16 +3,16 @@ import {randomUUID} from 'node:crypto';
 export function repository(db) {
  return {
   member: (id,lock=false)=>db.one(`SELECT * FROM gb_members WHERE id=:id${lock?' FOR UPDATE':''}`,{id}),
-  memberByPhone:(p,lock=false)=>db.one(`SELECT * FROM gb_members WHERE phone=:p${lock?' FOR UPDATE':''}`,{p}),
+  memberByUsername:(username,lock=false)=>db.one(`SELECT * FROM gb_members WHERE username=:username${lock?' FOR UPDATE':''}`,{username}),
   registration:(h,lock=false)=>db.one(`SELECT * FROM gb_registrations WHERE token_hash=:h${lock?' FOR UPDATE':''}`,{h}),
   registrationByReference:(ref,lock=false)=>db.one(`SELECT * FROM gb_registrations WHERE reference=:ref${lock?' FOR UPDATE':''}`,{ref}),
-  registrations:()=>db.all("SELECT id,reference,phone,display_name,expires_at FROM gb_registrations WHERE status='pending' AND expires_at>SYSTIMESTAMP ORDER BY created_at FETCH FIRST 200 ROWS ONLY"),
-  createRegistration:r=>db.run(`INSERT INTO gb_registrations(id,token_hash,reference,phone,display_name,challenge,challenge_expires_at,expires_at)
-    VALUES (:id,:h,:ref,:p,:name,:challenge,SYSTIMESTAMP+INTERVAL '10' MINUTE,SYSTIMESTAMP+INTERVAL '2' DAY)`,r),
+  registrations:()=>db.all("SELECT id,reference,username,display_name,expires_at FROM gb_registrations WHERE status='pending' AND expires_at>SYSTIMESTAMP ORDER BY created_at FETCH FIRST 200 ROWS ONLY"),
+  createRegistration:r=>db.run(`INSERT INTO gb_registrations(id,token_hash,reference,username,display_name,challenge,challenge_expires_at,expires_at)
+    VALUES (:id,:h,:ref,:username,:name,:challenge,SYSTIMESTAMP+INTERVAL '10' MINUTE,SYSTIMESTAMP+INTERVAL '2' DAY)`,r),
   claimRegistration:id=>db.run("UPDATE gb_registrations SET status='verifying' WHERE id=:id",{id}),
   markPending:id=>db.run("UPDATE gb_registrations SET status='pending' WHERE id=:id",{id}),
   markApproved:id=>db.run("UPDATE gb_registrations SET status='approved' WHERE id=:id",{id}),
-  rejectOtherRegistrations:(p,id)=>db.run("UPDATE gb_registrations SET status='rejected' WHERE phone=:p AND id<>:id AND status IN ('started','verifying','pending')",{p,id}),
+  rejectOtherRegistrations:(username,id)=>db.run("UPDATE gb_registrations SET status='rejected' WHERE username=:username AND id<>:id AND status IN ('started','verifying','pending')",{username,id}),
   rejectRegistration:id=>db.run("UPDATE gb_registrations SET status='rejected' WHERE id=:id AND status IN ('started','verifying','pending')",{id}),
   key:(id,lock=false)=>db.one(`SELECT * FROM gb_passkeys WHERE credential_id=:id${lock?' FOR UPDATE':''}`,{id}),
   registrationKey:id=>db.one('SELECT * FROM gb_passkeys WHERE registration_id=:id',{id}),
@@ -33,7 +33,7 @@ export function repository(db) {
   createLogin:(h,id,challenge)=>db.run("INSERT INTO gb_login_challenges(token_hash,member_id,challenge,expires_at) VALUES (:h,:id,:challenge,SYSTIMESTAMP+INTERVAL '5' MINUTE)",{h,id,challenge}),
   consumeLogin:h=>db.run('UPDATE gb_login_challenges SET used_at=SYSTIMESTAMP WHERE token_hash=:h',{h}),
   cancelLogins:id=>db.run('UPDATE gb_login_challenges SET used_at=SYSTIMESTAMP WHERE member_id=:id AND used_at IS NULL',{id}),
-  members:()=>db.all('SELECT id,phone,display_name,role,status FROM gb_members ORDER BY created_at DESC FETCH FIRST 500 ROWS ONLY'),
+  members:()=>db.all('SELECT id,username,display_name,role,status FROM gb_members ORDER BY created_at DESC FETCH FIRST 500 ROWS ONLY'),
   adminExists:()=>db.one("SELECT id FROM gb_members WHERE role='admin' FETCH FIRST 1 ROW ONLY"),
   activeCategory:id=>db.one(
     'SELECT id FROM gb_categories WHERE id=:id AND active=1',{id}),
