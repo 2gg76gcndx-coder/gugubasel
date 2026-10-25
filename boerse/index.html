@@ -77,6 +77,28 @@ button.secondary{background:linear-gradient(#cbf6f0,#a9ebe5);color:var(--navy);b
 #message{margin:8px 0;font-size:13px}
 footer{display:none}
 @media(max-width:420px){main{padding:8px 9px 22px}.hero-media{border-radius:12px}.hero-content{padding:11px 3px 1px}section#access,section#registration,section#pending,section#account,section#admin{padding:12px 11px;border-radius:16px}.market-panel{padding:10px 8px}.filters{gap:7px}.filters input,.filters select{font-size:11px;padding:6px 5px}.intro{font-size:13px}}
+
+/* Mobile-first Börse: three compact sell rows, two compact search rows */
+main{max-width:430px;padding:8px 8px 20px}
+section#account{padding:10px 8px}
+.market-panel{padding:8px 6px}
+.market-head{padding:8px;margin-bottom:6px}
+.market-tabs{gap:6px;margin-bottom:7px}
+.market-tab{min-height:34px;padding:6px 3px;font-size:13px}
+.market-panel h2{font-size:15px;margin-bottom:5px}
+#listing-form{gap:5px}
+.sell-compact,.filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:4px;row-gap:6px;margin-bottom:5px}
+.sell-compact>.compact-field,.filters>div{min-width:0;overflow:hidden}
+.sell-compact>.title-field{grid-column:span 2}
+.sell-compact label,.filters label{font-size:10px;line-height:1.12;margin:0 0 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sell-compact input,.sell-compact select,.filters input,.filters select,#listing-form input[type=file]{min-width:0;width:100%;height:32px;min-height:32px;padding:4px 3px;font-size:11px;border-radius:7px}
+#listing-form input[type=file]{font-size:9px;padding:4px 1px;overflow:hidden}
+.photo-preview:empty{display:none}
+.photo-preview:not(:empty){margin-top:3px;min-height:28px}
+.photo-limit-note{font-size:10px;margin:0 0 2px!important}
+.sell-actions,.search-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.sell-actions button,.search-actions button{width:100%;min-height:34px;padding:6px 5px;font-size:12px}
+@media(max-width:420px){.filters{gap:6px 4px}.filters input,.filters select{font-size:10px;padding:4px 2px}.market-panel{padding:8px 5px}}
 </style></head>
 <body>
 <main>
@@ -134,76 +156,33 @@ footer{display:none}
 <section id="listing-editor" style="padding:0;margin:0;background:transparent;border:0;box-shadow:none;">
 <h2>Publish an item</h2>
 <form id="listing-form">
-<div class="listing-row">
-<div>
-<label for="listing-category">Category *</label>
-<select id="listing-category" name="categoryId" required=""></select>
-</div>
-<div>
-<label for="listing-subcategory">Sub-type</label>
-<select id="listing-subcategory" name="subcategoryId"><option value="">No sub-type</option></select>
-</div>
-</div>
-<label for="listing-title">Item title *</label>
-<input id="listing-title" maxlength="200" name="title" required=""/>
-<textarea aria-hidden="true" class="hidden-description" hidden="" id="listing-description" maxlength="2000" name="description"></textarea>
-<label>Photos (optional; maximum 2)</label>
-<p class="small">JPEG, PNG or WebP. Maximum 2 MB per photo and 4 MB combined.</p>
-<div class="photo-fields">
-<div>
-<label for="listing-photo-1">Photo 1</label>
-<input accept="image/jpeg,image/png,image/webp" id="listing-photo-1" type="file"/>
-<div class="photo-preview" id="listing-photo-preview-1"></div>
-</div>
-<div>
-<label for="listing-photo-2">Photo 2</label>
-<input accept="image/jpeg,image/png,image/webp" id="listing-photo-2" type="file"/>
-<div class="photo-preview" id="listing-photo-preview-2"></div>
-</div>
-</div>
-<div class="listing-row">
-<div>
-<label for="listing-condition">Condition *</label>
-<select id="listing-condition" name="condition" required="">
+<div class="sell-compact">
+<div class="compact-field "><label for="listing-category">Category *</label><select id="listing-category" name="categoryId" required=""></select></div>
+<div class="compact-field "><label for="listing-subcategory">Sub-type</label><select id="listing-subcategory" name="subcategoryId"><option value="">No sub-type</option></select></div>
+<div class="compact-field title-field"><label for="listing-title">Item title *</label><input id="listing-title" maxlength="200" name="title" required=""/></div>
+<div class="compact-field "><label for="listing-condition">Condition *</label><select id="listing-condition" name="condition" required="">
 <option value="very_good">Very good</option>
 <option value="good">Good</option>
 <option value="fair">Fair</option>
-</select>
-</div>
-<div>
-<label for="listing-gender">Gender *</label>
-<select id="listing-gender" name="gender" required="">
+</select></div>
+<div class="compact-field "><label for="listing-gender">Gender *</label><select id="listing-gender" name="gender" required="">
 <option value="Boy">Boy</option>
 <option value="Girl">Girl</option>
 <option value="Unisex">Unisex</option>
-</select>
-</div>
-</div>
-<div class="listing-row">
-<div>
-<label for="listing-size">Size</label>
-<input id="listing-size" maxlength="50" name="size" placeholder="e.g. 110, age 4–5"/>
-</div>
-<div>
-<label for="listing-price">Price (CHF)</label>
-<input id="listing-price" min="0" name="price" placeholder="Optional" step="0.01" type="number"/>
-</div>
-</div>
-<div class="listing-row">
-<div>
-<label for="listing-postcode">Swiss postcode</label>
-<input id="listing-postcode" inputmode="numeric" maxlength="4" name="postcode" pattern="[0-9]{4}" placeholder="e.g. 4051"/>
-</div>
-<div>
-<label for="listing-twint">Accept TWINT? *</label>
-<select id="listing-twint" name="twintAvailable" required="">
+</select></div>
+<div class="compact-field "><label for="listing-size">Size</label><input id="listing-size" maxlength="50" name="size" placeholder="e.g. 110, age 4–5"/></div>
+<div class="compact-field "><label for="listing-price">Price CHF</label><input id="listing-price" min="0" name="price" placeholder="Optional" step="0.01" type="number"/></div>
+<div class="compact-field "><label for="listing-postcode">Postcode</label><input id="listing-postcode" inputmode="numeric" maxlength="4" name="postcode" pattern="[0-9]{4}" placeholder="e.g. 4051"/></div>
+<div class="compact-field "><label for="listing-twint">TWINT *</label><select id="listing-twint" name="twintAvailable" required="">
 <option value="1">Yes</option>
 <option value="0">No</option>
-</select>
+</select></div>
+<div class="compact-field "><label for="listing-photo-1">Photo 1</label><input accept="image/jpeg,image/png,image/webp" id="listing-photo-1" type="file"/><div class="photo-preview" id="listing-photo-preview-1"></div></div>
+<div class="compact-field "><label for="listing-photo-2">Photo 2</label><input accept="image/jpeg,image/png,image/webp" id="listing-photo-2" type="file"/><div class="photo-preview" id="listing-photo-preview-2"></div></div>
 </div>
-</div>
-<button type="submit">Publish listing</button>
-<button class="secondary" id="cancel-listing" type="button">Cancel</button>
+<textarea aria-hidden="true" class="hidden-description" hidden="" id="listing-description" maxlength="2000" name="description"></textarea>
+<p class="small photo-limit-note">JPEG, PNG or WebP · Max 2 MB/photo, 4 MB total.</p>
+<div class="sell-actions"><button type="submit">Publish listing</button><button class="secondary" id="cancel-listing" type="button">Cancel</button></div>
 </form>
 </section>
 </div>
