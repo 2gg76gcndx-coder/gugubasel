@@ -1,0 +1,40 @@
+/* Shared language controls and optional saved items. */
+#tab-pinned:checked~.panels>#pinned-panel{display:block}
+.main-tabs{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important}
+.main-tabs .pinned-main-tab{position:relative;flex-direction:row;gap:8px!important;grid-column:1/-1;height:33px!important;min-height:33px!important;padding:3px 36px!important;border-radius:12px!important;background:#fff8db!important;color:#083b59!important}
+#tab-pinned:checked~.panels .main-tabs .pinned-main-tab{background:#ffe586!important;border-color:#e6bb35!important}
+.main-tabs .pin-count{position:absolute;top:3px;right:4px;min-width:17px;height:17px;padding:1px 3px;border-radius:9px;background:#0d7ddb;color:white;font:700 10px/15px Arial,sans-serif}
+.main-tabs .pinned-main-tab .tab-icon{font-size:21px;display:block;text-align:center}
+@media(max-width:430px){.main-tabs .tab-text{font-size:13px!important;overflow-wrap:normal}.main-tabs .weekend-day-choice,.main-tabs .deals-subtab-choice{font-size:11px!important}.main-tabs .tab-icon{width:18px!important;height:18px!important;flex-basis:18px!important}.main-tabs .weekend-main-hit{gap:2px!important}}
+.pin-host{position:relative!important}
+button.pin-button{position:absolute!important;right:5px!important;top:5px!important;width:32px!important;height:32px!important;min-height:32px!important;padding:0!important;display:flex!important;align-items:center;justify-content:center;border:1px solid #c3ddea!important;border-radius:50%!important;background:#fff!important;color:#083b59;box-shadow:0 2px 7px #083b5926;cursor:pointer;z-index:3;font:17px/1 Arial,sans-serif;opacity:.76;touch-action:manipulation}
+button.pin-button.is-pinned{background:#ffe586!important;border-color:#d5a325!important;opacity:1}
+button.pin-button:focus-visible,.pinned-open:focus-visible{outline:3px solid #0d7ddb;outline-offset:2px}
+article.pin-host .autumn-name-cell,article.pin-host .event-name{padding-right:39px!important}
+article.pin-host>.deal-copy{padding-right:34px!important}
+summary.pin-host{padding-right:48px!important}
+summary.pin-host .pin-button{top:50%!important;transform:translateY(-50%)}
+summary.pin-host .guide-caret{display:none!important}
+.pin-highlight{outline:3px solid #e7b92f!important;outline-offset:3px}
+.pins-heading{padding:10px 4px;color:#083b59}.pins-heading h1{font-size:23px;margin:8px 0}.pins-heading p,#pins-empty{font-size:13px;line-height:1.5}
+#pins-list{display:grid;gap:12px;padding-bottom:20px}
+.pinned-preview{position:relative;display:grid;grid-template-columns:40% 60%;border:1px solid #cae5ef;border-radius:16px;overflow:hidden;background:white;min-height:115px}
+.pinned-photo{background-color:#eaf8ff;background-size:contain;background-position:center;background-repeat:no-repeat;display:flex;align-items:center;justify-content:center;font-size:36px;min-height:115px;overflow:hidden}
+.pinned-photo img{width:100%;height:100%;max-height:240px;object-fit:contain;display:block}
+.pinned-copy{padding:12px 8px;min-width:0}
+.pinned-open{display:block;border:0;background:transparent;color:#075d91;cursor:pointer;text-align:left;font:900 14px/1.3 Arial,sans-serif;width:100%;padding:0 30px 6px 0}
+.pinned-open *{position:static!important;font:inherit!important;color:inherit!important;display:inline!important;text-decoration:none!important;white-space:normal!important}
+.pinned-meta{font:12px/1.45 Arial,sans-serif;color:#30556b;overflow-wrap:anywhere;max-height:13em;overflow:auto}
+.pinned-meta .event-meta,.pinned-meta .price-stack,.pinned-meta .autumn-details-cell{display:block!important;position:static!important;width:auto!important;margin:0!important;padding:0!important;font:inherit!important}
+.pinned-meta .event-meta>div{display:block!important;margin:0 0 4px!important;padding:0!important;font:inherit!important}
+.pinned-meta .price-stack span{margin-right:5px}.pinned-meta .autumn-detail-line{font:inherit!important;margin:4px 0!important}
+.languages{align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.languages .gugu-lang{background:#eaf8ff;color:#083b59;border:1px solid #b8dbe9;border-radius:10px;padding:8px;min-height:36px;font:900 13px Arial,sans-serif;cursor:pointer}
+.languages .gugu-lang.active{background:#0d7ddb;color:white}
+.languages .standalone-pins{display:flex;align-items:center;gap:4px;font-size:12px;text-decoration:none;padding:7px!important;background:#fff3bb!important;color:#083b59}
+.languages .standalone-pins .pin-count{font-size:10px}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+
+.deal-photo.image-unavailable::after{content:"Photo unavailable"}html[lang=de] .deal-photo.image-unavailable::after{content:"Foto nicht verfügbar"}
+
+.main-tabs > label.tall-main-tab.pinned-main-tab{height:34px!important;min-height:34px!important}

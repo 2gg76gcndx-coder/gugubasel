@@ -109,14 +109,14 @@ def render(item,lang,content,description,indexable=True):
     label='Family guides' if lang=='en' else 'Familienratgeber'
     note=('Please check the official listings for current prices, opening hours, age limits and booking requirements before visiting.' if lang=='en' else 'Bitte prüft vor dem Besuch die offiziellen Angaben zu Preisen, Öffnungszeiten, Altersgrenzen und Anmeldungen.')
     structured={'@context':'https://schema.org','@type':'CollectionPage','name':title,'description':description,'url':url,'inLanguage':lang,'isPartOf':{'@type':'WebSite','name':'GUGU Basel','url':BASE+'/'}}
-    alternates=''.join(f'<link rel="alternate" hreflang="{l}" href="{BASE}{path(item,l)}">' for l in ['en','de'])
+    alternates='' 
     document=f'''<!doctype html>
 <html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(title)} | GUGU Basel</title><meta name="description" content="{esc(description,quote=True)}">
 <meta name="robots" content="{'index,follow' if indexable else 'noindex,follow'}"><link rel="canonical" href="{url}">{alternates}<link rel="alternate" hreflang="x-default" href="{BASE}{path(item,'en')}">
 <meta property="og:type" content="website"><meta property="og:title" content="{esc(title,quote=True)} | GUGU Basel"><meta property="og:description" content="{esc(description,quote=True)}"><meta property="og:url" content="{url}"><meta property="og:image" content="{BASE}/favicon.PNG"><link rel="icon" href="../favicon.PNG"><link rel="stylesheet" href="../guide-pages.css">
-<script type="application/ld+json">{json.dumps(structured,ensure_ascii=False).replace('<',chr(92)+'u003c')}</script></head>
-<body><div class="shell"><header class="topbar"><a class="brand" href="../"><img src="../favicon.PNG" alt="">GUGU Basel</a><nav class="languages" aria-label="{'Language' if lang=='en' else 'Sprache'}"><a href="{path(item,'en')}" lang="en" hreflang="en"{' aria-current="page"' if lang=='en' else ''}>EN</a><a href="{path(item,'de')}" lang="de" hreflang="de"{' aria-current="page"' if lang=='de' else ''}>DE</a></nav></header>
+<script type="application/ld+json">{json.dumps(structured,ensure_ascii=False).replace('<',chr(92)+'u003c')}</script><link rel="stylesheet" href="../assets/site-features.css"><script src="../assets/site-languages.js" defer></script><script src="../assets/site-features.js" defer></script></head>
+<body><div class="shell"><header class="topbar"><a class="brand" href="../"><img src="../favicon.PNG" alt="">GUGU Basel</a><nav class="languages" aria-label="{'Language' if lang=='en' else 'Sprache'}"><a href="../?tab=pinned" class="standalone-pins">📌 <span>Pinned</span><span class="pin-count">0</span></a><button type="button" class="gugu-lang active" data-site-language="en" aria-pressed="true">EN</button><button type="button" class="gugu-lang" data-site-language="de" aria-pressed="false">DE</button></nav></header>
 <nav class="crumbs" aria-label="Breadcrumb"><a href="../">GUGU Basel</a> / <a href="{directory}">{label}</a> / {esc(title)}</nav>
 <main><div class="intro"><p>{label} · Basel</p><h1>{esc(title)}</h1><p>{esc(description)}</p></div><section class="panel" id="guides-panel"><section class="family-guides"><div class="guide-accordion">{content}</div></section></section></main>
 <footer class="footer"><p>{note}</p><p><a href="{directory}">{label}</a> · <a href="../">GUGU Basel</a> · <a href="https://www.instagram.com/gugubasel/">Instagram</a></p></footer></div></body></html>\n'''
@@ -125,7 +125,7 @@ def render(item,lang,content,description,indexable=True):
     manifest.append({'path':slug+'/index.html','language':lang,'indexable':indexable})
 
 for guide in GUIDES:
-    for lang in ['en','de']:
+    for lang in ['en']:
         body,count=fragment(guide[4],lang)
         desc=(f'{count} curated ideas for families: discover {guide[2].lower()}, with practical details, photos and official links.' if lang=='en' else f'{count} ausgewählte Tipps für Familien: {guide[3]} – mit praktischen Infos, Bildern und offiziellen Links.')
         if guide[0] in ['herbstmesse','herbstmesse-delicacies','halloween']:
@@ -152,27 +152,20 @@ def links(items,lang):
     return '<ul class="list">'+''.join(f'<li><a href="{path(g,lang)}">{esc(g[2 if lang=="en" else 3])}</a></li>' for g in items)+'</ul>'
 for hub in HUBS:
     children=[g for g in GUIDES if g[5]==hub[0]]
-    for lang in ['en','de']:
+    for lang in ['en']:
         desc=(f'Explore GUGU Basel’s {hub[2].lower()} guides.' if lang=='en' else f'Entdeckt die GUGU-Basel-Ratgeber: {hub[3]}.')
         content=combine(children,lang) if children else ('<p>This guide is being prepared. Explore the published family guides below.</p>' if lang=='en' else '<p>Dieser Ratgeber ist in Vorbereitung. Entdeckt unten unsere bereits veröffentlichten Familienratgeber.</p>')+links(GUIDES,lang)
         if not children:content=fragment('[data-standalone-chapter='+hub[0]+']',lang)[0]
         render(hub,lang,content,desc,bool(children))
 DIRECTORY=('family-guides','familienratgeber','Family activities & guides in Basel','Familienaktivitäten und Ratgeber in Basel')
-for lang in ['en','de']:
+for lang in ['en']:
     content=combine(GUIDES,lang)
     content+=('<h2>All published guides</h2>' if lang=='en' else '<h2>Alle veröffentlichten Ratgeber</h2>')+links(GUIDES,lang)
     desc=('Plan family time in Basel: rainy-day ideas, cafés, brunch, birthday venues, farms, day trips and seasonal activities.' if lang=='en' else 'Familienzeit in Basel planen: Ideen für Regentage, Cafés, Brunch, Kindergeburtstage, Bauernhöfe, Ausflüge und saisonale Aktivitäten.')
     render(DIRECTORY,lang,content,desc)
 if missing:raise ValueError('Add German translations to guide_de.json: '+repr(sorted(missing)))
-# Only insert a small, crawlable navigation block. Do not reserialize the homepage.
-block='<nav class="guide-links" aria-label="Family guides in English and German"><p><strong>Family Guides · Familienratgeber</strong></p><p><a href="/family-guides/">All guides (EN)</a> · <a href="/familienratgeber/" lang="de">Alle Ratgeber (DE)</a></p><ul>'+''.join(f'<li><a href="{path(g,"en")}">{esc(g[2])}</a> · <a lang="de" href="{path(g,"de")}">{esc(g[3])}</a></li>' for g in GUIDES)+'</ul></nav>'
-start='<!-- STATIC GUIDE LINKS START -->';end='<!-- STATIC GUIDE LINKS END -->'
-source=re.sub(re.escape(start)+r'.*?'+re.escape(end)+r'\n?','',source,flags=re.S)
-anchor='<header class="guides-heading guides-heading-slogan">'
-assert anchor in source
-output['index.html']=source.replace(anchor,start+block+end+'\n'+anchor,1)
 # Retain any other sitemap URLs when regenerating.
-existing=re.findall(r'<loc>(.*?)</loc>',(ROOT/'sitemap.xml').read_text())
+existing=[]
 all_generated={BASE+'/'+m['path'].removesuffix('index.html') for m in manifest}
 urls=list(dict.fromkeys([BASE+'/',*[u for u in existing if u not in all_generated],*urls]))
 output['sitemap.xml']='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join(f'  <url><loc>{esc(url)}</loc></url>\n' for url in urls)+'</urlset>\n'

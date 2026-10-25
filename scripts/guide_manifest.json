@@ -5,18 +5,8 @@
     "indexable": true
   },
   {
-    "path": "regentage/index.html",
-    "language": "de",
-    "indexable": true
-  },
-  {
     "path": "brunch/index.html",
     "language": "en",
-    "indexable": true
-  },
-  {
-    "path": "brunch-mit-kindern/index.html",
-    "language": "de",
     "indexable": true
   },
   {
@@ -25,18 +15,8 @@
     "indexable": true
   },
   {
-    "path": "familiencafes/index.html",
-    "language": "de",
-    "indexable": true
-  },
-  {
     "path": "birthday-venues/index.html",
     "language": "en",
-    "indexable": true
-  },
-  {
-    "path": "kindergeburtstag/index.html",
-    "language": "de",
     "indexable": true
   },
   {
@@ -45,18 +25,8 @@
     "indexable": true
   },
   {
-    "path": "herbstmesse-leckereien/index.html",
-    "language": "de",
-    "indexable": true
-  },
-  {
     "path": "herbstmesse/index.html",
     "language": "en",
-    "indexable": true
-  },
-  {
-    "path": "herbstmesse-mit-kindern/index.html",
-    "language": "de",
     "indexable": true
   },
   {
@@ -65,18 +35,8 @@
     "indexable": true
   },
   {
-    "path": "herbstausfluege/index.html",
-    "language": "de",
-    "indexable": true
-  },
-  {
     "path": "halloween/index.html",
     "language": "en",
-    "indexable": true
-  },
-  {
-    "path": "halloween-mit-kindern/index.html",
-    "language": "de",
     "indexable": true
   },
   {
@@ -85,18 +45,8 @@
     "indexable": true
   },
   {
-    "path": "bauernhoefe/index.html",
-    "language": "de",
-    "indexable": true
-  },
-  {
     "path": "eat-drink/index.html",
     "language": "en",
-    "indexable": true
-  },
-  {
-    "path": "essen-trinken/index.html",
-    "language": "de",
     "indexable": true
   },
   {
@@ -105,18 +55,8 @@
     "indexable": true
   },
   {
-    "path": "geburtstag/index.html",
-    "language": "de",
-    "indexable": true
-  },
-  {
     "path": "seasonal-picks/index.html",
     "language": "en",
-    "indexable": true
-  },
-  {
-    "path": "saisonale-tipps/index.html",
-    "language": "de",
     "indexable": true
   },
   {
@@ -125,18 +65,8 @@
     "indexable": true
   },
   {
-    "path": "ausflugsziele/index.html",
-    "language": "de",
-    "indexable": true
-  },
-  {
     "path": "things-to-do/index.html",
     "language": "en",
-    "indexable": false
-  },
-  {
-    "path": "aktivitaeten/index.html",
-    "language": "de",
     "indexable": false
   },
   {
@@ -145,28 +75,13 @@
     "indexable": false
   },
   {
-    "path": "familienleben/index.html",
-    "language": "de",
-    "indexable": false
-  },
-  {
     "path": "trips-outdoors/index.html",
     "language": "en",
     "indexable": false
   },
   {
-    "path": "ausfluege-natur/index.html",
-    "language": "de",
-    "indexable": false
-  },
-  {
     "path": "family-guides/index.html",
     "language": "en",
-    "indexable": true
-  },
-  {
-    "path": "familienratgeber/index.html",
-    "language": "de",
     "indexable": true
   }
 ]
