@@ -3,7 +3,8 @@ import {cookie,sessionCookie} from './security.mjs';
 const publicFiles=new Map([
  ['/boerse/', ['index.html','text/html; charset=utf-8']],
  ['/boerse/app.js',['app.js','text/javascript; charset=utf-8']],
- ['/boerse/style.css',['style.css','text/css; charset=utf-8']]
+ ['/boerse/style.css',['gugu-boerse.css','text/css; charset=utf-8']],
+ ['/boerse/gugu-boerse.css',['gugu-boerse.css','text/css; charset=utf-8']]
 ]);
 const headers={
  'Cache-Control':'no-store',
