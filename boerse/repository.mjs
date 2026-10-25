@@ -22,7 +22,7 @@ export function repository(db) {
   attachKey:(registration,id)=>db.run('UPDATE gb_passkeys SET member_id=:id WHERE registration_id=:registration AND member_id IS NULL',{id,registration}),
   counter:(id,counter)=>db.run('UPDATE gb_passkeys SET sign_count=:counter WHERE credential_id=:id',{id,counter}),
   revokeKeys:id=>db.run('UPDATE gb_passkeys SET revoked_at=SYSTIMESTAMP WHERE member_id=:id AND revoked_at IS NULL',{id}),
-  createMember:m=>db.run('INSERT INTO gb_members(id,phone,display_name,role,status) VALUES (:id,:p,:name,:role,\'active\')',m),
+  createMember:m=>db.run('INSERT INTO gb_members(id,username,display_name,role,status) VALUES (:id,:username,:name,:role,\'active\')',m),
   activateMember:(id,name)=>db.run("UPDATE gb_members SET status='active',display_name=:name WHERE id=:id",{id,name}),
   blockMember:id=>db.run("UPDATE gb_members SET status='blocked' WHERE id=:id",{id}),
   session:h=>db.one('SELECT * FROM gb_sessions WHERE token_hash=:h AND expires_at>SYSTIMESTAMP',{h}),
