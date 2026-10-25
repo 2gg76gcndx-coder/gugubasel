@@ -6,9 +6,9 @@ import {fail} from './security.mjs';
 export function createWebAuthn(origin) {
   const rpID=new URL(origin).hostname;
   return {
-    registrationOptions: ({id,phone})=>generateRegistrationOptions({
+    registrationOptions: ({id,username})=>generateRegistrationOptions({
       rpName:'Gugu Börse', rpID, userID:new TextEncoder().encode(id),
-      userName:phone, userDisplayName:'Gugu Börse member', attestationType:'none',
+      userName:username, userDisplayName:'Gugu Börse member', attestationType:'none',
       authenticatorSelection:{residentKey:'required',userVerification:'required'},
       supportedAlgorithmIDs:[-7,-257],
     }),
