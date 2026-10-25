@@ -83,6 +83,7 @@ export function createHandler({service,marketplace,origin,trustLocalProxy=false}
       const result=await service.loginFinish(input,ip);res.setHeader('Set-Cookie',cookie(result.session,14*86400));return json(200,{member:result.member});
     }
     if(path==='/api/logout') {await service.logout(session);res.setHeader('Set-Cookie',cookie('',0));return json(200,{ok:true});}
+    if(path==='/api/listings/status') return json(200,await service.updateListingStatus(session,input));
     if(path==='/api/listings') {
       const result = await service.createListing(session,input);
       return json(201,result);
