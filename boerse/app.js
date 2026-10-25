@@ -1,5 +1,9 @@
 const $=id=>document.getElementById(id);
 const webauthn=window.SimpleWebAuthnBrowser;
+let signedInMember=null;
+const likeStorageKey='gugu_boerse_likes_v1';
+function likedIds(){try{return JSON.parse(localStorage.getItem(likeStorageKey)||'[]')}catch{return []}}
+function toggleLike(id){const values=new Set(likedIds());values.has(id)?values.delete(id):values.add(id);localStorage.setItem(likeStorageKey,JSON.stringify([...values]));return values.has(id)}
 async function api(path,body){
  const r=await fetch(path,{method:body?'POST':'GET',credentials:'same-origin',headers:body?{'Content-Type':'application/json','X-Gugu-Request':'1'}:{},body:body?JSON.stringify(body):undefined});
  const data=await r.json();if(!r.ok)throw new Error(data.error||'Please try again.');return data;
@@ -16,6 +20,7 @@ function openRegistration(){
  $('register-username').value=$('username').value;
 }
 async function show(m){
+ signedInMember=m;
  panel('account');
 
  $('admin').hidden=m.role!=='admin';
@@ -203,7 +208,13 @@ async function loadListings(){
  }
  for(const item of rows){
   const card=document.createElement('article');card.className='listing-card';
-  const title=document.createElement('h3');title.textContent=item.TITLE;card.append(title);
+  const header=document.createElement('div');header.className='listing-top';
+  const title=document.createElement('h3');title.textContent=item.TITLE;header.append(title);
+  const likes=document.createElement('button');likes.type='button';likes.className='like-btn';likes.textContent=likedIds().includes(item.ID)?'♥':'♡';likes.setAttribute('aria-label','Shortlist item');
+  likes.onclick=()=>{const active=toggleLike(item.ID);likes.textContent=active?'♥':'♡';likes.classList.toggle('liked',active)};
+  header.append(likes);
+  const status=document.createElement('span');const listingStatus=['available','reserved','sold'].includes(item.LISTING_STATUS)?item.LISTING_STATUS:'available';
+  status.className='status-badge status-'+listingStatus;status.textContent=listingStatus[0].toUpperCase()+listingStatus.slice(1);header.append(status);card.append(header);
   const category=document.createElement('p');category.className='small';
   category.textContent=`${item.CATEGORY_EMOJI||''} ${item.CATEGORY_NAME}${item.SUBCATEGORY_NAME?' · '+item.SUBCATEGORY_NAME:''}`;
   card.append(category);
@@ -230,6 +241,13 @@ async function loadListings(){
   price.textContent=item.PRICE_CHF===null?'Price on request':'CHF '+Number(item.PRICE_CHF).toFixed(2);
   card.append(price);
   const twint=document.createElement('p');twint.className='small';twint.textContent=item.TWINT_AVAILABLE?'TWINT accepted':'TWINT not available';card.append(twint);
+  if(signedInMember && signedInMember.id===item.SELLER_ID){
+   const statusSelect=document.createElement('select');statusSelect.setAttribute('aria-label','Listing status');
+   for(const value of ['available','reserved','sold'])statusSelect.add(new Option(value[0].toUpperCase()+value.slice(1),value));
+   statusSelect.value=listingStatus;
+   statusSelect.onchange=()=>action(async()=>{await api('/api/listings/status',{id:item.ID,status:statusSelect.value});await loadListings()});
+   card.append(statusSelect);
+  }
   target.append(card);
  }
 }
