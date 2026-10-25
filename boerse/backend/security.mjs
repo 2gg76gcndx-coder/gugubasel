@@ -15,10 +15,16 @@ export function text(value, max) {
   if (typeof value !== 'string' || !value.trim() || value.trim().length > max) throw new Error('Please check your details.');
   return value.trim();
 }
-export function eligible(member, invitation, invited) {
-  if (!member || member.STATUS === 'blocked') return false;
-  if (!invited) return member.STATUS === 'active';
-  return member.STATUS === 'pending' && invitation && !invitation.USED_AT && !invitation.REVOKED_AT && new Date(invitation.EXPIRES_AT) > new Date();
+export function reference(value) {
+  const ref=String(value??'').replace(/[\s-]/g,'').toUpperCase();
+  if(!/^[A-F0-9]{20}$/.test(ref)) throw new Error('Invalid registration reference.');
+  return ref;
+}
+export function liveRegistration(r, state='pending') {
+  return !!r && r.STATUS===state && new Date(r.EXPIRES_AT)>new Date();
+}
+export function fail(message='Access unavailable. Contact your Gugu community admin.',status=403) {
+  const error=new Error(message);error.status=status;return error;
 }
 export const cookie = (value, age) => `__Host-gugu_session=${value}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${age}`;
 export function sessionCookie(header = '') {

@@ -1,6 +1,17 @@
 {
-  "name": "gugu-boerse-login", "private": true, "type": "module",
-  "engines": {"node": ">=22"},
-  "scripts": {"start": "node --env-file=.env server.mjs", "test": "node --test"},
-  "dependencies": {"oracledb": "^6.10.0"}
+  "name": "gugu-boerse-login",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node --env-file=.env server.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@simplewebauthn/browser": "^13.3.0",
+    "@simplewebauthn/server": "^13.3.3",
+    "oracledb": "^6.10.0"
+  }
 }

@@ -1,29 +1,40 @@
--- Run ONCE as a dedicated GUGU_BORSE schema owner, never in PUBLIC.
--- These prefixed names avoid overwriting earlier MEMBERS/INVITATIONS tables.
+-- Fresh installation only. Run ONCE as GUGU_BORSE, never PUBLIC.
+-- For an existing SMS draft schema use migrate-passkeys.sql instead.
 CREATE TABLE gb_members (
  id VARCHAR2(36) PRIMARY KEY,
  phone VARCHAR2(16) NOT NULL UNIQUE,
  display_name VARCHAR2(80) NOT NULL,
- referred_by VARCHAR2(120),
  role VARCHAR2(10) DEFAULT 'member' NOT NULL CHECK (role IN ('admin','member')),
- status VARCHAR2(10) DEFAULT 'pending' NOT NULL CHECK (status IN ('pending','active','blocked')),
+ status VARCHAR2(10) DEFAULT 'active' NOT NULL CHECK (status IN ('pending','active','blocked')),
  created_at TIMESTAMP WITH TIME ZONE DEFAULT SYSTIMESTAMP NOT NULL
 );
-CREATE TABLE gb_invitations (
- token_hash VARCHAR2(64) PRIMARY KEY,
- member_id VARCHAR2(36) NOT NULL REFERENCES gb_members(id),
- created_by VARCHAR2(36) NOT NULL REFERENCES gb_members(id),
+CREATE TABLE gb_registrations (
+ id VARCHAR2(36) PRIMARY KEY,
+ token_hash VARCHAR2(64) NOT NULL UNIQUE,
+ reference VARCHAR2(20) NOT NULL UNIQUE,
+ phone VARCHAR2(16) NOT NULL,
+ display_name VARCHAR2(80) NOT NULL,
+ challenge VARCHAR2(128) NOT NULL,
+ challenge_expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+ status VARCHAR2(10) DEFAULT 'started' NOT NULL CHECK (status IN ('started','verifying','pending','approved','rejected')),
  expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
- used_at TIMESTAMP WITH TIME ZONE,
+ created_at TIMESTAMP WITH TIME ZONE DEFAULT SYSTIMESTAMP NOT NULL
+);
+CREATE INDEX gb_reg_phone ON gb_registrations(phone);
+CREATE TABLE gb_passkeys (
+ credential_id VARCHAR2(1400) PRIMARY KEY,
+ registration_id VARCHAR2(36) NOT NULL UNIQUE REFERENCES gb_registrations(id),
+ member_id VARCHAR2(36) REFERENCES gb_members(id),
+ public_key VARCHAR2(4000) NOT NULL,
+ sign_count NUMBER NOT NULL,
+ transports VARCHAR2(500) NOT NULL,
  revoked_at TIMESTAMP WITH TIME ZONE
 );
-CREATE INDEX gb_inv_member ON gb_invitations(member_id);
-CREATE TABLE gb_challenges (
+CREATE INDEX gb_key_member ON gb_passkeys(member_id);
+CREATE TABLE gb_login_challenges (
  token_hash VARCHAR2(64) PRIMARY KEY,
  member_id VARCHAR2(36) NOT NULL REFERENCES gb_members(id),
- invitation_hash VARCHAR2(64) REFERENCES gb_invitations(token_hash),
- verification_sid VARCHAR2(34) NOT NULL,
- attempts NUMBER DEFAULT 0 NOT NULL,
+ challenge VARCHAR2(128) NOT NULL,
  expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
  used_at TIMESTAMP WITH TIME ZONE
 );
@@ -45,5 +56,4 @@ CREATE TABLE gb_audit (
  target_id VARCHAR2(36) REFERENCES gb_members(id),
  created_at TIMESTAMP WITH TIME ZONE DEFAULT SYSTIMESTAMP NOT NULL
 );
--- Runtime account needs only SELECT/INSERT/UPDATE/DELETE on these six tables.
--- Do not grant DBA, schema creation or access to unrelated Gugu data.
+-- Separate runtime account: CRUD only on these seven tables, no DDL or DBA.

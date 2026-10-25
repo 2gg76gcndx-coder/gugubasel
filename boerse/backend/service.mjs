@@ -1,104 +1,146 @@
-import { randomUUID } from 'node:crypto';
-import { token, hash, phone, opaque, text, eligible, bucket, publicMember } from './security.mjs';
-const denied = () => { const e=new Error('Access unavailable. Check your invitation or contact Gugu Basel.'); e.status=403; return e; };
-export function createService({transaction, rate, sms, secret, origin}) {
-  const limited = (key, max, minutes) => transaction(db=>rate(db,bucket(secret,key),max,minutes));
-  const audit = (db, actor, action, target) => db.run('INSERT INTO gb_audit(id,actor_id,action,target_id) VALUES (:id,:actor,:action,:target)',{id:randomUUID(),actor,action,target});
-  async function target(db, input, lock=false) {
-    const invited=!!input.invitation;
-    const inv=invited ? await db.one('SELECT * FROM gb_invitations WHERE token_hash=:h',{h:hash(opaque(input.invitation))}) : null;
-    const m=invited ? (inv && await db.one(`SELECT * FROM gb_members WHERE id=:id${lock?' FOR UPDATE':''}`,{id:inv.MEMBER_ID})) : await db.one(`SELECT * FROM gb_members WHERE phone=:p${lock?' FOR UPDATE':''}`,{p:phone(input.phone)});
-    if(!eligible(m,inv,invited)) throw denied();
-    return {m,inv};
+import {randomBytes,randomUUID} from 'node:crypto';
+import {token,hash,phone,opaque,text,reference,liveRegistration,fail,bucket,publicMember} from './security.mjs';
+
+// Caller holds a transaction; only admin API or private bootstrap may invoke this.
+export async function approveRegistration(repo,ref,senderPhone,{role='member',actor=null,recovery=false}={}) {
+  // Read immutable number first; acquire member before registration lock if it exists.
+  const initial=await repo.registrationByReference(ref);
+  if(!liveRegistration(initial)) throw fail('Registration is unavailable or expired.');
+  if(initial.PHONE!==senderPhone) throw fail('The WhatsApp sender number does not match this registration.',400);
+  let member=await repo.memberByPhone(initial.PHONE,true);
+  const r=await repo.registrationByReference(ref,true);
+  if(!liveRegistration(r)) throw fail('Registration is unavailable or expired.');
+  const key=await repo.registrationKey(r.ID);
+  if(!key || key.MEMBER_ID || key.REVOKED_AT) throw fail();
+  if(member) {
+    if(role==='admin') throw fail('Owner number already exists. Private operator enrollment is required.');
+    if(member.STATUS==='blocked') throw fail('This number is blocked. Review it separately before restoring access.');
+    if(member.ROLE==='admin') throw fail('Admin passkey recovery requires private operator assistance.');
+    if(member.STATUS==='active' && !recovery) throw fail('This number already has access. Select passkey recovery only after checking the WhatsApp sender.',409);
+    await repo.revokeKeys(member.ID);
+    await repo.deleteSessions(member.ID);
+    await repo.cancelLogins(member.ID);
+    await repo.activateMember(member.ID,r.DISPLAY_NAME);
+    member={...member,STATUS:'active',DISPLAY_NAME:r.DISPLAY_NAME};
+  } else {
+    member={ID:randomUUID(),PHONE:r.PHONE,DISPLAY_NAME:r.DISPLAY_NAME,ROLE:role,STATUS:'active'};
+    await repo.createMember({id:member.ID,p:member.PHONE,name:member.DISPLAY_NAME,role});
   }
-  async function current(db, raw, admin=false, lock=false) {
-    if(!raw) throw denied();
-    const s=await db.one('SELECT member_id FROM gb_sessions WHERE token_hash=:h AND expires_at>SYSTIMESTAMP',{h:hash(opaque(raw))});
-    const m=s && await db.one(`SELECT * FROM gb_members WHERE id=:id${lock?' FOR UPDATE':''}`,{id:s.MEMBER_ID});
-    if(!m || m.STATUS!=='active' || (admin && m.ROLE!=='admin')) throw denied();
-    // A blocked/reapproved account must not restore a previously deleted session.
-    if(lock && !await db.one('SELECT member_id FROM gb_sessions WHERE token_hash=:h AND expires_at>SYSTIMESTAMP',{h:hash(raw)})) throw denied();
+  await repo.attachKey(r.ID,member.ID);
+  await repo.markApproved(r.ID);
+  await repo.rejectOtherRegistrations(r.PHONE,r.ID);
+  await repo.audit(actor??member.ID,recovery?'recover-passkey':'approve-registration',member.ID);
+  return publicMember(member);
+}
+
+export function createService({transaction,rateTransaction,webauthn,secret,adminWhatsApp}) {
+  const limited=(key,max,minutes)=>rateTransaction(bucket(secret,key),max,minutes);
+  async function current(repo,raw,admin=false,lock=false) {
+    if(!raw) throw fail();
+    const session=await repo.session(hash(opaque(raw)));
+    const m=session && await repo.member(session.MEMBER_ID,lock);
+    if(!m || m.STATUS!=='active' || (admin && m.ROLE!=='admin')) throw fail();
+    if(lock && !await repo.session(hash(raw))) throw fail();
     return m;
   }
   return {
-    async start(input, ip) {
-      await limited(`send-ip:${ip}`,20,60);
-      const {m,inv}=await transaction(db=>target(db,input));
-      await limited(`send-phone:${m.ID}`,5,60);
-      await limited(`send-cooldown:${m.ID}`,1,1);
-      const result=await sms.send(m.PHONE);
+    async registerOptions(input,ip) {
+      await limited(`register-ip:${ip}`,20,60);
+      const p=phone(input.phone),name=text(input.name,80);
+      await limited(`register-phone:${p}`,10,1440);
+      const id=randomUUID(),raw=token(),ref=randomBytes(10).toString('hex').toUpperCase();
+      const options=await webauthn.registrationOptions({id,phone:p});
+      await transaction(repo=>repo.createRegistration({id,h:hash(raw),ref,p,name,challenge:options.challenge}));
+      return {ceremony:raw,options};
+    },
+    async registerFinish(input,ip) {
+      await limited(`register-check-ip:${ip}`,40,60);
+      const h=hash(opaque(input.ceremony));
+      // Consume registration even if cryptographic verification fails: no challenge retries.
+      const r=await transaction(async repo=>{
+        const r=await repo.registration(h,true);
+        if(!liveRegistration(r,'started') || new Date(r.CHALLENGE_EXPIRES_AT)<=new Date()) throw fail();
+        await repo.claimRegistration(r.ID);
+        return r;
+      });
+      const key=await webauthn.verifyRegistration(input.response,r.CHALLENGE);
+      await transaction(async repo=>{
+        const live=await repo.registration(h,true);
+        if(!live || live.STATUS!=='verifying' || new Date(live.EXPIRES_AT)<=new Date()) throw fail();
+        await repo.createKey({id:key.id,registration:r.ID,publicKey:key.publicKey,counter:key.counter,transports:JSON.stringify(key.transports)});
+        await repo.markPending(r.ID);
+      });
+      const formatted=r.REFERENCE.match(/.{1,4}/g).join('-');
+      const message=`Please approve my Gugu Börse registration. Reference: ${formatted}. Registered number: ${r.PHONE}.`;
+      return {reference:formatted,expiresInHours:48,whatsappUrl:`https://wa.me/${adminWhatsApp.slice(1)}?text=${encodeURIComponent(message)}`};
+    },
+    async loginOptions(input,ip) {
+      await limited(`login-ip:${ip}`,40,60);
+      const p=phone(input.phone);
+      const details=await transaction(async repo=>{
+        const m=await repo.memberByPhone(p);
+        if(!m || m.STATUS!=='active') throw fail();
+        const keys=await repo.keys(m.ID);
+        if(!keys.length) throw fail();
+        return {m,keys};
+      });
+      const options=await webauthn.loginOptions(details.keys),raw=token();
+      await transaction(repo=>repo.createLogin(hash(raw),details.m.ID,options.challenge));
+      return {ceremony:raw,options};
+    },
+    async loginFinish(input,ip) {
+      await limited(`login-check-ip:${ip}`,60,60);
+      const h=hash(opaque(input.ceremony));
+      // Commit consumption before checking signatures so failed ceremonies cannot be replayed.
+      const c=await transaction(async repo=>{
+        const c=await repo.loginChallenge(h,true);
+        if(!c || c.USED_AT || new Date(c.EXPIRES_AT)<=new Date()) throw fail();
+        await repo.consumeLogin(h);return c;
+      });
       const raw=token();
-      await transaction(async db=>{
-        await target(db,input,true);
-        await db.run(`INSERT INTO gb_challenges(token_hash,member_id,invitation_hash,verification_sid,expires_at) VALUES (:h,:id,:inv,:sid,SYSTIMESTAMP+INTERVAL '10' MINUTE)`,{h:hash(raw),id:m.ID,inv:inv?.TOKEN_HASH??null,sid:result.sid});
-      });
-      return {challenge:raw, message:'Code sent to your approved phone number.'};
-    },
-    async finish(input, ip) {
-      await limited(`check-ip:${ip}`,40,60);
-      const h=hash(opaque(input.challenge));
-      if(!/^\d{4,10}$/.test(input.code??'')) throw new Error('Enter your SMS verification code.');
-      const c=await transaction(async db=>{
-        const c=await db.one('SELECT * FROM gb_challenges WHERE token_hash=:h FOR UPDATE',{h});
-        if(!c || c.USED_AT || c.ATTEMPTS>=5 || new Date(c.EXPIRES_AT)<=new Date()) throw denied();
-        await db.run('UPDATE gb_challenges SET attempts=attempts+1 WHERE token_hash=:h',{h});
-        return c;
-      });
-      const verified=await sms.verify(c.VERIFICATION_SID,input.code);
-      if(verified.status!=='approved' || verified.sid!==c.VERIFICATION_SID) throw new Error('Incorrect or expired code.');
-      const raw=token();
-      return transaction(async db=>{
-        // All account lifecycle changes lock the member first, then invitations/challenges.
-        const m=await db.one('SELECT * FROM gb_members WHERE id=:id FOR UPDATE',{id:c.MEMBER_ID});
-        const inv=c.INVITATION_HASH ? await db.one('SELECT * FROM gb_invitations WHERE token_hash=:h FOR UPDATE',{h:c.INVITATION_HASH}) : null;
-        if(!eligible(m,inv,!!c.INVITATION_HASH)) throw denied();
-        const live=await db.one('SELECT * FROM gb_challenges WHERE token_hash=:h FOR UPDATE',{h});
-        if(!live || live.USED_AT || new Date(live.EXPIRES_AT)<=new Date()) throw denied();
-        if(inv) {
-          await db.run('UPDATE gb_invitations SET used_at=SYSTIMESTAMP WHERE token_hash=:h',{h:inv.TOKEN_HASH});
-          await db.run("UPDATE gb_members SET status='active' WHERE id=:id",{id:m.ID});
-        }
-        await db.run('UPDATE gb_challenges SET used_at=SYSTIMESTAMP WHERE token_hash=:h',{h});
-        await db.run("INSERT INTO gb_sessions VALUES (:h,:id,SYSTIMESTAMP+INTERVAL '14' DAY)",{h:hash(raw),id:m.ID});
-        await audit(db,m.ID,inv?'activate':'login',m.ID);
-        return {session:raw, member:publicMember(m)};
+      return transaction(async repo=>{
+        const m=await repo.member(c.MEMBER_ID,true);
+        const key=await repo.key(input.response?.id,true);
+        if(!m || m.STATUS!=='active' || !key || key.MEMBER_ID!==m.ID || key.REVOKED_AT) throw fail();
+        const counter=await webauthn.verifyLogin(input.response,c.CHALLENGE,key);
+        await repo.counter(key.CREDENTIAL_ID,counter);
+        await repo.createSession(hash(raw),m.ID);
+        await repo.audit(m.ID,'login',m.ID);
+        return {session:raw,member:publicMember(m)};
       });
     },
-    async me(raw) {return transaction(async db=>publicMember(await current(db,raw)));},
-    async logout(raw) {if(raw) await transaction(db=>db.run('DELETE FROM gb_sessions WHERE token_hash=:h',{h:hash(raw)}));},
-    async members(raw) {return transaction(async db=>{await current(db,raw,true);return db.all('SELECT id,display_name,phone,role,status,referred_by FROM gb_members ORDER BY created_at DESC FETCH FIRST 500 ROWS ONLY');});},
-    async invite(raw,input) {
-      const p=phone(input.phone), name=text(input.name,80), ref=input.referredBy?text(input.referredBy,120):null;
-      const invitation=token();
-      await transaction(async db=>{
-        const admin=await current(db,raw,true,true);
-        let m=await db.one('SELECT * FROM gb_members WHERE phone=:p FOR UPDATE',{p});
-        if(m && m.STATUS!=='pending') throw new Error('This number already has an active or blocked account.');
-        if(!m) {
-          m={ID:randomUUID()};
-          await db.run('INSERT INTO gb_members(id,phone,display_name,referred_by) VALUES (:id,:p,:name,:ref)',{id:m.ID,p,name,ref});
-        }
-        await db.run('UPDATE gb_invitations SET revoked_at=SYSTIMESTAMP WHERE member_id=:id AND used_at IS NULL AND revoked_at IS NULL',{id:m.ID});
-        await db.run("INSERT INTO gb_invitations(token_hash,member_id,created_by,expires_at) VALUES (:h,:id,:a,SYSTIMESTAMP+INTERVAL '2' DAY)",{h:hash(invitation),id:m.ID,a:admin.ID});
-        await audit(db,admin.ID,'invite',m.ID);
+    async me(raw){return transaction(async repo=>publicMember(await current(repo,raw)));},
+    async logout(raw){if(raw)await transaction(repo=>repo.deleteSession(hash(raw)));},
+    async members(raw){return transaction(async repo=>{await current(repo,raw,true);return repo.members();});},
+    async pending(raw){return transaction(async repo=>{await current(repo,raw,true);return repo.registrations();});},
+    async approve(raw,input){
+      const ref=reference(input.reference),sender=phone(input.senderPhone);
+      if(input.communityConfirmed!==true) throw fail('Confirm the WhatsApp sender belongs to your approved community.',400);
+      return transaction(async repo=>{
+        const admin=await current(repo,raw,true,true);
+        return approveRegistration(repo,ref,sender,{actor:admin.ID,recovery:input.recovery===true});
       });
-      return {url:`${origin}/boerse/#invite=${invitation}`,expiresInHours:48};
     },
-    async deactivate(raw,input) {
+    async reject(raw,input){
+      const ref=reference(input.reference);
+      return transaction(async repo=>{
+        const admin=await current(repo,raw,true,true);
+        const r=await repo.registrationByReference(ref,true);
+        if(!r || !['started','verifying','pending'].includes(r.STATUS)) throw fail();
+        await repo.rejectRegistration(r.ID);await repo.audit(admin.ID,'reject-registration',null);
+        return {ok:true};
+      });
+    },
+    async deactivate(raw,input){
       const id=text(input.id,36);
-      await transaction(async db=>{
-        const admin=await current(db,raw,true,true);
-        if(id===admin.ID) throw new Error('You cannot deactivate your own admin account.');
-        const m=await db.one('SELECT * FROM gb_members WHERE id=:id FOR UPDATE',{id});
-        if(!m) throw denied();
-        // Admin account lifecycle is intentionally not exposed in the member UI.
-        if(m.ROLE==='admin') throw new Error('Admin accounts require operator assistance.');
-        await db.run("UPDATE gb_members SET status='blocked' WHERE id=:id",{id});
-        await db.run('DELETE FROM gb_sessions WHERE member_id=:id',{id});
-        await db.run('UPDATE gb_invitations SET revoked_at=SYSTIMESTAMP WHERE member_id=:id AND revoked_at IS NULL',{id});
-        await db.run('UPDATE gb_challenges SET used_at=SYSTIMESTAMP WHERE member_id=:id AND used_at IS NULL',{id});
-        await audit(db,admin.ID,'deactivate',id);
-      });return {ok:true};
-    }
+      return transaction(async repo=>{
+        const admin=await current(repo,raw,true,true);
+        const m=await repo.member(id,true);
+        if(!m || m.ROLE==='admin') throw fail('Admin accounts require private operator assistance.');
+        await repo.blockMember(id);await repo.revokeKeys(id);await repo.deleteSessions(id);await repo.cancelLogins(id);
+        await repo.rejectOtherRegistrations(m.PHONE,'none');
+        await repo.audit(admin.ID,'deactivate',id);return {ok:true};
+      });
+    },
   };
 }
