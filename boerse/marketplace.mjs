@@ -27,9 +27,7 @@ export function createMarketplace(db) {
     },
 
     async listings(filters = {}) {
-      const conditions = [
-        "l.LISTING_STATUS = 'available'"
-      ];
+      const conditions = ["l.LISTING_STATUS IN ('available','reserved','sold')"];
       const binds = {};
 
       if (filters.categoryId !== undefined && filters.categoryId !== '') {
@@ -96,6 +94,7 @@ export function createMarketplace(db) {
         SELECT
           l.ID,
           l.TITLE,
+          l.SELLER_ID,
           l.DESCRIPTION,
           l.CATEGORY_ID,
           c.NAME AS CATEGORY_NAME,
@@ -110,6 +109,7 @@ export function createMarketplace(db) {
           l.POSTCODE,
           l.TWINT_AVAILABLE,
           l.PRICE_CHF,
+          l.LISTING_STATUS,
           l.CREATED_AT
         FROM GB_LISTINGS l
         JOIN GB_CATEGORIES c ON c.ID = l.CATEGORY_ID
