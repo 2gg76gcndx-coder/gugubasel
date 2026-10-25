@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="noindex,nofollow" name="robots"/>
+<title>Gugu Börse · Member access</title>
+<script defer="" src="/boerse/webauthn.js"></script>
+<script defer="" src="/boerse/app.js"></script>
+<link href="./gugu-boerse.css?v=20261025-5" rel="stylesheet"/><style>
+:root{--navy:#073f60;--blue:#178ded;--blue2:#0d70c7;--sky:#e4f7ff;--cyan:#caeeff;--mint:#c7f4eb;--mintline:#44bdb1;--yellow:#ffdb47;--yellowline:#ebb92e;--white:#fff;--shadow:0 7px 20px rgba(10,84,119,.10)}
+*,*::before,*::after{box-sizing:border-box}
+html{margin:0;padding:0;width:100%;overflow-x:hidden;font-size:16px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;padding:0;width:100%;min-width:0;max-width:100%;overflow-x:hidden;background:linear-gradient(180deg,#e7f8ff,#dff4ff);color:var(--navy);font:500 15px/1.42 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+main{width:100%;max-width:760px;margin:0 auto;padding:10px 12px 28px}
+a.home{display:inline-flex;align-items:center;min-height:32px;margin:0 0 7px;padding:6px 10px;background:#fff;border:1px solid #b8e5f4;border-radius:999px;color:var(--navy);font-size:12px;font-weight:750;text-decoration:none}
+.hero-card{display:block;padding:0;margin:0 0 12px;border:0;border-radius:0;background:transparent;box-shadow:none;min-width:0}
+.hero-media{display:block;width:100%;height:auto!important;min-height:0!important;max-height:none!important;overflow:hidden;border-radius:18px;border:2px solid rgba(255,255,255,.9);background:#d7f5ff;box-shadow:var(--shadow)}
+.hero-media img,.hero-media img.boerse-header{display:block!important;width:100%!important;max-width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;object-position:center!important;aspect-ratio:auto;border:0;margin:0}
+.hero-content{padding:12px 5px 1px}
+h1{font-size:clamp(27px,7vw,36px);font-weight:850;letter-spacing:-.045em;line-height:1.06;margin:0 0 8px;color:var(--navy)}
+.intro{margin:0;color:var(--navy);font-size:14px;font-weight:620;line-height:1.45;max-width:650px}
+section#access,section#registration,section#pending,section#account,section#admin{display:block;margin:0 0 12px;padding:15px 13px;background:#fff;border:1px solid #cce9f6;border-radius:19px;box-shadow:var(--shadow);min-width:0}
+section#access>p:first-child{font-size:13px;margin:0 0 10px}
+h2,h3{color:var(--navy);letter-spacing:-.025em;line-height:1.17}
+h2{font-size:20px;margin:0 0 9px;font-weight:840}
+h3{font-size:16px;margin:12px 0 8px}
+p{margin:0 0 10px}
+.small{color:#426e83;font-size:11px;line-height:1.42}
+#login{display:flex;flex-direction:column;gap:7px}
+label{display:block;font-size:12px;font-weight:750;color:var(--navy);margin:3px 0 4px}
+input:not([type=checkbox]),select,textarea{display:block;width:100%;min-width:0;max-width:100%;height:40px;min-height:40px;border:1px solid #b9dce9;border-radius:10px;background:#fafdff;color:var(--navy);padding:8px 10px;font-size:13px}
+input[type=file]{height:auto;min-height:36px;padding:5px;font-size:11px}
+input:focus,select:focus,textarea:focus{outline:2px solid #5eb8f0;outline-offset:1px}
+button,.button{display:inline-flex;align-items:center;justify-content:center;gap:5px;border:1px solid #1475bd;border-radius:12px;background:linear-gradient(#33a0ff,#1783de);color:#fff;font-size:13px;font-weight:820;min-height:39px;padding:9px 11px;text-align:center;text-decoration:none;box-shadow:0 3px 0 #0e65ac}
+button.secondary{background:linear-gradient(#cbf6f0,#a9ebe5);color:var(--navy);border-color:#48b7b2;box-shadow:0 2px 0 #48b7b2}
+#login button{width:100%;margin:4px 0 0}
+.action-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:9px 0}
+.action-row button{width:100%;min-width:0;font-size:12px;white-space:normal;padding:8px 5px}
+.spacer-top{margin-top:10px!important}
+.badge{display:inline-flex;background:#d7f8ef;border:1px solid #67cbbb;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:750;margin:0 0 10px}
+#account #welcome{font-size:18px;overflow-wrap:anywhere;margin:0 0 7px}
+.market-shell{padding:0;background:transparent;min-width:0}
+.market-head{background:#cceeff;border:1px solid #9fdef5;border-radius:15px;padding:10px 12px;margin-bottom:9px}
+.market-head .panel-tag{display:none}
+.market-title{margin:0;font-size:16px;font-weight:840}
+.market-subtitle{font-size:12px;margin:3px 0 0;color:#366b87}
+.market-tabs{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:0 0 10px}
+.market-tab{width:100%;min-width:0;border-radius:14px;background:linear-gradient(#ffe86d,#ffcf31);border:2px solid var(--yellowline);box-shadow:0 3px 0 #d59b18;color:var(--navy);font-size:15px}
+.market-tab.active{background:linear-gradient(#33a4ff,#1887e6);border-color:#0870c9;box-shadow:0 3px 0 #095fa4;color:white}
+.market-panel{padding:11px 10px;background:#f9fdff;border:1px solid #c5e6f3;border-radius:15px;min-width:0}
+.market-panel h2{font-size:17px;margin:0 0 9px}
+.filters,.listing-row,.photo-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 9px}
+.filters>div,.listing-row>div,.photo-fields>div{min-width:0}
+.filters label,#listing-form label{font-size:11px;margin:0 0 4px}
+.filters input,.filters select,#listing-form input,#listing-form select{height:37px;min-height:37px;padding:7px;font-size:12px}
+.filters{margin-bottom:11px}
+.search-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.search-actions button{width:100%}
+#listing-form{display:flex;flex-direction:column;gap:6px}
+#listing-form>.listing-row{margin:2px 0}
+#listing-form>.photo-fields{margin:0 0 5px}
+#listing-form>.small{margin:0 0 3px}
+.photo-preview{border:1px dashed #b4dcea;min-height:35px;border-radius:10px;background:#edf9ff}
+#listing-form input[type=file]{height:auto;min-height:35px}
+#listing-form>button{width:100%;margin-top:5px}
+#listing-count{margin:9px 0 6px}
+.listing-grid{display:grid;gap:9px}
+.listing-grid>*{min-width:0;overflow-wrap:anywhere;border:1px solid #c5e6f3;background:white;padding:10px;border-radius:13px}
+#admin label.check{display:flex;align-items:flex-start;gap:8px}
+#admin label.check input{width:18px;flex:0 0 18px;margin-top:1px}
+#logout{width:100%;margin-top:10px}
+#message{margin:8px 0;font-size:13px}
+footer{display:none}
+@media(max-width:420px){main{padding:8px 9px 22px}.hero-media{border-radius:12px}.hero-content{padding:11px 3px 1px}section#access,section#registration,section#pending,section#account,section#admin{padding:12px 11px;border-radius:16px}.market-panel{padding:10px 8px}.filters{gap:7px}.filters input,.filters select{font-size:11px;padding:6px 5px}.intro{font-size:13px}}
+</style></head>
+<body>
+<main>
+<a class="home" href="https://gugubasel.ch">← Back to GUGU Basel</a>
+<section class="hero-card">
+<div class="hero-media image-frame" id="hero-media">
+<img alt="GUGU Basel header" class="boerse-header" loading="eager" src="/assets/Header.PNG"/>
+</div>
+<div class="hero-content">
+<h1>Gugu Börse</h1>
+<p class="intro">A platform for searching and selling second-hand kids’ items, exclusively accessible to the GUGU Basel WhatsApp Community.</p>
+</div>
+</section>
+<section id="access">
+<p>Use your approved WhatsApp number and your passkey to sign in.</p>
+<form id="login">
+<label for="phone" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">WhatsApp number</label>
+<input autocomplete="tel" id="phone" name="phone" placeholder="+41 79 123 45 67" required="" type="tel"/>
+<button>Sign in with a passkey</button>
+</form>
+<div class="action-row">
+<button class="secondary" id="open-register" type="button">New member? Register</button>
+<button class="secondary" id="open-recovery" type="button">Lost your passkey?</button>
+</div>
+<p class="small spacer-top">Community admission is checked by your admin. Passkeys protect account access</p>
+</section>
+<section hidden="" id="registration">
+<h2 id="register-heading">Join Gugu Börse</h2>
+<p id="register-explanation">Create a passkey, then send your registration reference privately to the community admin on WhatsApp. You can sign in after approval.</p>
+<form id="register">
+<label for="name">Display name</label>
+<input autocomplete="nickname" id="name" maxlength="80" name="name" required=""/>
+<label for="register-phone">Your WhatsApp number</label>
+<input autocomplete="tel" id="register-phone" name="phone" placeholder="+41 79 123 45 67" required="" type="tel"/>
+<button>Create my passkey</button>
+</form>
+<div class="spacer-top"><button class="secondary" id="back" type="button">Back to sign in</button></div>
+</section>
+<section hidden="" id="pending">
+<h2>One last step: WhatsApp approval</h2>
+<p>Send this reference from the WhatsApp number you registered. Your admin will check the sender and approve this exact registration.</p>
+<p class="reference" id="reference"></p>
+<p class="small">Reference expires after 48 hours. Keep it until approval.</p>
+<a class="button" id="whatsapp" rel="noopener noreferrer" target="_blank">Send reference on WhatsApp</a>
+<div class="action-row spacer-top">
+<button class="secondary" id="copy" type="button">Copy reference</button>
+<button class="secondary" id="pending-login" type="button">Go to sign in</button>
+</div>
+<p class="small spacer-top">If WhatsApp opens on another account, switch to your registered number before sending.</p>
+</section>
+<section hidden="" id="account">
+<h2 id="welcome"></h2>
+<p class="badge">Community-approved · Passkey protected</p>
+<div class="market-shell" id="marketplace">
+<div class="market-head">
+<div>
+<p class="panel-tag" style="background:#fff6dc;border:1px solid #f1de96;color:#836100;margin:0 0 8px;">Marketplace</p>
+<p class="market-title">Browse or post an item</p>
+<p class="market-subtitle">Find little treasures or pass yours along.</p>
+</div>
+</div>
+<div aria-label="Marketplace" class="market-tabs" role="tablist">
+<button aria-controls="search-panel" aria-selected="true" class="market-tab active" id="tab-search" role="tab" type="button">🔎 Search</button>
+<button aria-controls="sell-panel" aria-selected="false" class="market-tab secondary" id="tab-sell" role="tab" type="button">＋ Sell</button>
+</div>
+<div aria-labelledby="tab-sell" class="market-panel" hidden="" id="sell-panel" role="tabpanel">
+<section id="listing-editor" style="padding:0;margin:0;background:transparent;border:0;box-shadow:none;">
+<h2>Publish an item</h2>
+<form id="listing-form">
+<div class="listing-row">
+<div>
+<label for="listing-category">Category *</label>
+<select id="listing-category" name="categoryId" required=""></select>
+</div>
+<div>
+<label for="listing-subcategory">Sub-type</label>
+<select id="listing-subcategory" name="subcategoryId"><option value="">No sub-type</option></select>
+</div>
+</div>
+<label for="listing-title">Item title *</label>
+<input id="listing-title" maxlength="200" name="title" required=""/>
+<textarea aria-hidden="true" class="hidden-description" hidden="" id="listing-description" maxlength="2000" name="description"></textarea>
+<label>Photos (optional; maximum 2)</label>
+<p class="small">JPEG, PNG or WebP. Maximum 2 MB per photo and 4 MB combined.</p>
+<div class="photo-fields">
+<div>
+<label for="listing-photo-1">Photo 1</label>
+<input accept="image/jpeg,image/png,image/webp" id="listing-photo-1" type="file"/>
+<div class="photo-preview" id="listing-photo-preview-1"></div>
+</div>
+<div>
+<label for="listing-photo-2">Photo 2</label>
+<input accept="image/jpeg,image/png,image/webp" id="listing-photo-2" type="file"/>
+<div class="photo-preview" id="listing-photo-preview-2"></div>
+</div>
+</div>
+<div class="listing-row">
+<div>
+<label for="listing-condition">Condition *</label>
+<select id="listing-condition" name="condition" required="">
+<option value="very_good">Very good</option>
+<option value="good">Good</option>
+<option value="fair">Fair</option>
+</select>
+</div>
+<div>
+<label for="listing-gender">Gender *</label>
+<select id="listing-gender" name="gender" required="">
+<option value="Boy">Boy</option>
+<option value="Girl">Girl</option>
+<option value="Unisex">Unisex</option>
+</select>
+</div>
+</div>
+<div class="listing-row">
+<div>
+<label for="listing-size">Size</label>
+<input id="listing-size" maxlength="50" name="size" placeholder="e.g. 110, age 4–5"/>
+</div>
+<div>
+<label for="listing-price">Price (CHF)</label>
+<input id="listing-price" min="0" name="price" placeholder="Optional" step="0.01" type="number"/>
+</div>
+</div>
+<div class="listing-row">
+<div>
+<label for="listing-postcode">Swiss postcode</label>
+<input id="listing-postcode" inputmode="numeric" maxlength="4" name="postcode" pattern="[0-9]{4}" placeholder="e.g. 4051"/>
+</div>
+<div>
+<label for="listing-twint">Accept TWINT? *</label>
+<select id="listing-twint" name="twintAvailable" required="">
+<option value="1">Yes</option>
+<option value="0">No</option>
+</select>
+</div>
+</div>
+<button type="submit">Publish listing</button>
+<button class="secondary" id="cancel-listing" type="button">Cancel</button>
+</form>
+</section>
+</div>
+<div aria-labelledby="tab-search" class="market-panel" id="search-panel" role="tabpanel">
+<h2>Find an item</h2>
+<div class="filters">
+<div><label for="filter-category">Category</label><select id="filter-category"><option value="">All categories</option></select></div>
+<div><label for="filter-subcategory">Sub-type</label><select disabled="" id="filter-subcategory"><option value="">All sub-types</option></select></div>
+<div><label for="filter-condition">Condition</label><select id="filter-condition"><option value="">Any condition</option><option value="very_good">Very good</option><option value="good">Good</option><option value="fair">Fair</option></select></div>
+<div><label for="filter-gender">Gender</label><select id="filter-gender"><option value="">All genders</option><option value="Boy">Boy</option><option value="Girl">Girl</option><option value="Unisex">Unisex</option></select></div>
+<div><label for="filter-size">Size</label><input id="filter-size" maxlength="50" placeholder="Any size"/></div>
+<div><label for="filter-postcode">Postcode</label><input id="filter-postcode" inputmode="numeric" maxlength="4" placeholder="e.g. 4051"/></div>
+<div><label for="filter-twint">TWINT</label><select id="filter-twint"><option value="">Any</option><option value="1">Yes</option><option value="0">No</option></select></div>
+</div>
+<div class="search-actions">
+<button id="apply-filters" type="button">Search</button>
+<button class="secondary" id="clear-filters" type="button">Clear</button>
+</div>
+<p aria-live="polite" class="small" id="listing-count"></p>
+<div class="listing-grid" id="listing-results"></div>
+</div>
+</div>
+<div class="spacer-top"><button class="secondary" id="logout">Log out</button></div>
+</section>
+<section hidden="" id="admin">
+<h2>Approve a registration</h2>
+<p>Open the private WhatsApp message. Check the actual sender number and their community membership. Then enter the reference from that message.</p>
+<form id="approve">
+<label for="approval-ref">Registration reference from WhatsApp</label>
+<input autocomplete="off" id="approval-ref" maxlength="30" name="reference" required=""/>
+<label for="sender-phone">Actual WhatsApp sender number</label>
+<input autocomplete="off" id="sender-phone" name="senderPhone" placeholder="+41 79 123 45 67" required="" type="tel"/>
+<label class="check"><input id="community-confirmed" required="" type="checkbox"/> I checked the actual WhatsApp sender and their community membership.</label>
+<label class="check"><input id="recovery" type="checkbox"/> Passkey recovery: replace their existing passkey and end all sessions.</label>
+<button>Approve this registration</button>
+</form>
+<h3 class="spacer-top">Pending registrations</h3>
+<p class="small">A submitted number or display name is unverified until you check WhatsApp. Do not approve from this list alone.</p>
+<button class="secondary" id="refresh" type="button">Refresh lists</button>
+<div id="registrations"></div>
+<h3 class="spacer-top">Approved members</h3>
+<div id="members"></div>
+</section>
+<p aria-live="polite" id="message" role="status"></p>
+</main>
+</body>
+</html>

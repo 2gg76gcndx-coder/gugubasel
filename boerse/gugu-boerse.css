@@ -1,0 +1,69 @@
+
+:root{--navy:#073f60;--blue:#178ded;--blue2:#0d70c7;--sky:#e4f7ff;--cyan:#caeeff;--mint:#c7f4eb;--mintline:#44bdb1;--yellow:#ffdb47;--yellowline:#ebb92e;--white:#fff;--shadow:0 7px 20px rgba(10,84,119,.10)}
+*,*::before,*::after{box-sizing:border-box}
+html{margin:0;padding:0;width:100%;overflow-x:hidden;font-size:16px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;padding:0;width:100%;min-width:0;max-width:100%;overflow-x:hidden;background:linear-gradient(180deg,#e7f8ff,#dff4ff);color:var(--navy);font:500 15px/1.42 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+main{width:100%;max-width:760px;margin:0 auto;padding:10px 12px 28px}
+a.home{display:inline-flex;align-items:center;min-height:32px;margin:0 0 7px;padding:6px 10px;background:#fff;border:1px solid #b8e5f4;border-radius:999px;color:var(--navy);font-size:12px;font-weight:750;text-decoration:none}
+.hero-card{display:block;padding:0;margin:0 0 12px;border:0;border-radius:0;background:transparent;box-shadow:none;min-width:0}
+.hero-media{display:block;width:100%;height:auto!important;min-height:0!important;max-height:none!important;overflow:hidden;border-radius:18px;border:2px solid rgba(255,255,255,.9);background:#d7f5ff;box-shadow:var(--shadow)}
+.hero-media img,.hero-media img.boerse-header{display:block!important;width:100%!important;max-width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;object-position:center!important;aspect-ratio:auto;border:0;margin:0}
+.hero-content{padding:12px 5px 1px}
+h1{font-size:clamp(27px,7vw,36px);font-weight:850;letter-spacing:-.045em;line-height:1.06;margin:0 0 8px;color:var(--navy)}
+.intro{margin:0;color:var(--navy);font-size:14px;font-weight:620;line-height:1.45;max-width:650px}
+section#access,section#registration,section#pending,section#account,section#admin{display:block;margin:0 0 12px;padding:15px 13px;background:#fff;border:1px solid #cce9f6;border-radius:19px;box-shadow:var(--shadow);min-width:0}
+section#access>p:first-child{font-size:13px;margin:0 0 10px}
+h2,h3{color:var(--navy);letter-spacing:-.025em;line-height:1.17}
+h2{font-size:20px;margin:0 0 9px;font-weight:840}
+h3{font-size:16px;margin:12px 0 8px}
+p{margin:0 0 10px}
+.small{color:#426e83;font-size:11px;line-height:1.42}
+#login{display:flex;flex-direction:column;gap:7px}
+label{display:block;font-size:12px;font-weight:750;color:var(--navy);margin:3px 0 4px}
+input:not([type=checkbox]),select,textarea{display:block;width:100%;min-width:0;max-width:100%;height:40px;min-height:40px;border:1px solid #b9dce9;border-radius:10px;background:#fafdff;color:var(--navy);padding:8px 10px;font-size:13px}
+input[type=file]{height:auto;min-height:36px;padding:5px;font-size:11px}
+input:focus,select:focus,textarea:focus{outline:2px solid #5eb8f0;outline-offset:1px}
+button,.button{display:inline-flex;align-items:center;justify-content:center;gap:5px;border:1px solid #1475bd;border-radius:12px;background:linear-gradient(#33a0ff,#1783de);color:#fff;font-size:13px;font-weight:820;min-height:39px;padding:9px 11px;text-align:center;text-decoration:none;box-shadow:0 3px 0 #0e65ac}
+button.secondary{background:linear-gradient(#cbf6f0,#a9ebe5);color:var(--navy);border-color:#48b7b2;box-shadow:0 2px 0 #48b7b2}
+#login button{width:100%;margin:4px 0 0}
+.action-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:9px 0}
+.action-row button{width:100%;min-width:0;font-size:12px;white-space:normal;padding:8px 5px}
+.spacer-top{margin-top:10px!important}
+.badge{display:inline-flex;background:#d7f8ef;border:1px solid #67cbbb;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:750;margin:0 0 10px}
+#account #welcome{font-size:18px;overflow-wrap:anywhere;margin:0 0 7px}
+.market-shell{padding:0;background:transparent;min-width:0}
+.market-head{background:#cceeff;border:1px solid #9fdef5;border-radius:15px;padding:10px 12px;margin-bottom:9px}
+.market-head .panel-tag{display:none}
+.market-title{margin:0;font-size:16px;font-weight:840}
+.market-subtitle{font-size:12px;margin:3px 0 0;color:#366b87}
+.market-tabs{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:0 0 10px}
+.market-tab{width:100%;min-width:0;border-radius:14px;background:linear-gradient(#ffe86d,#ffcf31);border:2px solid var(--yellowline);box-shadow:0 3px 0 #d59b18;color:var(--navy);font-size:15px}
+.market-tab.active{background:linear-gradient(#33a4ff,#1887e6);border-color:#0870c9;box-shadow:0 3px 0 #095fa4;color:white}
+.market-panel{padding:11px 10px;background:#f9fdff;border:1px solid #c5e6f3;border-radius:15px;min-width:0}
+.market-panel h2{font-size:17px;margin:0 0 9px}
+.filters,.listing-row,.photo-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 9px}
+.filters>div,.listing-row>div,.photo-fields>div{min-width:0}
+.filters label,#listing-form label{font-size:11px;margin:0 0 4px}
+.filters input,.filters select,#listing-form input,#listing-form select{height:37px;min-height:37px;padding:7px;font-size:12px}
+.filters{margin-bottom:11px}
+.search-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.search-actions button{width:100%}
+#listing-form{display:flex;flex-direction:column;gap:6px}
+#listing-form>.listing-row{margin:2px 0}
+#listing-form>.photo-fields{margin:0 0 5px}
+#listing-form>.small{margin:0 0 3px}
+.photo-preview{border:1px dashed #b4dcea;min-height:35px;border-radius:10px;background:#edf9ff}
+#listing-form input[type=file]{height:auto;min-height:35px}
+#listing-form>button{width:100%;margin-top:5px}
+#listing-count{margin:9px 0 6px}
+.listing-grid{display:grid;gap:9px}
+.listing-grid>*{min-width:0;overflow-wrap:anywhere;border:1px solid #c5e6f3;background:white;padding:10px;border-radius:13px}
+#admin label.check{display:flex;align-items:flex-start;gap:8px}
+#admin label.check input{width:18px;flex:0 0 18px;margin-top:1px}
+#logout{width:100%;margin-top:10px}
+#message{margin:8px 0;font-size:13px}
+footer{display:none}
+@media(max-width:420px){main{padding:8px 9px 22px}.hero-media{border-radius:12px}.hero-content{padding:11px 3px 1px}section#access,section#registration,section#pending,section#account,section#admin{padding:12px 11px;border-radius:16px}.market-panel{padding:10px 8px}.filters{gap:7px}.filters input,.filters select{font-size:11px;padding:6px 5px}.intro{font-size:13px}}
