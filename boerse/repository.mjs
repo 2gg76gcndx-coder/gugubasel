@@ -47,9 +47,9 @@ export function repository(db) {
        item_condition,gender,item_size,postcode,twint_available,
        listing_status,price_chf,image1_path,image2_path,created_at,updated_at)
     VALUES
-      (:id,:sellerId,:title,:description,:categoryId,:subcategoryId,
-       :condition,:gender,:size,:postcode,:twint,:status,:price,
-       :image1Path,:image2Path,SYSTIMESTAMP,SYSTIMESTAMP)`,l),
+      (:p_id,:p_sellerId,:p_title,:p_description,:p_categoryId,:p_subcategoryId,
+       :p_condition,:p_gender,:p_size,:p_postcode,:p_twint,:p_status,:p_price,
+       :p_image1Path,:p_image2Path,SYSTIMESTAMP,SYSTIMESTAMP)`,Object.fromEntries(Object.entries(l).map(([key,value])=>['p_'+key,value]))),
   audit:(actor,action,target)=>db.run('INSERT INTO gb_audit(id,actor_id,action,target_id) VALUES (:id,:actor,:action,:target)',{id:randomUUID(),actor,action,target}),
  };
 }
