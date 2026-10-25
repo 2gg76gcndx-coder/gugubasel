@@ -222,3 +222,35 @@ article.pin-host .event-meta,article.pin-host>.autumn-details-cell,article.pin-h
 /* Use the cafe cards' 9px photo inset: neighbouring pictures have breathing room. */
 #guides-panel .family-guides #herbstmesse-2026-guide .autumn-row>.autumn-photo-cell{padding:9px!important;box-sizing:border-box!important}
 #guides-panel .family-guides #herbstmesse-2026-guide .autumn-photo-frame{min-height:155px!important;box-sizing:border-box!important;border-radius:15px!important}
+
+/* Offer indices use the same blue circle and inline placement as cafe indices. */
+#deals-panel .deal-copy .deal-name .offer-entry-index{
+ display:inline-flex!important;position:static!important;align-items:center!important;justify-content:center!important;vertical-align:middle!important;
+ flex:none!important;min-width:23px!important;width:23px!important;height:23px!important;padding:0!important;margin:0 5px 3px 0!important;
+ box-sizing:border-box!important;border-radius:50%!important;background:#117ed5!important;color:#fff!important;
+ font-family:"Arial Rounded MT Bold","Avenir Next Rounded","SF Pro Rounded","Trebuchet MS",Arial,sans-serif!important;
+ font-size:12px!important;font-weight:900!important;line-height:1!important;letter-spacing:normal!important;text-decoration:none!important;
+ box-shadow:0 1px 3px rgba(7,59,82,.16)!important;
+}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.deal-copy{padding-top:7px!important}
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-text-column .autumn-number-line{display:inline-flex!important;height:auto!important;min-height:0!important;margin:0 5px 3px 0!important;vertical-align:middle!important}
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-text-column .autumn-name-link>.notranslate{display:inline!important}
+@media(max-width:360px){
+ #deals-panel .deal-copy .deal-name .offer-entry-index{min-width:21px!important;width:21px!important;height:21px!important;font-size:11px!important;margin-right:3px!important}
+}
+/* Current and reference prices share one line; discount gets the following line. */
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack{
+ display:grid!important;grid-template-columns:minmax(0,max-content) minmax(0,max-content)!important;
+ justify-content:center!important;align-content:start!important;align-items:center!important;gap:4px 6px!important;
+}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack>.new{grid-column:1!important;grid-row:1!important;margin:0!important}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack>.old{grid-column:2!important;grid-row:1!important;margin:0!important;white-space:normal!important;overflow-wrap:anywhere!important}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack>.discount{grid-column:1 / -1!important;grid-row:2!important;justify-self:center!important}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack:not(:has(.old)){grid-template-columns:minmax(0,max-content)!important}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack{padding-bottom:38px!important}
+#deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack>.new{white-space:nowrap!important}
+@media(max-width:360px){
+ #deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack{column-gap:4px!important}
+ #deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack>.new{font-size:14px!important;padding-inline:4px!important}
+ #deals-panel :is(#kids-deals-content,#family-deals-content) article.deal-card>.price-stack>.old{font-size:13px!important}
+}
