@@ -215,6 +215,16 @@ export function createService({transaction,rateTransaction,webauthn,secret}) {
         throw error;
       }
     },
+    async updateListingStatus(raw,input){
+      if(!input || typeof input.id!=='string' || !['available','reserved','sold'].includes(input.status)) throw fail('Invalid listing status.',400);
+      return transaction(async repo=>{
+        const member=await current(repo,raw,false,true);
+        const listing=await repo.listingOwner(input.id);
+        if(!listing || listing.SELLER_ID!==member.ID) throw fail('Listing unavailable.',403);
+        await repo.setListingStatus(input.id,input.status);
+        return {ok:true};
+      });
+    },
     async me(raw){return transaction(async repo=>publicMember(await current(repo,raw)));},
     async logout(raw){if(raw)await transaction(repo=>repo.deleteSession(hash(raw)));},
     async members(raw){return transaction(async repo=>{await current(repo,raw,true);return repo.members();});},
