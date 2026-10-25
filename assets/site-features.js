@@ -87,7 +87,7 @@
     return clone;
   }
   function setupPins() {
-    document.querySelectorAll('[data-pin-key]').forEach(el => {
+    document.querySelectorAll('article[data-pin-key]').forEach(el => {
       const key = el.dataset.pinKey;
       const title = titleElement(el);
       const label = cleanClone(title);
@@ -96,7 +96,7 @@
       if (!catalog.has(key)) catalog.set(key, { el, label, meta, image: image ? image.getAttribute('src') : null, photo:el.style.getPropertyValue('--photo-front'), kind:el.dataset.pinKind });
       const button = document.createElement('button');
       button.type = 'button'; button.className = 'pin-button'; button.dataset.pinRef = key;
-      button.innerHTML = '<span aria-hidden="true">📌</span>';
+      button.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M16 2l6 6-2 2-2-1-4 4v4l-2 2-3-4-6 6-1-1 6-6-4-3 2-2h4l4-4-1-2z"/></svg>';
       const host = el.tagName === 'DETAILS' ? el.querySelector(':scope > summary') : el;
       host.classList.add('pin-host'); host.appendChild(button);
     });
@@ -108,7 +108,7 @@
       button.setAttribute('aria-label', (language === 'de' ? (active?'Nicht mehr merken':'Merken') : (active?'Unpin item':'Pin item')));
       button.title = button.getAttribute('aria-label');
     });
-    document.querySelectorAll('.pin-count').forEach(el=>{el.textContent=String(pins.size);});
+    document.querySelectorAll('.pin-count').forEach(el=>{el.textContent=String(pins.size);el.hidden=pins.size===0;});
   }
   function renderPins() {
     const list = document.getElementById('pins-list');
@@ -130,7 +130,7 @@
       if(label.tagName==='A'){const text=document.createElement('span');text.append(...label.childNodes);open.appendChild(text);}else open.appendChild(label);
       copy.appendChild(open);
       if(item.meta){const meta=document.createElement('div');meta.className='pinned-meta';meta.appendChild(item.meta.cloneNode(true));copy.appendChild(meta);}
-      const remove=document.createElement('button');remove.type='button';remove.className='pin-button';remove.dataset.pinRef=key;remove.innerHTML='<span aria-hidden="true">📌</span>';
+      const remove=document.createElement('button');remove.type='button';remove.className='pin-button';remove.dataset.pinRef=key;remove.innerHTML='<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M16 2l6 6-2 2-2-1-4 4v4l-2 2-3-4-6 6-1-1 6-6-4-3 2-2h4l4-4-1-2z"/></svg>';
       card.append(photo,copy,remove);list.appendChild(card);
     });
     const empty=document.getElementById('pins-empty');if(empty)empty.hidden=list.children.length>0;
@@ -138,6 +138,7 @@
   }
   async function reveal(key) {
     const item=catalog.get(key);if(!item)return;
+    const dialog=document.getElementById('pins-dialog');if(dialog?.open)dialog.close();
     const el=item.el,panel=el.closest('.panel'),day=el.closest('.day-panel');
     let radio;
     if(panel?.id==='events-panel')radio=document.getElementById(day?.id==='sun-panel'?'tab-weekend-sun':'tab-weekend-sat');
@@ -161,7 +162,13 @@
   function init() {
     try { const saved=JSON.parse(readStorage(pinsKey,'[]'));if(Array.isArray(saved))pins=new Set(saved.filter(x=>typeof x==='string'&&x.startsWith('pin-'))); } catch (_) { pins=new Set(); }
     setupPins();
+    if(document.getElementById('events-panel')){pins=new Set([...pins].filter(key=>catalog.has(key)));writeStorage(pinsKey,JSON.stringify([...pins]));}
+    const dialog=document.getElementById('pins-dialog');
+    function openPins(){if(!dialog)return;renderPins();if(!dialog.open)dialog.showModal();document.querySelectorAll('[data-open-pins]').forEach(x=>x.setAttribute('aria-expanded','true'));}
+    if(dialog){dialog.addEventListener('close',()=>document.querySelectorAll('[data-open-pins]').forEach(x=>x.setAttribute('aria-expanded','false')));dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});}
     document.addEventListener('click',event=>{
+      if(event.target.closest('[data-open-pins]')){event.preventDefault();openPins();return;}
+      if(event.target.closest('[data-close-pins]')){dialog?.close();return;}
       const button=event.target.closest('[data-site-language]');
       if(button){event.preventDefault();setLanguage(button.dataset.siteLanguage,true);return;}
       const pin=event.target.closest('[data-pin-ref]');
@@ -172,7 +179,7 @@
     const status=document.createElement('p');status.id='pins-status';status.className='sr-only';status.setAttribute('role','status');document.body.appendChild(status);
     renderPins();setLanguage(readStorage(languageKey,'en'),false);
     const query=new URLSearchParams(location.search);
-    if(query.get('tab')==='pinned'){const tab=document.getElementById('tab-pinned');if(tab)tab.checked=true;}
+    if(query.get('tab')==='pinned')openPins();
     if(query.get('pin'))reveal(query.get('pin'));
     window.addEventListener('storage',event=>{if(event.key===pinsKey){try{const saved=JSON.parse(event.newValue||'[]');if(Array.isArray(saved))pins=new Set(saved.filter(x=>typeof x==='string'&&x.startsWith('pin-')));}catch(_){}renderPins();syncButtons();}if(event.key===languageKey)setLanguage(event.newValue,false);});
     window.GuguSite={setLanguage,getLanguage:()=>language,getPins:()=>[...pins]};

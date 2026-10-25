@@ -38,3 +38,69 @@ summary.pin-host .guide-caret{display:none!important}
 .deal-photo.image-unavailable::after{content:"Photo unavailable"}html[lang=de] .deal-photo.image-unavailable::after{content:"Foto nicht verfügbar"}
 
 .main-tabs > label.tall-main-tab.pinned-main-tab{height:34px!important;min-height:34px!important}
+
+/* Larger labels in the three primary chapter pills. */
+.main-tabs{grid-template-columns:1.3fr 1fr 1.15fr!important}
+.main-tabs .weekend-main-hit .tab-text,
+.main-tabs label[for="tab-guides"] .tab-text,
+.main-tabs .deals-main-hit .tab-text{font-size:17px!important;line-height:1.08!important;letter-spacing:-.025em!important}
+.main-tabs .weekend-day-choice,.main-tabs .deals-subtab-choice{font-size:15px!important;line-height:1.05!important;letter-spacing:-.035em!important}
+.main-tabs>.weekend-combo-tab,.main-tabs>.deals-combo-tab,.main-tabs>label[for="tab-guides"]{height:78px!important;min-height:78px!important}
+.main-tabs>.weekend-combo-tab,.main-tabs>.deals-combo-tab{grid-template-rows:minmax(0,1fr) 29px!important}
+.main-tabs .weekend-main-hit,.main-tabs .deals-main-hit,.main-tabs>label[for="tab-guides"]{gap:4px!important;min-width:0!important;padding-left:3px!important;padding-right:3px!important}
+@media(max-width:350px){.main-tabs .tab-icon{width:15px!important;height:15px!important;flex-basis:15px!important}.main-tabs .weekend-main-hit,.main-tabs .deals-main-hit{gap:2px!important}.main-tabs>label[for="tab-guides"]{flex-direction:column;gap:2px!important}}
+
+/* Herbstmesse introduction uses the chapter heading face, one pixel smaller. */
+#guides-panel .family-guides #herbstmesse-2026-guide .evergreen-intro,
+#guides-panel .family-guides #herbstmesse-2026-guide .evergreen-intro p,
+#guides-panel .family-guides #herbstmesse-2026-guide .evergreen-intro strong{
+ font-family:"Arial Rounded MT Bold","Avenir Next Rounded","SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Trebuchet MS",Arial,sans-serif!important;
+ font-size:14px!important;font-weight:900!important;font-style:normal!important;line-height:1.45!important;color:var(--ink,#083b59)!important;
+}
+/* Legacy 27px link caps clipped multi-line ride titles and pulled descriptions over them. */
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-text-column .autumn-name-cell,
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-text-column .autumn-name-link,
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-text-column .autumn-name-link>span,
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-text-column .autumn-details-cell,
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-text-column .autumn-detail-line{
+ position:static!important;height:auto!important;max-height:none!important;min-height:0!important;flex:0 0 auto!important;overflow:visible!important;transform:none!important;float:none!important;
+}
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-text-column .autumn-name-link{display:block!important}
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-text-column .autumn-name-link>.notranslate{display:block!important}
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-text-column .autumn-number-line{display:flex!important}
+
+/* Pins sit at the lower right; their single-color icon reflects saved state. */
+button.pin-button{top:auto!important;bottom:6px!important;right:6px!important;transform:none!important;color:#8a949e!important;opacity:1!important;background:#fff!important;border-color:#d7dfe4!important}
+button.pin-button.is-pinned{color:#d9313d!important;background:#fff!important;border-color:#e7b2b7!important}
+button.pin-button svg{width:19px;height:19px;display:block;fill:currentColor}
+summary.pin-host .pin-button{top:auto!important;bottom:3px!important;right:5px!important;transform:none!important}
+article.pin-host .autumn-name-cell,article.pin-host .event-name{padding-right:10px!important}
+article.pin-host>.deal-copy{padding-right:6px!important}
+article.pin-host .event-meta,article.pin-host>.autumn-details-cell,article.pin-host>.price-stack{padding-bottom:42px!important}
+#guides-panel .family-guides #herbstmesse-2026-guide .autumn-row>.autumn-text-column{padding-bottom:42px!important}
+.pinned-preview .pinned-copy{padding-bottom:42px}
+.app .panels .panel .main-tabs .weekend-day-split>label.weekend-day-choice,
+.app .panels .panel .main-tabs .deals-subtab-split>label.deals-subtab-choice{font-size:15px!important;line-height:1.05!important;letter-spacing:-.035em!important}
+.main-tabs{grid-template-columns:1.6fr 1fr 1.2fr!important}
+@media(max-width:350px){.app .panels .panel .main-tabs .weekend-day-split>label.weekend-day-choice,.app .panels .panel .main-tabs .deals-subtab-split>label.deals-subtab-choice{letter-spacing:-.08em!important}}
+@media(max-width:350px){.main-tabs{margin-left:-10px!important;margin-right:-10px!important}}
+/* Saved items open from the square next to EN, without an extra section tab. */
+.gugu-language-header{display:grid!important;grid-template-columns:38px 38px;grid-template-rows:auto auto;gap:4px!important}
+.gugu-language-header [data-site-language=en]{grid-column:1;grid-row:1}
+.gugu-language-header [data-site-language=de]{grid-column:1;grid-row:2}
+.gugu-language-header .pins-launcher{grid-column:2;grid-row:1}
+.pins-launcher{position:relative;display:inline-flex!important;align-items:center;justify-content:center;width:38px!important;height:34px!important;min-height:34px!important;box-sizing:border-box;border:1px solid #b8dbe9!important;border-radius:9px!important;background:#fff!important;color:#8a949e!important;padding:0!important;cursor:pointer;flex:0 0 38px;text-decoration:none}
+.pins-launcher svg{width:21px;height:21px;fill:currentColor}
+.pins-launcher[aria-expanded=true]{color:#d9313d!important}
+.pins-launcher .pin-count{position:absolute;right:-3px;top:-5px;min-width:15px;height:15px;border-radius:10px;background:#d9313d;color:white;font:700 9px/15px Arial,sans-serif;text-align:center;padding:0 2px}
+.pins-launcher .pin-count[hidden]{display:none!important}
+.languages .pins-launcher.standalone-pins{padding:0!important;background:#fff!important;color:#8a949e!important;font-size:inherit}
+#pins-dialog{width:min(94vw,430px);max-height:85vh;box-sizing:border-box;margin:auto;padding:42px 12px 12px;border:1px solid #c8e4ef;border-radius:20px;background:#f0faff;color:#083b59;box-shadow:0 18px 65px #083b5940;overflow-y:auto}
+#pins-dialog::backdrop{background:rgba(4,35,53,.45)}
+#pins-dialog .pins-close{position:absolute;top:6px;right:9px;border:0;background:transparent;color:#547180;font:28px/1 Arial,sans-serif;cursor:pointer;min-width:32px;min-height:32px}
+#pins-dialog #pins-list{padding-bottom:0}
+#pins-dialog #pins-empty{padding:8px;line-height:1.5}
+#pins-dialog:focus-visible,.pins-launcher:focus-visible,.pins-close:focus-visible{outline:3px solid #0d7ddb;outline-offset:2px}
+@media(max-width:350px){.app .panels .panel .main-tabs .weekend-day-split>label.weekend-day-choice,.app .panels .panel .main-tabs .deals-subtab-split>label.deals-subtab-choice{letter-spacing:-.11em!important}}
+.gugu-language-header{align-items:start!important}
+.gugu-language-header .gugu-lang,.pins-launcher{width:38px!important;height:38px!important;min-height:38px!important}
