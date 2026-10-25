@@ -190,6 +190,25 @@
   }
   function init() {
     try { const saved=JSON.parse(readStorage(pinsKey,'[]'));if(Array.isArray(saved))pins=new Set(saved.filter(x=>typeof x==='string'&&x.startsWith('pin-'))); } catch (_) { pins=new Set(); }
+    // Add the same end-of-page action to both weekend days, guides and offers.
+    document.querySelectorAll('#sat-panel,#sun-panel,#guides-panel,#deals-panel,body.guide-page main').forEach(panel=>{
+      const footer=document.createElement('div');footer.className='move-up-section';
+      const button=document.createElement('button');button.type='button';button.className='move-up-button';button.textContent='Move up ↑';
+      button.addEventListener('click',()=>{
+        window.scrollTo({top:0,behavior:'instant'});
+        const heading=document.querySelector('.hero-art,.topbar,.guide-topbar,header,.app,.shell');
+        if(heading){heading.setAttribute('tabindex','-1');heading.focus({preventScroll:true});}
+      });
+      footer.appendChild(button);panel.appendChild(footer);
+    });
+    const rail=document.createElement('input');rail.type='range';rail.className='page-scrollbar';
+    rail.min='0';rail.max='1000';rail.step='1';rail.value='0';rail.setAttribute('aria-label','Page scroll position');
+    rail.setAttribute('aria-orientation','vertical');document.body.appendChild(rail);
+    const scrollExtent=()=>Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
+    const syncRail=()=>{const extent=scrollExtent();rail.hidden=extent<1;rail.value=extent?Math.round(window.scrollY/extent*1000):0;rail.setAttribute('aria-valuetext',Math.round(Number(rail.value)/10)+'%');};
+    rail.addEventListener('input',()=>window.scrollTo({top:Number(rail.value)/1000*scrollExtent(),behavior:'instant'}));
+    window.addEventListener('scroll',syncRail,{passive:true});window.addEventListener('resize',syncRail);
+    new ResizeObserver(syncRail).observe(document.body);syncRail();
     setupPins();
     if(document.getElementById('events-panel')){pins=new Set([...pins].filter(key=>catalog.has(key)));writeStorage(pinsKey,JSON.stringify([...pins]));}
     const dialog=document.getElementById('pins-dialog');
