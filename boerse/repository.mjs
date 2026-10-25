@@ -50,6 +50,8 @@ export function repository(db) {
       (:p_id,:p_sellerId,:p_title,:p_description,:p_categoryId,:p_subcategoryId,
        :p_condition,:p_gender,:p_size,:p_postcode,:p_twint,:p_status,:p_price,
        :p_image1Path,:p_image2Path,SYSTIMESTAMP,SYSTIMESTAMP)`,Object.fromEntries(Object.entries(l).map(([key,value])=>['p_'+key,value]))),
+  listingOwner:id=>db.one('SELECT seller_id FROM gb_listings WHERE id=:id',{id}),
+  setListingStatus:(id,status)=>db.run('UPDATE gb_listings SET listing_status=:status,updated_at=SYSTIMESTAMP WHERE id=:id',{id,status}),
   audit:(actor,action,target)=>db.run('INSERT INTO gb_audit(id,actor_id,action,target_id) VALUES (:id,:actor,:action,:target)',{id:randomUUID(),actor,action,target}),
  };
 }
