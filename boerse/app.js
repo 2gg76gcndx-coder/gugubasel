@@ -19,7 +19,7 @@ function openRegistration(recovery=false){
 }
 async function show(m){
  panel('account');
- $('welcome').textContent=`Welcome, ${m.name}`;
+
  $('admin').hidden=m.role!=='admin';
  try{await loadMarketplace();}catch(e){message('Marketplace could not load. '+e.message,true);}
  if(m.role==='admin')await lists();
