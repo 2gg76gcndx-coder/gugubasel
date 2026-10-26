@@ -1,0 +1,104 @@
+name: GUGU Borse - Oracle
+
+on:
+  push:
+    branches: [boerse-open-registration]
+    paths:
+      - 'boerse/**'
+      - 'scripts/boerse/**'
+      - '.github/workflows/boerse-oracle.yml'
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Publish website/backend, or check existing service and Oracle connection
+        type: choice
+        options: [check, deploy]
+        default: check
+
+permissions:
+  contents: read
+
+concurrency:
+  group: boerse-oracle-production
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      commit: ${{ steps.source.outputs.commit }}
+    steps:
+      - name: Get Borse source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'push' && github.sha || 'boerse-open-registration' }}
+          persist-credentials: false
+      - name: Record exact source commit
+        id: source
+        run: echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check application syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in boerse/*.mjs boerse/app.js; do node --check "$file"; done
+          bash -n scripts/boerse/deploy.sh scripts/boerse/check.sh
+          python3 scripts/boerse/test_deploy.py
+  oracle:
+    needs: validate
+    if: vars.BOERSE_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: boerse-production
+    steps:
+      - name: Get Borse source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.validate.outputs.commit }}
+          persist-credentials: false
+      - name: Connect and run operation
+        shell: bash
+        env:
+          SSH_HOST: ${{ secrets.BOERSE_SSH_HOST }}
+          SSH_USER: ${{ secrets.BOERSE_SSH_USER }}
+          SSH_KEY: ${{ secrets.BOERSE_SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.BOERSE_SSH_KNOWN_HOSTS }}
+          APP_DIR: ${{ vars.BOERSE_APP_DIR }}
+          SERVICE: ${{ vars.BOERSE_SERVICE }}
+          OPERATION: ${{ github.event_name == 'push' && 'deploy' || inputs.operation }}
+        run: |
+          set -euo pipefail
+          for key in SSH_HOST SSH_USER SSH_KEY SSH_KNOWN_HOSTS APP_DIR SERVICE; do
+            [[ -n "${!key}" ]] || { echo "Missing setup: $key"; exit 1; }
+          done
+          [[ "$SSH_HOST" =~ ^[a-zA-Z0-9.-]+$ && "$SSH_USER" =~ ^[a-zA-Z_][a-zA-Z0-9_-]*$ ]]
+          [[ "$APP_DIR" == /* && "$APP_DIR" != / && "$SERVICE" =~ ^[a-zA-Z0-9_-]+\.service$ ]]
+          [[ "$OPERATION" == deploy || "$OPERATION" == check ]]
+          umask 077
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/boerse
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          unset SSH_KEY SSH_KNOWN_HOSTS
+          opts=(-i "$HOME/.ssh/boerse" -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=15 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
+          target="$SSH_USER@$SSH_HOST"
+          remote=$(ssh "${opts[@]}" "$target" 'umask 077; mktemp -d /tmp/gugu-deploy.XXXXXXXX')
+          [[ "$remote" =~ ^/tmp/gugu-deploy\.[a-zA-Z0-9]+$ ]]
+          cleanup() {
+            ssh "${opts[@]}" "$target" "rm -rf -- '$remote'" || true
+            rm -f ~/.ssh/boerse
+          }
+          trap cleanup EXIT
+          scp "${opts[@]}" scripts/boerse/check.sh scripts/boerse/deploy.sh "$target:$remote/"
+          if [[ "$OPERATION" == deploy ]]; then
+            commit=$(git rev-parse HEAD)
+            tar -czf "$RUNNER_TEMP/boerse.tar.gz" -C boerse app.js bootstrap.mjs gugu-boerse.css http.mjs index.html marketplace.mjs oracle.mjs package-lock.json package.json repository.mjs security.mjs server.mjs service.mjs webauthn.mjs
+            scp "${opts[@]}" "$RUNNER_TEMP/boerse.tar.gz" "$target:$remote/boerse.tar.gz"
+            printf -v command 'bash %q %q %q %q %q' "$remote/deploy.sh" "$APP_DIR" "$SERVICE" "$commit" "$remote/boerse.tar.gz"
+          else
+            printf -v command 'bash %q %q %q' "$remote/check.sh" "$APP_DIR" "$SERVICE"
+          fi
+          ssh "${opts[@]}" "$target" "$command"
