@@ -231,6 +231,30 @@ export function createService({transaction,rateTransaction,webauthn,secret,admin
         throw error;
       }
     },
+    async favourites(raw){return transaction(async repo=>{const m=await current(repo,raw);return repo.favourites(m.ID);});},
+    async setFavourite(raw,input){
+      const id=String(input.id||'');
+      if(!/^[0-9a-f-]{36}$/i.test(id)||typeof input.favourite!=='boolean')throw fail('Invalid favourite request.',400);
+      return transaction(async repo=>{
+        const m=await current(repo,raw,false,true);
+        if(input.favourite){if(!await repo.listingOwner(id))throw fail('Listing not found.',404);await repo.addFavourite(m.ID,id);}
+        else await repo.removeFavourite(m.ID,id);
+        return {ok:true};
+      });
+    },
+    async setListingStatus(raw,input){
+      const id=String(input.id||''),status=String(input.status||'').toLowerCase();
+      if(!/^[0-9a-f-]{36}$/i.test(id)||!['available','reserved','sold'].includes(status))throw fail('Invalid listing status.',400);
+      return transaction(async repo=>{
+        const m=await current(repo,raw,false,true);
+        const listing=await repo.listingOwner(id,true);
+        if(!listing)throw fail('Listing not found.',404);
+        if(listing.SELLER_ID!==m.ID)throw fail('Only the listing owner can change its status.',403);
+        await repo.updateListingStatus(id,status);
+        await repo.audit(m.ID,'listing-status-'+status,id);
+        return {ok:true,status};
+      });
+    },
     async me(raw){return transaction(async repo=>publicMember(await current(repo,raw)));},
     async logout(raw){if(raw)await transaction(repo=>repo.deleteSession(hash(raw)));},
     async members(raw){return transaction(async repo=>{await current(repo,raw,true);return repo.members();});},

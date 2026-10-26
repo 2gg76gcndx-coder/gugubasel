@@ -49,6 +49,15 @@ export function repository(db) {
       (:id,:sellerId,:title,:description,:categoryId,:subcategoryId,
        :condition,:gender,:size,:postcode,:twint,:status,:price,
        :image1Path,:image2Path,SYSTIMESTAMP,SYSTIMESTAMP)`,l),
+   listingOwner:(id,lock=false)=>db.one(`SELECT id,seller_id,listing_status FROM gb_listings WHERE id=:id${lock?' FOR UPDATE':''}`,{id}),
+   updateListingStatus:(id,status)=>db.run('UPDATE gb_listings SET listing_status=:status,updated_at=SYSTIMESTAMP WHERE id=:id',{id,status}),
+   favourites:memberId=>db.all(`SELECT l.ID,l.TITLE,l.LISTING_STATUS,l.PRICE_CHF,l.IMAGE1_PATH
+     FROM gb_favourites f JOIN gb_listings l ON l.id=f.listing_id
+     WHERE f.member_id=:memberId ORDER BY f.created_at DESC FETCH FIRST 100 ROWS ONLY`,{memberId}),
+   addFavourite:(memberId,listingId)=>db.run(`MERGE INTO gb_favourites f USING (SELECT :memberId member_id,:listingId listing_id FROM dual) v
+     ON (f.member_id=v.member_id AND f.listing_id=v.listing_id)
+     WHEN NOT MATCHED THEN INSERT (member_id,listing_id) VALUES(v.member_id,v.listing_id)`,{memberId,listingId}),
+   removeFavourite:(memberId,listingId)=>db.run('DELETE FROM gb_favourites WHERE member_id=:memberId AND listing_id=:listingId',{memberId,listingId}),
   audit:(actor,action,target)=>db.run('INSERT INTO gb_audit(id,actor_id,action,target_id) VALUES (:id,:actor,:action,:target)',{id:randomUUID(),actor,action,target}),
  };
 }

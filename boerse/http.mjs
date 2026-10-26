@@ -58,6 +58,7 @@ export function createHandler({service,marketplace,origin,trustLocalProxy=false}
       }));
     }
     const session=sessionCookie(req.headers.cookie);
+     if(req.method==='GET' && path==='/api/favourites') return json(200,await service.favourites(session));
     if(req.method==='GET' && path==='/api/me') return json(200,await service.me(session));
     if(req.method==='GET' && path==='/api/admin/registrations') return json(200,await service.pending(session));
     if(req.method==='GET' && path==='/api/admin/members') return json(200,await service.members(session));
@@ -83,6 +84,8 @@ export function createHandler({service,marketplace,origin,trustLocalProxy=false}
       const result=await service.loginFinish(input,ip);res.setHeader('Set-Cookie',cookie(result.session,14*86400));return json(200,{member:result.member});
     }
     if(path==='/api/logout') {await service.logout(session);res.setHeader('Set-Cookie',cookie('',0));return json(200,{ok:true});}
+     if(path==='/api/favourites') return json(200,await service.setFavourite(session,input));
+     if(path==='/api/listings/status') return json(200,await service.setListingStatus(session,input));
     if(path==='/api/listings') {
       const result = await service.createListing(session,input);
       return json(201,result);

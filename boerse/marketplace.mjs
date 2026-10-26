@@ -1,4 +1,3 @@
-
 export function createMarketplace(db) {
   return {
     async categories() {
@@ -28,7 +27,7 @@ export function createMarketplace(db) {
 
     async listings(filters = {}) {
       const conditions = [
-        "l.LISTING_STATUS = 'available'"
+        "l.LISTING_STATUS IN ('available','reserved','sold')"
       ];
       const binds = {};
 
@@ -96,6 +95,10 @@ export function createMarketplace(db) {
         SELECT
           l.ID,
           l.TITLE,
+          l.SELLER_ID,
+          l.LISTING_STATUS,
+          l.SELLER_ID,
+          l.LISTING_STATUS,
           l.DESCRIPTION,
           l.CATEGORY_ID,
           c.NAME AS CATEGORY_NAME,
