@@ -1,6 +1,9 @@
 const $=id=>document.getElementById(id);
 const webauthn=window.SimpleWebAuthnBrowser;
 let savedReference='';
+let currentMember=null;
+let favouriteIds=new Set();
+let favouriteOnly=false;
 async function api(path,body){
  const r=await fetch(path,{method:body?'POST':'GET',credentials:'same-origin',headers:body?{'Content-Type':'application/json','X-Gugu-Request':'1'}:{},body:body?JSON.stringify(body):undefined});
  const data=await r.json();if(!r.ok)throw new Error(data.error||'Please try again.');return data;
@@ -18,6 +21,7 @@ function openRegistration(recovery=false){
  $('register-explanation').textContent=recovery?'Create a replacement passkey and send the new reference from your approved WhatsApp number. Your admin must approve recovery; your old passkey works until then.':'Create a passkey, then send your registration reference privately to the community admin on WhatsApp. You can sign in after approval.';
 }
 async function show(m){
+ currentMember=m;
  panel('account');
 
  $('admin').hidden=m.role!=='admin';
@@ -179,7 +183,12 @@ async function loadMarketplace(){
    message('Your item has been published.');
   });
  };
+ await refreshFavourites();
  await loadListings();
+}
+async function refreshFavourites(){
+ try {const rows=await api('/api/favourites');favouriteIds=new Set(rows.map(x=>String(x.ID)));}
+ catch(e){favouriteIds=new Set();message('Favourites are unavailable until the backend update is deployed.',true);}
 }
 async function loadSubtypes(categoryId,selectId,allowAll){
  const select=$(selectId);
@@ -199,7 +208,8 @@ async function loadListings(){
   ['postcode','filter-postcode'],['twintAvailable','filter-twint']
  ];
  for(const [key,id] of pairs){const value=$(id).value.trim();if(value)params.set(key,value);}
- const rows=await api('/api/listings?'+params.toString());
+ const allRows=await api('/api/listings?'+params.toString());
+ const rows=favouriteOnly?allRows.filter(x=>favouriteIds.has(String(x.ID))):allRows;
  const target=$('listing-results');target.replaceChildren();
  $('listing-count').textContent=`${rows.length} item${rows.length===1?'':'s'} found`;
  if(!rows.length){
@@ -213,6 +223,22 @@ async function loadListings(){
   const category=document.createElement('p');category.className='small';
   category.textContent=`${item.CATEGORY_EMOJI||''} ${item.CATEGORY_NAME}${item.SUBCATEGORY_NAME?' · '+item.SUBCATEGORY_NAME:''}`;
   card.append(category);
+  const status=document.createElement('p');status.className='small';
+  const listingStatus=String(item.LISTING_STATUS||'available').toLowerCase();
+  status.textContent='Status: '+({available:'Available',reserved:'Reserved',sold:'Sold'}[listingStatus]||listingStatus);
+  card.append(status);
+  const fav=document.createElement('button');fav.type='button';fav.className='secondary';
+  fav.textContent=favouriteIds.has(String(item.ID))?'♥ Saved':'♡ Save';
+  fav.setAttribute('aria-label','Toggle favourite');
+  fav.onclick=()=>action(async()=>{const add=!favouriteIds.has(String(item.ID));await api('/api/favourites',{id:String(item.ID),favourite:add});await refreshFavourites();await loadListings();});
+  card.append(fav);
+  if(currentMember && String(item.SELLER_ID)===String(currentMember.id||currentMember.ID)){
+   const select=document.createElement('select');select.setAttribute('aria-label','Listing status');
+   for(const value of ['available','reserved','sold'])select.add(new Option(value[0].toUpperCase()+value.slice(1),value));
+   select.value=listingStatus;
+   select.onchange=()=>action(async()=>{await api('/api/listings/status',{id:String(item.ID),status:select.value});await loadListings();});
+   card.append(select);
+  }
   const gender=document.createElement('p');
   gender.className='small';
   gender.textContent='Gender: '+(item.GENDER||'Not specified');
