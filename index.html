@@ -1,63 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="#eaf8ff" name="theme-color"/><link href="/favicon.PNG" rel="icon" sizes="1000x1000" type="image/png"/><link href="/favicon.PNG" rel="shortcut icon" type="image/png"/><link href="/favicon.PNG" rel="apple-touch-icon"/><title>Gugu Basel — Weekend Plans &amp; Family Offers</title><meta content="Everything needed for family life in Basel | Useful family guides, weekend activities &amp; Swiss-wide family deals" name="description"/><meta content="Everything needed for family life in Basel | Useful family guides, weekend activities &amp; Swiss-wide family deals" property="og:description"/><meta content="Everything needed for family life in Basel | Useful family guides, weekend activities &amp; Swiss-wide family deals" name="twitter:description"/><link href="https://gugubasel.ch/" rel="canonical"/><link href="https://gugubasel.ch/sitemap.xml" rel="sitemap" title="Sitemap" type="application/xml"/>
-<script>
-(function (w, d) {
-  // Visit ?gugu_owner=on once in each browser to stop loading Clarity there.
-  // Visit ?gugu_owner=off to restore tracking. This is a browser setting,
-  // not a device-wide identifier; clearing website data removes the setting.
-  var ownerKey = "gugu_owner_no_clarity";
-  var params = new URLSearchParams(w.location.search);
-  var command = params.get("gugu_owner");
-  var cookieName = ownerKey + "=";
-  var cookieOptions = "; path=/; SameSite=Lax" +
-    (w.location.protocol === "https:" ? "; Secure" : "");
 
-  function hasOwnerCookie() {
-    return d.cookie.split(";").some(function (item) {
-      return item.trim() === cookieName + "1";
-    });
-  }
-  function isOwnerStored() {
-    try { if (w.localStorage.getItem(ownerKey) === "1") return true; }
-    catch (e) { /* Storage can be unavailable in restricted browsers. */ }
-    return hasOwnerCookie();
-  }
-  var excluded;
-  if (command === "on") {
-    excluded = true; // Exclude the activation visit itself, even if storage is blocked.
-    try { w.localStorage.setItem(ownerKey, "1"); } catch (e) {}
-    d.cookie = cookieName + "1; Max-Age=315360000" + cookieOptions;
-  } else if (command === "off") {
-    excluded = false;
-    try { w.localStorage.removeItem(ownerKey); } catch (e) {}
-    d.cookie = cookieName + "; Max-Age=0" + cookieOptions;
-  } else {
-    excluded = isOwnerStored();
-  }
-
-  // Remove the command from the address bar without refreshing the page.
-  if (command === "on" || command === "off") {
-    params.delete("gugu_owner");
-    var remaining = params.toString();
-    try {
-      w.history.replaceState(w.history.state, "", w.location.pathname +
-        (remaining ? "?" + remaining : "") + w.location.hash);
-    } catch (e) { /* Filtering still works if URL cleanup is unavailable. */ }
-  }
-
-  // No Clarity network request, page-view event, clicks or replay on excluded visits.
-  if (excluded) return;
-  var clarityProjectId = "ypd5sz8urr";
-  if (!clarityProjectId || clarityProjectId.indexOf("YOUR_") === 0) return;
-  (function(c,l,a,r,i,t,y){
-    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(w,d,"clarity","script",clarityProjectId);
-  w.clarity("consentv2", {ad_Storage: "denied", analytics_Storage: "denied"});
-})(window, document);
-</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -112,7 +56,7 @@ window.guguDefaultSunday=function(){
 <p aria-live="polite" class="feedback-status" id="gugu-feedback-status" role="status"></p>
 </form>
 <div class="feedback-note-block"><p lang="en">🐥 Your feedback helps GUGU grow! No name or email required.</p><p lang="de">🐥 Dein Feedback hilft GUGU, noch besser zu werden! Kein Name und keine E-Mail-Adresse erforderlich.</p></div>
-</section><section class="legal"><details id="about"><summary>About us</summary><div><p><strong>Gugu Basel</strong> brings together weekend activities in and around Basel, practical family guides, and family-friendly deals across Switzerland — all independently curated to make family planning easier.</p><p>Created and independently managed by a mom, <strong>Kübra Bulut Sengupta</strong>, based in Basel, Switzerland.</p></div></details><details id="terms"><summary>Terms</summary><div><p>Information is provided for general guidance. Event details, prices, discounts, stock and booking conditions can change. Please confirm current information directly with organisers or retailers before visiting, booking or buying; featured deals are not guaranteed to be the lowest price.</p><p>Gugu Basel curates information but does not organise events, sell tickets or retail products. Third-party websites, services and transactions are subject to their own terms and remain outside our control.</p><p>Any sponsored content, paid partnerships or affiliate links will be clearly labelled. Editorial inclusion is not a guarantee or endorsement.</p><p>Original Gugu Basel content and branding are protected where applicable. Third-party materials and trademarks belong to their respective owners.</p></div></details><details id="privacy"><summary>Privacy</summary><div><p>Gugu Basel is designed to collect as little visitor data as reasonably possible. The feedback form does not require a name, email address or account. Messages are transmitted through FormSubmit (formsubmit.co) to the Gugu Basel mailbox. The service may process technical data such as IP addresses for operation and abuse prevention. Please avoid including identifying or sensitive information in the message.</p><p><strong>Website Analytics</strong></p><p>We use Microsoft Clarity to understand how visitors interact with Gugu Basel and improve the website, including which pages and links are used. Clarity is configured with advertising and analytics cookie storage denied by default.</p><p>For more information about how Microsoft handles data, please see <a href="https://privacy.microsoft.com/en-us/privacystatement" rel="noopener" target="_blank">Microsoft’s Privacy Statement</a>.</p><p>Technical data may still be processed by website hosting, DNS and infrastructure providers as necessary to deliver, operate and secure the website. Their processing is governed by their own terms and privacy practices.</p><p>You may also contact Gugu Basel through Instagram DM or email. Information you send through Instagram is processed under Instagram's own terms and privacy practices.</p><p>The website contains external links to Instagram, event organisers, venues, retailers and other third-party websites. When you open an external link, the destination service's own privacy policy and data-processing practices apply.</p><p>Gugu Basel does not sell personal data to advertisers or other third parties.</p></div></details><details id="impressum"><summary>Impressum</summary><div><p><strong>Website operator and editorial responsibility:</strong> Kübra Bulut Sengupta<br>Basel, Switzerland</br></p><p><strong>Contact:</strong> Instagram DM <a href="https://www.instagram.com/gugubasel/" rel="noopener" target="_blank">@gugubasel</a></p></div></details></section><div class="gugu-section-end-nav"><a aria-label="Back to header / Zurück zum Seitenanfang" title="Back to top / Nach oben" class="gugu-section-top-link" href="#page-content"><svg aria-hidden="true" viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></a></div><div aria-label="Gugu Basel social and contact links" class="social-icon-bar"><a aria-label="Gugu Basel on Instagram" class="social-icon-link instagram" href="https://instagram.com/gugubasel?psln=dWRmODBqeTBtazM5&amp;utm_source=qr" rel="noopener" target="_blank"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="18" rx="5" ry="5" stroke-width="1.8" width="18" x="3" y="3"></rect><circle cx="12" cy="12" fill="none" r="4.2" stroke-width="1.8"></circle><circle cx="17.2" cy="6.8" r="1.2"></circle></svg></a><a aria-label="Gugu Basel on Facebook" class="social-icon-link facebook" href="https://www.facebook.com/share/1FoBXUrEfG/?mibextid=wwXIfr" rel="noopener" target="_blank"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="#eaf8ff" r="9.4" stroke="currentColor" stroke-width="2.2"></circle><path d="M13.25 18.6v-5.55h1.72l.25-2.05h-1.97V9.65c0-.95.43-1.45 1.37-1.45h.73V6.38c-.27-.04-.82-.08-1.37-.08-1.83 0-2.84 1.09-2.84 3.03V11H9.68v2.05h1.46v5.55z" fill="currentColor"></path></svg></a><a aria-label="Email Gugu Basel" class="social-icon-link email" href="mailto:gugubasel@hotmail.com"><svg aria-hidden="true" viewbox="0 0 24 24"><rect height="12.4" rx="2.2" ry="2.2" width="17.6" x="3.2" y="5.8"></rect><path d="M4.5 7.2 12 13l7.5-5.8"></path></svg></a></div><p class="copyright">© 2026 Gugu Basel. All rights reserved.</p></footer></div>
+</section><section class="legal"><details id="about"><summary>About us</summary><div><p><strong>Gugu Basel</strong> brings together weekend activities in and around Basel, practical family guides, and family-friendly deals across Switzerland — all independently curated to make family planning easier.</p><p>Created and independently managed by a mom, <strong>Kübra Bulut Sengupta</strong>, based in Basel, Switzerland.</p></div></details><details id="terms"><summary>Terms</summary><div><p>Information is provided for general guidance. Event details, prices, discounts, stock and booking conditions can change. Please confirm current information directly with organisers or retailers before visiting, booking or buying; featured deals are not guaranteed to be the lowest price.</p><p>Gugu Basel curates information but does not organise events, sell tickets or retail products. Third-party websites, services and transactions are subject to their own terms and remain outside our control.</p><p>Any sponsored content, paid partnerships or affiliate links will be clearly labelled. Editorial inclusion is not a guarantee or endorsement.</p><p>Original Gugu Basel content and branding are protected where applicable. Third-party materials and trademarks belong to their respective owners.</p></div></details><details id="privacy"><summary>Privacy</summary><div><p>Gugu Basel is designed to collect as little visitor data as reasonably possible. The feedback form does not require a name, email address or account. Messages are transmitted through FormSubmit (formsubmit.co) to the Gugu Basel mailbox. The service may process technical data such as IP addresses for operation and abuse prevention. Please avoid including identifying or sensitive information in the message.</p><p><strong>Website Analytics</strong></p><p>Microsoft Clarity is disabled on this website. This page does not load Clarity, send visitor interactions to Clarity, or set Clarity analytics or advertising cookies.</p><p>Technical data may still be processed by website hosting, DNS and infrastructure providers as necessary to deliver, operate and secure the website. Their processing is governed by their own terms and privacy practices.</p><p>You may also contact Gugu Basel through Instagram DM or email. Information you send through Instagram is processed under Instagram's own terms and privacy practices.</p><p>The website contains external links to Instagram, event organisers, venues, retailers and other third-party websites. When you open an external link, the destination service's own privacy policy and data-processing practices apply.</p><p>Gugu Basel does not sell personal data to advertisers or other third parties.</p></div></details><details id="impressum"><summary>Impressum</summary><div><p><strong>Website operator and editorial responsibility:</strong> Kübra Bulut Sengupta<br>Basel, Switzerland</br></p><p><strong>Contact:</strong> Instagram DM <a href="https://www.instagram.com/gugubasel/" rel="noopener" target="_blank">@gugubasel</a></p></div></details></section><div class="gugu-section-end-nav"><a aria-label="Back to header / Zurück zum Seitenanfang" title="Back to top / Nach oben" class="gugu-section-top-link" href="#page-content"><svg aria-hidden="true" viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></a></div><div aria-label="Gugu Basel social and contact links" class="social-icon-bar"><a aria-label="Gugu Basel on Instagram" class="social-icon-link instagram" href="https://instagram.com/gugubasel?psln=dWRmODBqeTBtazM5&amp;utm_source=qr" rel="noopener" target="_blank"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="18" rx="5" ry="5" stroke-width="1.8" width="18" x="3" y="3"></rect><circle cx="12" cy="12" fill="none" r="4.2" stroke-width="1.8"></circle><circle cx="17.2" cy="6.8" r="1.2"></circle></svg></a><a aria-label="Gugu Basel on Facebook" class="social-icon-link facebook" href="https://www.facebook.com/share/1FoBXUrEfG/?mibextid=wwXIfr" rel="noopener" target="_blank"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="#eaf8ff" r="9.4" stroke="currentColor" stroke-width="2.2"></circle><path d="M13.25 18.6v-5.55h1.72l.25-2.05h-1.97V9.65c0-.95.43-1.45 1.37-1.45h.73V6.38c-.27-.04-.82-.08-1.37-.08-1.83 0-2.84 1.09-2.84 3.03V11H9.68v2.05h1.46v5.55z" fill="currentColor"></path></svg></a><a aria-label="Email Gugu Basel" class="social-icon-link email" href="mailto:gugubasel@hotmail.com"><svg aria-hidden="true" viewbox="0 0 24 24"><rect height="12.4" rx="2.2" ry="2.2" width="17.6" x="3.2" y="5.8"></rect><path d="M4.5 7.2 12 13l7.5-5.8"></path></svg></a></div><p class="copyright">© 2026 Gugu Basel. All rights reserved.</p></footer></div>
 <script>
 /* Load Autumn WebP files from GitHub when this HTML is previewed locally. */
 document.addEventListener("DOMContentLoaded",function(){
