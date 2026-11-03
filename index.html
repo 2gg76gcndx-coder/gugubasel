@@ -427,15 +427,17 @@ document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' '
 })();
 </script>
 <style id="gugu-consent-style">
-#gugu-consent[hidden]{display:none!important}#gugu-consent{position:fixed;bottom:16px;left:16px;right:16px;max-width:650px;margin:auto;z-index:2147483647;background:#fffaf0;color:#243b4b;border:2px solid #243b4b;border-radius:18px;padding:20px;box-shadow:0 6px 30px #0003;font:16px/1.5 system-ui,sans-serif;max-height:80vh;overflow:auto}#gugu-consent h2{font-size:20px;margin:0 0 8px}#gugu-consent p{margin:8px 0}#gugu-consent .consent-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}#gugu-consent button,.gugu-privacy-settings{font:inherit;cursor:pointer;border:2px solid #243b4b;background:#eaf8ff;color:#243b4b;border-radius:10px;padding:10px 16px}#gugu-consent .consent-actions button{flex:1;min-width:160px}#gugu-consent a{color:#243b4b;text-decoration:underline}#gugu-consent button:focus-visible,.gugu-privacy-settings:focus-visible{outline:3px solid #ad3f7e;outline-offset:3px}
+#gugu-consent[hidden]{display:none!important}
+#gugu-consent{position:fixed;bottom:16px;left:16px;right:16px;max-width:380px;margin:auto;z-index:2147483647;background:#fffaf0;color:#243b4b;border:2px solid #243b4b;border-radius:18px;padding:12px;box-shadow:0 6px 30px #0003;font:15px/1.3 system-ui,sans-serif}
+#gugu-consent .consent-actions{display:flex;gap:8px;margin:0}
+#gugu-consent button{font:inherit;font-weight:700;cursor:pointer;border:2px solid #243b4b;background:#eaf8ff;color:#243b4b;border-radius:10px;padding:12px 6px}
+#gugu-consent .consent-actions button{flex:1;min-width:0}
+#gugu-consent button:focus-visible,.gugu-privacy-settings:focus-visible{outline:3px solid #ad3f7e;outline-offset:3px}
+#gugu-consent-close[hidden]{display:none!important}
 </style>
-<section id="gugu-consent" role="region" aria-labelledby="gugu-consent-title" hidden>
-<h2 id="gugu-consent-title">Optional analytics / Optionale Analyse</h2>
-<p lang="en">May we use Microsoft Clarity to improve GUGU? It records interactions such as clicks and scrolling and reconstructs browsing sessions. It starts only if you accept. You can reject and use the website normally, or change your choice in Privacy settings.</p>
-<p lang="de">Dürfen wir Microsoft Clarity nutzen, um GUGU zu verbessern? Es erfasst Klicks und Scrollbewegungen und rekonstruiert Besuche. Es startet erst nach Ihrer Zustimmung. Sie können ablehnen und die Website normal nutzen oder Ihre Auswahl in den Datenschutzeinstellungen ändern.</p>
-<a href="#privacy" id="gugu-consent-info">Privacy information / Datenschutz</a>
-<div class="consent-actions"><button id="gugu-consent-reject" type="button">Reject / Ablehnen</button><button id="gugu-consent-accept" type="button">Accept analytics / Analyse erlauben</button></div>
-<button id="gugu-consent-close" type="button" hidden>Close / Schliessen</button>
+<section id="gugu-consent" role="region" aria-label="Cookie-Einwilligung" lang="de" hidden>
+<div class="consent-actions"><button id="gugu-consent-reject" type="button">Cookies ablehnen</button><button id="gugu-consent-accept" type="button">Cookies akzeptieren</button></div>
+<button id="gugu-consent-close" type="button" hidden>Schliessen</button>
 </section>
 <script id="gugu-consent-script">
 (function(w,d){
@@ -456,7 +458,6 @@ d.getElementById('gugu-consent-accept').addEventListener('click',function(){sele
 d.getElementById('gugu-consent-reject').addEventListener('click',function(){select('rejected');});
 d.querySelectorAll('.gugu-privacy-settings').forEach(function(button){button.addEventListener('click',function(){returnFocus=button;banner.hidden=false;close.hidden=!choice;d.getElementById('gugu-consent-reject').focus();});});
 close.addEventListener('click',hide);
-d.getElementById('gugu-consent-info').addEventListener('click',function(){var privacy=d.getElementById('privacy');privacy.open=true;hide();privacy.scrollIntoView();});
 choice=getStored();if(choice==='accepted')start();else clearCookies();if(!choice&&!owner)banner.hidden=false;
 })(window,document);
 </script>
