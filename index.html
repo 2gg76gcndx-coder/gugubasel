@@ -15,6 +15,21 @@ window.guguStartGTM=function(){
   document.head.appendChild(script);
 };
 </script>
+<!-- Google Analytics 4: loaded only after analytics consent -->
+<script id="gugu-ga4-consent-loader">
+  window.guguStartGA4 = function () {
+    if (window.guguGA4Loaded) return;
+    window.guguGA4Loaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', 'G-BLYC1CF3KN');
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-BLYC1CF3KN';
+    document.head.appendChild(script);
+  };
+</script>
 <meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="#eaf8ff" name="theme-color"/><link href="/favicon.PNG" rel="icon" sizes="1000x1000" type="image/png"/><link href="/favicon.PNG" rel="shortcut icon" type="image/png"/><link href="/favicon.PNG" rel="apple-touch-icon"/><title>Gugu Basel — Weekend Plans &amp; Family Offers</title><meta content="Everything needed for family life in Basel | Useful family guides, weekend activities &amp; Swiss-wide family deals" name="description"/><meta content="Everything needed for family life in Basel | Useful family guides, weekend activities &amp; Swiss-wide family deals" property="og:description"/><meta content="Everything needed for family life in Basel | Useful family guides, weekend activities &amp; Swiss-wide family deals" name="twitter:description"/><link href="https://gugubasel.ch/" rel="canonical"/><link href="https://gugubasel.ch/sitemap.xml" rel="sitemap" title="Sitemap" type="application/xml"/>
 <script type="application/ld+json">
 {
@@ -481,7 +496,7 @@ var params=new URLSearchParams(w.location.search),cmd=params.get('gugu_owner'),o
 try{owner=w.localStorage.getItem('gugu_owner_no_clarity')==='1';}catch(e){}owner=owner||cookie('gugu_owner_no_clarity')==='1';
 if(cmd==='on'||cmd==='off'){owner=cmd==='on';try{if(owner)w.localStorage.setItem('gugu_owner_no_clarity','1');else w.localStorage.removeItem('gugu_owner_no_clarity');}catch(e){}d.cookie='gugu_owner_no_clarity='+(owner?'1':'')+'; Max-Age='+(owner?'315360000':'0')+'; Path=/; SameSite=Lax'+(w.location.protocol==='https:'?'; Secure':'');params.delete('gugu_owner');try{w.history.replaceState(w.history.state,'',w.location.pathname+(params.toString()?'?'+params:'')+w.location.hash);}catch(e){}}
 function clearCookies(){['_clck','_clsk'].forEach(function(name){var bases=[''];var host=w.location.hostname.split('.');for(var i=0;i<host.length-1;i++)bases.push(host.slice(i).join('.'));bases.forEach(function(domain){d.cookie=name+'=; Max-Age=0; Path=/'+(domain?'; Domain='+domain:'')+'; SameSite=Lax'+(w.location.protocol==='https:'?'; Secure':'');});});}
-function start(){if(loaded||owner||choice!=='accepted')return;loaded=true;if(typeof w.guguStartGTM==='function')w.guguStartGTM();w.clarity=w.clarity||function(){(w.clarity.q=w.clarity.q||[]).push(arguments);};w.clarity('consentv2',{ad_Storage:'denied',analytics_Storage:'granted'});var tag=d.createElement('script');tag.async=true;tag.src='https://www.clarity.ms/tag/ypd5sz8urr';d.head.appendChild(tag);}
+function start(){if(loaded||owner||choice!=='accepted')return;loaded=true;if(typeof w.guguStartGTM==='function')w.guguStartGTM();if(typeof w.guguStartGA4==='function')w.guguStartGA4();w.clarity=w.clarity||function(){(w.clarity.q=w.clarity.q||[]).push(arguments);};w.clarity('consentv2',{ad_Storage:'denied',analytics_Storage:'granted'});var tag=d.createElement('script');tag.async=true;tag.src='https://www.clarity.ms/tag/ypd5sz8urr';d.head.appendChild(tag);}
 function hide(){banner.hidden=true;if(returnFocus){returnFocus.focus();returnFocus=null;}}
 function select(value){save(value);hide();if(value==='accepted')start();else{if(loaded&&w.clarity)w.clarity('consentv2',{ad_Storage:'denied',analytics_Storage:'denied'});clearCookies();if(loaded)w.location.reload();}}
 d.getElementById('gugu-consent-accept').addEventListener('click',function(){select('accepted');});
