@@ -281,6 +281,81 @@ window.guguStartGTM=function(){
   #page-content .gugu-site-search {width:100%!important;max-width:none!important;min-height:42px!important;height:42px!important;}
   #page-content .gugu-search-input {font-size:18px!important;}
 }
+</style><style id="gugu-desktop-header-and-navigation-final">
+/* Desktop-only: keep original mobile composition untouched. */
+@media screen and (min-width:768px) {
+  /* Display the complete hero artwork, without cropping its center or lettering. */
+  #page-content > div:first-child {background:#dff5ff!important;text-align:center!important;}
+  .app#page-content .hero-art {
+    display:block!important;width:100%!important;
+    height:clamp(360px,46vw,720px)!important;
+    max-height:none!important;aspect-ratio:auto!important;
+    object-fit:contain!important;object-position:center center!important;
+    background:#dff5ff!important;
+  }
+  /* Three equally sized, complete pill groups. */
+  #page-content .main-tabs {
+    display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    width:min(calc(100% - 36px),1200px)!important;max-width:1200px!important;
+    gap:16px!important;align-items:stretch!important;
+    margin:16px auto 22px!important;
+  }
+  #page-content .main-tabs > .weekend-combo-tab,
+  #page-content .main-tabs > .deals-combo-tab,
+  #page-content .main-tabs > .tall-main-tab {
+    box-sizing:border-box!important;width:100%!important;
+    height:106px!important;min-height:106px!important;max-height:106px!important;
+    border-radius:22px!important;overflow:hidden!important;
+    margin:0!important;
+  }
+  #page-content .main-tabs > .weekend-combo-tab,
+  #page-content .main-tabs > .deals-combo-tab {
+    display:flex!important;flex-direction:column!important;justify-content:flex-start!important;
+  }
+  #page-content .main-tabs .weekend-main-hit,
+  #page-content .main-tabs .deals-main-hit {
+    flex:0 0 65px!important;height:65px!important;min-height:65px!important;max-height:65px!important;
+    box-sizing:border-box!important;display:flex!important;align-items:center!important;
+    justify-content:center!important;gap:11px!important;padding:8px 12px!important;
+    width:100%!important;border-radius:0!important;
+  }
+  #page-content .main-tabs .weekend-day-split,
+  #page-content .main-tabs .deals-subtab-split {
+    display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    flex:0 0 39px!important;width:100%!important;
+    height:39px!important;min-height:39px!important;max-height:39px!important;
+    gap:0!important;overflow:visible!important;
+    border-top:2px solid rgba(6,70,110,.18)!important;
+  }
+  #page-content .main-tabs .weekend-day-choice,
+  #page-content .main-tabs .deals-subtab-choice {
+    box-sizing:border-box!important;display:flex!important;
+    align-items:center!important;justify-content:center!important;
+    height:37px!important;min-height:37px!important;max-height:37px!important;
+    font-size:17px!important;font-weight:900!important;line-height:1!important;
+    padding:4px 6px!important;white-space:nowrap!important;
+    border-radius:0!important;
+  }
+  #page-content .main-tabs .tall-main-tab {
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    padding:8px 14px!important;
+  }
+  #page-content .main-tabs .tab-text {
+    font-size:clamp(21px,1.7vw,26px)!important;
+    font-weight:900!important;line-height:1.1!important;
+    white-space:normal!important;text-align:center!important;
+  }
+  #page-content .main-tabs .tab-icon,
+  #page-content .main-tabs .tab-icon svg {
+    width:25px!important;height:25px!important;flex-basis:25px!important;
+  }
+}
+@media screen and (min-width:768px) and (max-width:930px) {
+  #page-content .main-tabs {gap:10px!important;}
+  #page-content .main-tabs .tab-text {font-size:19px!important;}
+  #page-content .main-tabs .weekend-day-choice,
+  #page-content .main-tabs .deals-subtab-choice {font-size:14px!important;}
+}
 </style></head><body><div id="gugu-translate-wrapper"><div id="google_translate_element"></div></div><div class="app" id="page-content"><div style="position:relative"><img alt="Header" class="hero-art" data-image-name="Header" decoding="async" fetchpriority="high" src="./assets/Header.PNG?v=20260914-1"/><input class="menu-toggle" id="menu-toggle" type="checkbox"/><label aria-label="Open navigation" class="menu-button" for="menu-toggle"></label><div aria-label="Website language" class="gugu-language-controls gugu-language-header notranslate" translate="no"><button aria-label="English" aria-pressed="true" class="gugu-lang active" data-site-language="en" type="button">🇺🇸</button><button aria-label="Deutsch" aria-pressed="false" class="gugu-lang" data-site-language="de" type="button">🇨🇭</button></div><button aria-controls="saved-events-dialog" aria-expanded="false" aria-haspopup="dialog" aria-label="Open pinned items" class="notranslate" id="saved-events-open" translate="no" type="button">📌<span id="saved-events-count">0</span></button><div class="nav-pop"><div class="notranslate" hidden="" id="gugu-translate-credit" translate="no">German translation by Google Translate</div><label for="tab-events">Activities</label><label for="tab-guides">Family Guides</label><label for="tab-deals">Offers</label><a href="#about" onclick="document.getElementById('about').open=true;document.getElementById('menu-toggle').checked=false;">About</a></div></div><input checked="" class="radio" id="tab-events" name="main" type="radio"/><input class="radio" id="tab-weekend-sat" name="main" type="radio"/><input class="radio" id="tab-weekend-sun" name="main" type="radio"/><input class="radio" id="tab-deals" name="main" type="radio"/><input class="radio" id="tab-deals-kids" name="main" type="radio"/><input class="radio" id="tab-deals-family" name="main" type="radio"/><input class="radio" id="tab-guides" name="main" type="radio"/><div class="panels"><section class="panel" id="events-panel"><nav aria-label="Gugu Basel sections" class="main-tabs"><div class="weekend-combo-tab"><label class="weekend-main-hit" for="tab-events"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><use href="#gv0"></use></svg></span><span class="tab-text">Activities</span></label><div aria-label="Choose a weekend day" class="weekend-day-split" role="group"><label aria-label="Show Saturday weekend plans" class="weekend-day-choice" data-weekend-day="sat" for="tab-weekend-sat">Saturday</label><label aria-label="Show Sunday weekend plans" class="weekend-day-choice" data-weekend-day="sun" for="tab-weekend-sun">Sunday</label></div></div><label class="tall-main-tab" for="tab-guides"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><use href="#gv1"></use></svg></span><span class="tab-text">Family Guides</span></label><div class="deals-combo-tab"><label class="deals-main-hit" for="tab-deals"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><use href="#gv2"></use></svg></span><span class="tab-text">Offers</span></label><div aria-label="Choose a deals category" class="deals-subtab-split" role="group"><label aria-label="Open Kids deals" class="deals-subtab-choice" for="tab-deals-kids">Kids</label><label aria-label="Open Family deals" class="deals-subtab-choice" for="tab-deals-family">Family</label></div></div></nav><div class="gugu-search-area notranslate" translate="no"><div class="gugu-site-search" role="search"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.8"></circle><path d="m16 16 5 5"></path></svg><input aria-label="Search Gugu Basel" autocomplete="off" class="gugu-search-input" enterkeyhint="search" placeholder="Search Gugu Basel…" type="search"/><button aria-label="Clear search" class="gugu-search-clear" hidden="" type="button">×</button></div><section aria-label="Search results" class="gugu-search-results" hidden=""><p aria-live="polite" class="gugu-search-status" role="status"></p><div class="gugu-search-list"></div></section></div><input checked="checked" class="radio" id="day-sat" name="day" type="radio"/><input class="radio" id="day-sun" name="day" type="radio"/><script>
 /* Default weekend day follows the current date in Basel. */
 window.guguDefaultSunday=function(){
