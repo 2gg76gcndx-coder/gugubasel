@@ -7236,3 +7236,16 @@ html {overflow-y:scroll;scrollbar-gutter:stable;scrollbar-color:#1085b9 #eaf8ff}
     object-position:center center!important;
   }
 }
+
+/* Keep the pinned-items button at the header edge and scroll it with the page. */
+html body #saved-events-open {
+  position:absolute!important;
+  top:max(8px,env(safe-area-inset-top))!important;
+  right:0!important;left:auto!important;bottom:auto!important;
+  margin-right:0!important;
+}
+html body #saved-events-count {right:0!important;}
+/* Thin navy frame around the complete Weekend Plans image placeholder. */
+html body #events-panel .event-row .event-photo-link {
+  border:1px solid #073b65!important;
+}
