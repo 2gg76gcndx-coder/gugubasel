@@ -7226,7 +7226,7 @@ html {overflow-y:scroll;scrollbar-gutter:stable;scrollbar-color:#1085b9 #eaf8ff}
     overflow:hidden!important;
     background:#e1f6ff!important;
   }
-  html body .gugu-responsive-header > img.hero-art {
+  html body .app#page-content .gugu-responsive-header > img.hero-art {
     width:100%!important;
     height:100%!important;
     min-height:0!important;
