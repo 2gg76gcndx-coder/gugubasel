@@ -7215,3 +7215,24 @@ html {overflow-y:scroll;scrollbar-gutter:stable;scrollbar-color:#1085b9 #eaf8ff}
 #deals-panel #family-deals-content .family-deal-card>.deal-photo {grid-column:1!important;grid-row:1 / span 2!important;min-height:148px!important}
 #deals-panel #family-deals-content .family-deal-card>.deal-copy {grid-column:2!important;grid-row:1!important}
 #deals-panel #family-deals-content .family-deal-card>.price-stack {grid-column:2!important;grid-row:2!important}
+
+/* Show the complete desktop artwork within the compact banner. */
+@media (min-width:768px) {
+  html body .gugu-responsive-header {
+    display:block!important;
+    width:100%!important;
+    height:min(25vh,240px)!important;
+    max-height:25vh!important;
+    overflow:hidden!important;
+    background:#e1f6ff!important;
+  }
+  html body .gugu-responsive-header > img.hero-art {
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:100%!important;
+    aspect-ratio:auto!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+  }
+}
