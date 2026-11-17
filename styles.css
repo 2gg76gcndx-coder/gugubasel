@@ -7277,3 +7277,8 @@ html body #events-panel .event-row .event-photo-link {
 #page-content #guides-panel#guides-panel#guides-panel #evergreen-niggi-naeggi .autumn-name-link > .notranslate {
  flex:1 1 0%!important;min-width:0!important;display:block!important;
 }
+
+/* Weekend Plans image placeholders without outline frames. */
+html body #events-panel .event-row .event-photo-link {
+  border:0!important;
+}
