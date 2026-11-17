@@ -7262,3 +7262,18 @@ html body #events-panel .event-row .event-photo-link {
     overflow-x:clip!important;overflow-y:visible!important;
   }
 }
+
+/* Keep every Niggi event number beside its title at all screen widths. */
+#page-content #guides-panel#guides-panel#guides-panel #evergreen-niggi-naeggi .niggi-row .autumn-name-link {
+ display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;
+ align-items:flex-start!important;justify-content:flex-start!important;
+ gap:6px!important;width:100%!important;min-width:0!important;
+}
+#page-content #guides-panel#guides-panel#guides-panel #evergreen-niggi-naeggi .autumn-name-link > .autumn-entry-index {
+ display:inline-flex!important;flex:0 0 23px!important;
+ width:23px!important;min-width:23px!important;max-width:23px!important;
+ height:23px!important;margin:0!important;align-self:flex-start!important;
+}
+#page-content #guides-panel#guides-panel#guides-panel #evergreen-niggi-naeggi .autumn-name-link > .notranslate {
+ flex:1 1 0%!important;min-width:0!important;display:block!important;
+}
