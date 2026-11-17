@@ -1249,14 +1249,24 @@ choice=getStored();if(choice==='accepted')start();else clearCookies();if(!choice
 .gugu-header-fallback strong{font-size:clamp(24px,4vw,54px);letter-spacing:.04em}.gugu-header-fallback span{font-size:clamp(12px,1.3vw,20px)}
 .gugu-event-image-fallback{display:flex!important;align-items:center;justify-content:center;width:100%;height:100%;min-height:90px;background:linear-gradient(145deg,#e1f5fc,#c2e7f7);font-size:38px}
 </style>
-<script id="gugu-basel-weekend-weather">
+<style id="gugu-blue-weather-pills">
+/* Match the Hands-on Fun category row blue on both days. */
+#sat-panel .gugu-day-weather,#sun-panel .gugu-day-weather{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  gap:5px!important;background:linear-gradient(90deg,#d9f2fc,#b8e6f7)!important;color:#0a4163!important;
+  border-radius:999px!important;padding:5px 9px!important;min-height:35px!important;
+  max-width:100%!important;box-shadow:none!important;white-space:nowrap!important;
+}
+#sat-panel .gugu-day-weather .weather-chance,#sun-panel .gugu-day-weather .weather-chance{color:#0a679a!important;}
+@media(max-width:390px){#sat-panel .gugu-day-weather,#sun-panel .gugu-day-weather{padding:4px 6px!important;gap:3px!important;min-height:32px!important;}}
+</style><script id="gugu-basel-weekend-weather">
 /* Fetch a fresh Basel weekend forecast once on every full page entry/reload. */
 (function(){
   var nodes=Array.prototype.slice.call(document.querySelectorAll('.gugu-day-weather[data-date]'));
   if(!nodes.length)return;
   var codes={0:['☀️','Clear sky'],1:['🌤️','Mainly clear'],2:['⛅','Partly cloudy'],3:['☁️','Cloudy'],45:['🌫️','Fog'],48:['🌫️','Rime fog'],51:['🌦️','Light drizzle'],53:['🌦️','Drizzle'],55:['🌧️','Heavy drizzle'],56:['🌨️','Freezing drizzle'],57:['🌨️','Freezing drizzle'],61:['🌦️','Light rain'],63:['🌧️','Rain'],65:['🌧️','Heavy rain'],66:['🌨️','Freezing rain'],67:['🌨️','Freezing rain'],71:['🌨️','Light snow'],73:['❄️','Snow'],75:['❄️','Heavy snow'],77:['🌨️','Snow grains'],80:['🌦️','Rain showers'],81:['🌧️','Rain showers'],82:['⛈️','Heavy showers'],85:['🌨️','Snow showers'],86:['❄️','Heavy snow showers'],95:['⛈️','Thunderstorm'],96:['⛈️','Thunderstorm with hail'],99:['⛈️','Thunderstorm with hail']};
   var dates=nodes.map(function(el){return el.getAttribute('data-date')}).sort();
-  var api='https://api.open-meteo.com/v1/forecast?latitude=47.5596&longitude=7.5886&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&models=meteoswiss_icon_seamless&timezone=Europe%2FZurich&start_date='+dates[0]+'&end_date='+dates[dates.length-1];
+  var apiBase='https://api.open-meteo.com/v1/forecast?latitude=47.5596&longitude=7.5886&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FZurich&start_date='+dates[0]+'&end_date='+dates[dates.length-1];
   function render(el, symbol, chance, low, high, description){
     var condition=document.createElement('span');condition.className='weather-condition';
     var icon=document.createElement('span');icon.className='weather-symbol';icon.textContent=symbol;
@@ -1270,20 +1280,29 @@ choice=getStored();if(choice==='accepted')start();else clearCookies();if(!choice
     el.title='Basel · MeteoSwiss ICON-CH · '+description+' · rain probability '+(chance===null?'unavailable':chance+'%')+' · '+(low===null?'—':low)+'° to '+(high===null?'—':high)+'°C';
     el.setAttribute('aria-label',el.title);
   }
-  fetch(api+'&_='+Date.now(),{mode:'cors',cache:'no-store'}).then(function(r){
-    if(!r.ok)throw new Error('Forecast request failed');return r.json();
-  }).then(function(data){
-    var d=data.daily;
+  function applyForecast(data){
+    var d=data&&data.daily;
     if(!d||!Array.isArray(d.time))throw new Error('Daily forecast unavailable');
+    var valid=0;
     nodes.forEach(function(el){
       var i=d.time.indexOf(el.getAttribute('data-date'));
-      if(i===-1||d.temperature_2m_max[i]==null){render(el,'🌡️',null,null,null,'Forecast not available for this date');return;}
-      var condition=codes[d.weather_code[i]]||['🌡️','Weather forecast'];
+      if(i<0||d.temperature_2m_max[i]==null||d.temperature_2m_min[i]==null)return;
+      var condition=codes[d.weather_code[i]]||['🌤️','Weather forecast'];
       var chance=d.precipitation_probability_max&&d.precipitation_probability_max[i]!=null?Math.round(d.precipitation_probability_max[i]):null;
       render(el,condition[0],chance,Math.round(d.temperature_2m_min[i]),Math.round(d.temperature_2m_max[i]),condition[1]);
+      el.dataset.weatherReady='true';valid++;
     });
-  }).catch(function(){
-    nodes.forEach(function(el){render(el,'🌡️',null,null,null,'Forecast temporarily unavailable');});
+    return valid;
+  }
+  function request(url){return fetch(url+'&_='+Date.now(),{mode:'cors',cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('Forecast request failed');return r.json();});}
+  /* Use ICON-CH when available; fall back to the broader forecast for dates outside its horizon. */
+  request(apiBase+'&models=meteoswiss_icon_seamless').then(function(data){
+    applyForecast(data);
+    if(nodes.some(function(el){return el.dataset.weatherReady!=='true';}))return request(apiBase).then(applyForecast);
+  }).catch(function(){return request(apiBase).then(applyForecast);}).catch(function(){
+    nodes.forEach(function(el){if(el.dataset.weatherReady!=='true'){
+      el.textContent='Forecast unavailable';el.title='Basel forecast temporarily unavailable';el.setAttribute('aria-label',el.title);
+    }});
   });
   /* No setInterval or visibility refresh: a fresh request happens at every page load. */
 })();
