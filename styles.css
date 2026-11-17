@@ -7249,3 +7249,16 @@ html body #saved-events-count {right:0!important;}
 html body #events-panel .event-row .event-photo-link {
   border:1px solid #073b65!important;
 }
+
+/* Use the document as the only desktop page scroll container. */
+@media (min-width:768px) {
+  html {overflow-x:clip!important;overflow-y:auto!important;}
+  html body {
+    height:auto!important;max-height:none!important;
+    overflow:visible!important;
+  }
+  html body .app#page-content {
+    height:auto!important;max-height:none!important;
+    overflow-x:clip!important;overflow-y:visible!important;
+  }
+}
