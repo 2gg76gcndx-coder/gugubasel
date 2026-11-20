@@ -1106,62 +1106,86 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script><script id="gugu-page-wide-en-de-20261018">
-/* English is the authoritative default. Google Translate provides full-page
-   German on demand without modifying original event names, links or data. */
-(function(){
+/* Reliable Google Translate language switching; preserve the existing site. */
+(function () {
   'use strict';
-  var target='en',requested=false,loading=false;
-  var controls;
-  function setButtons(lang){
-    document.documentElement.lang=lang;
-    if(!controls) return;
-    controls.querySelectorAll('[data-site-language]').forEach(function(b){
-      var active=b.getAttribute('data-site-language')===lang;
-      b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));
-    });
-    var credit=document.getElementById('gugu-translate-credit');
-    if(credit) credit.hidden=(lang!=='de');
+  var key = 'gugu-site-language';
+  var selected = 'en';
+  try { selected = localStorage.getItem(key) === 'de' ? 'de' : 'en'; } catch (e) {}
+  var googleLoaded = false;
+  function cookie(name, value, domain) {
+    document.cookie = name + '=' + encodeURIComponent(value) + '; path=/; SameSite=Lax' + (domain ? '; domain=' + domain : '') + (location.protocol === 'https:' ? '; Secure' : '');
   }
-  function applyLanguage(lang){
-    var select=document.querySelector('.goog-te-combo');
-    if(!select){return false;}
-    select.value=lang==='de'?'de':'en';
-    select.dispatchEvent(new Event('change',{bubbles:true}));
-    return true;
-  }
-  window.googleTranslateElementInit=function(){
-    if(!window.google || !window.google.translate) return;
-    new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'de',autoDisplay:false},'google_translate_element');
-    if(target==='de') {var attempts=0;var retry=function(){if(applyLanguage('de'))return;if(++attempts<35)setTimeout(retry,150);};retry();}
-  };
-  function enableGerman(){
-    target='de';setButtons('de');
-    if(applyLanguage('de'))return;
-    if(loading)return;
-    loading=true;
-    var src=document.createElement('script');
-    src.src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    src.async=true;
-    src.onerror=function(){loading=false;target='en';setButtons('en');alert('German translation is temporarily unavailable. Please check your internet connection and try again.');};
-    document.head.appendChild(src);
-  }
-  function enableEnglish(){
-    target='en';setButtons('en');
-    if(requested){
-      // Restoring English through the existing translate widget is safest.
-      if(!applyLanguage('en'))window.location.reload();
+  function setTranslationCookies(lang) {
+    var value = lang === 'de' ? '/en/de' : '/en/en';
+    cookie('googtrans', value);
+    var host = location.hostname;
+    if (host && host.indexOf('.') !== -1 && host !== 'localhost') {
+      cookie('googtrans', value, '.' + host.replace(/^www\./, ''));
     }
   }
-  document.addEventListener('DOMContentLoaded',function(){
-    controls=document.querySelector('.gugu-language-controls');
-    if(!controls)return;
-    controls.addEventListener('click',function(e){
-      var button=e.target.closest('[data-site-language]');if(!button)return;
-      requested=true;
-      button.getAttribute('data-site-language')==='de'?enableGerman():enableEnglish();
-      var menu=document.getElementById('menu-toggle');if(menu)menu.checked=false;
+  function updateButtons() {
+    document.documentElement.lang = selected;
+    document.querySelectorAll('[data-site-language]').forEach(function (button) {
+      var active = button.getAttribute('data-site-language') === selected;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
     });
-    setButtons('en');
+    var credit = document.getElementById('gugu-translate-credit');
+    if (credit) credit.hidden = selected !== 'de';
+  }
+  function applyGoogle() {
+    var combo = document.querySelector('#google_translate_element select.goog-te-combo');
+    if (!combo) return false;
+    var language = selected === 'de' ? 'de' : 'en';
+    if (combo.value !== language) {
+      combo.value = language;
+      combo.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    return true;
+  }
+  window.googleTranslateElementInit = function () {
+    if (!window.google || !google.translate || !google.translate.TranslateElement) return;
+    new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'de', autoDisplay: false }, 'google_translate_element');
+    var count = 0;
+    var interval = setInterval(function () {
+      if (applyGoogle() || ++count >= 60) clearInterval(interval);
+    }, 200);
+  };
+  function loadGoogle() {
+    if (googleLoaded) return;
+    googleLoaded = true;
+    var script = document.createElement('script');
+    script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    script.async = true;
+    script.onerror = function () {
+      googleLoaded = false;
+      if (selected === 'de') {
+        var credit = document.getElementById('gugu-translate-credit');
+        if (credit) { credit.hidden = false; credit.textContent = 'Google Translate konnte nicht geladen werden. Bitte Internetverbindung prüfen.'; }
+      }
+    };
+    document.head.appendChild(script);
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    setTranslationCookies(selected);
+    updateButtons();
+    if (selected === 'de') loadGoogle();
+    document.querySelectorAll('[data-site-language]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var next = button.getAttribute('data-site-language') === 'de' ? 'de' : 'en';
+        if (next !== selected) {
+          try { localStorage.setItem(key, next); } catch (e) {}
+          setTranslationCookies(next);
+          location.reload();
+        } else if (next === 'de') {
+          loadGoogle();
+          applyGoogle();
+        }
+        var menu = document.getElementById('menu-toggle');
+        if (menu) menu.checked = false;
+      });
+    });
   });
 })();
 </script><script id="herbstmesse-dataset-language">(function(){function change(lang){var guide=document.getElementById('evergreen-herbstmesse-2026');guide.querySelectorAll('[data-evergreen-en]').forEach(function(el){el.textContent=el.getAttribute('data-evergreen-'+lang);});}document.addEventListener('click',function(event){var button=event.target.closest('[data-site-language]');if(button)change(button.getAttribute('data-site-language'));});})();</script><script id="herbstmesse-delicacies-language">(function(){var root=document.getElementById('evergreen-herbstmesse-delicacies-2026'),original=new Map();root.querySelectorAll('[data-food-de]').forEach(function(el){original.set(el,el.textContent)});function change(){var de=document.documentElement.lang==='de';original.forEach(function(en,el){el.textContent=de?el.getAttribute('data-food-de'):en})}new MutationObserver(change).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});change()})();</script><style id="complete-card-image-fit">#deals-panel .deal-photo,#events-panel .event-photo-cell,#family-deals-panel .deal-photo,#guides-panel .autumn-photo-frame{min-width:0!important;overflow:hidden!important;align-items:center!important;justify-content:center!important}#deals-panel .deal-photo img,#events-panel .event-photo-cell img,#family-deals-panel .deal-photo img,#guides-panel .rainy-venue-photo,#guides-panel .venue-photo,#guides-panel#guides-panel#guides-panel img.autumn-photo{object-fit:contain!important;object-position:center!important;max-width:100%!important;max-height:100%!important;display:block!important}#guides-panel .guide-stack-thumb::after,#guides-panel .guide-stack-thumb::before,#guides-panel .guide-stack-thumb>i,#guides-panel .venue-thumb-stack .stack-face,#guides-panel .venue-thumb-stack::after,#guides-panel .venue-thumb-stack::before{background-size:100% 100%,contain!important;background-position:center!important;background-repeat:no-repeat!important}</style><div aria-controls="page-content" aria-label="Page scroll" aria-orientation="vertical" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" id="page-scroll-track" role="scrollbar" tabindex="0"><div id="page-scroll-thumb"></div></div><dialog aria-labelledby="saved-events-title" id="saved-events-dialog"><button aria-label="Close pinned items" id="saved-events-close" type="button">×</button><h2 id="saved-events-title">📌 Pinned items</h2><p id="saved-events-empty">Tap a grey pin on an event, guide or offer to save it here.</p><ul id="saved-events-list"></ul></dialog><script id="gugu-page-controls">(function(){'use strict';
