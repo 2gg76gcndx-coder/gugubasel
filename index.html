@@ -13,6 +13,46 @@ window.guguStartGTM=function(){
   script.src='https://www.googletagmanager.com/gtm.js?id=GTM-59DMVGCN';
   document.head.appendChild(script);
 };
+</script><script id="gugu-ga4-section-outbound-clicks">
+/* GUGU: report external link clicks by their originating website section.
+   This respects the site's existing analytics consent loader. */
+(function (w, d) {
+  'use strict';
+  var sections = {
+    'events-panel': 'plans',
+    'guides-panel': 'guides',
+    'deals-panel': 'offers'
+  };
+  function activeSection() {
+    var selected = d.querySelector('input[name="main"]:checked');
+    if (selected) {
+      if (selected.id === 'tab-guides') return 'guides';
+      if (selected.id === 'tab-deals' || selected.id === 'tab-deals-family') return 'offers';
+    }
+    return 'plans';
+  }
+  d.addEventListener('click', function (event) {
+    var target = event.target;
+    if (!target || !target.closest) return;
+    var link = target.closest('a[href]');
+    if (!link) return;
+    var destination;
+    try { destination = new URL(link.getAttribute('href'), w.location.href); }
+    catch (error) { return; }
+    if (!/^https?:$/.test(destination.protocol) ||
+        destination.hostname.toLowerCase() === w.location.hostname.toLowerCase()) return;
+    var panel = link.closest('#events-panel, #guides-panel, #deals-panel');
+    var section = panel ? sections[panel.id] : activeSection();
+    // Never send analytics before approval or after analytics was declined.
+    if (!w.guguGA4Loaded || typeof w.gtag !== 'function') return;
+    w.gtag('event', 'gugu_external_click', {
+      gugu_section: section,
+      link_url: destination.href,
+      link_domain: destination.hostname,
+      transport_type: 'beacon'
+    });
+  }, true);
+})(window, document);
 </script><!-- Google Analytics 4: loaded only after analytics consent --><script id="gugu-ga4-consent-loader">
   window.guguStartGA4 = function () {
     if (window.guguGA4Loaded) return;
