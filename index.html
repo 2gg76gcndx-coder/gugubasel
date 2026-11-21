@@ -1690,6 +1690,91 @@ html body #page-content #guides-panel .family-guides .guide-subchapter > summary
  padding:0 7px!important;
  box-shadow:0 2px 5px rgba(83,71,0,.18)!important;
 }
+</style><style id="gugu-100px-gutters-counts-final">
+/* GUGU Basel — desktop 100px content gutters; mobile remains responsive. */
+:root { --gugu-unified-blue:linear-gradient(115deg,#064a98 0%,#0869c8 48%,#073e84 100%); }
+@media screen and (min-width:1200px) {
+ html body #page-content #events-panel,
+ html body #page-content #guides-panel,
+ html body #page-content #deals-panel {
+   padding-left:100px!important;padding-right:100px!important;
+   box-sizing:border-box!important;
+ }
+ html body #page-content > .site-footer {
+   padding-left:100px!important;padding-right:100px!important;box-sizing:border-box!important;
+ }
+ html body #page-content #deals-panel .gugu-kids-product-list,
+ html body #page-content #deals-panel #kids-deals-content .deal-list {
+   display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+   gap:12px!important;
+ }
+ html body #page-content #deals-panel .gugu-kids-product-list > .deal-card {
+   min-width:0!important;width:100%!important;max-width:none!important;
+ }
+ html body #page-content #guides-panel .guide-accordion {
+   display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+   gap:12px!important;align-items:start!important;
+ }
+ /* Match feedback header and its white card to the total width of the three nav pills. */
+ html body #page-content > .site-footer .gugu-feedback {
+   width:min(100%,var(--gugu-navigation-width, 770px))!important;
+   max-width:770px!important;margin-left:auto!important;margin-right:auto!important;
+   box-sizing:border-box!important;
+ }
+ html body #page-content > .site-footer .gugu-feedback-pill {
+   width:100%!important;max-width:none!important;box-sizing:border-box!important;
+ }
+}
+/* Date/weather/event count on the body; only the yellow count remains a pill. */
+html body #page-content #events-panel .plans-date-line {
+ background:transparent!important;background-image:none!important;
+ border:0!important;border-radius:0!important;box-shadow:none!important;
+}
+html body #page-content #events-panel .date-title,
+html body #page-content #events-panel .gugu-day-weather {
+ background:transparent!important;background-image:none!important;
+ border:0!important;border-radius:0!important;box-shadow:none!important;
+}
+html body #page-content #events-panel .plans-date-line > .plan-count-pill {
+ background:linear-gradient(180deg,#fff4a0 0%,#ffd532 48%,#efb800 100%)!important;
+ border-radius:999px!important;box-shadow:0 2px 7px rgba(0,0,0,.13)!important;
+}
+/* Flohmi-equivalent gradient for feedback, and the six main guide chapters. */
+html body #page-content .gugu-feedback-pill,
+html body #page-content #guides-panel .guide-accordion > .guide-chapter > summary {
+ background:var(--gugu-unified-blue)!important;background-image:var(--gugu-unified-blue)!important;
+ color:#fff!important;border:1px solid #0753a5!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 3px 8px rgba(4,57,116,.15)!important;
+}
+html body #page-content #guides-panel .guide-accordion > .guide-chapter > summary * {
+ color:#fff!important;
+}
+/* Yellow option counters are part of each row, not absolute/floating siblings. */
+html body #page-content #guides-panel .guide-subchapter > summary,
+html body #page-content #guides-panel .autumn-category > summary,
+html body #page-content #guides-panel .guide-subitems-links > a {
+ position:relative!important;display:flex!important;align-items:center!important;
+ min-width:0!important;gap:8px!important;
+}
+html body #page-content #guides-panel .guide-subchapter > summary > .plan-count-pill,
+html body #page-content #guides-panel .autumn-category > summary > .plan-count-pill,
+html body #page-content #guides-panel .guide-subitems-links > a > .plan-count-pill {
+ position:static!important;inset:auto!important;transform:none!important;
+ float:none!important;display:inline-flex!important;align-items:center!important;
+ justify-content:center!important;flex:0 0 auto!important;
+ margin-left:auto!important;margin-right:18px!important;
+ z-index:1!important;
+ background:linear-gradient(180deg,#fff4a0,#ffd532 55%,#efb800)!important;
+ color:#604900!important;border-radius:999px!important;
+}
+/* Nested topics have white rows, without the heading's blue background. */
+html body #page-content #guides-panel .guide-subchapter > summary,
+html body #page-content #guides-panel .autumn-category > summary,
+html body #page-content #guides-panel .family-level2-title,
+html body #page-content #guides-panel .rainy-category-label {
+ background:#fff!important;background-image:none!important;color:#083b59!important;
+}
+/* All six main guide headings retain the desktop three-column arrangement. */
 </style></head><body><div id="gugu-translate-wrapper"><div id="google_translate_element"></div></div><div class="app" id="page-content"><div style="position:relative"><picture class="gugu-responsive-header"><source media="(max-width: 767px)" srcset="https://raw.githubusercontent.com/2gg76gcndx-coder/gugubasel/main/assets/Header-mobile.PNG"/><img alt="GUGU Basel — All about family | Plan. Save. Explore" class="hero-art" data-image-name="Header-desktop.PNG" decoding="async" fetchpriority="high" src="https://raw.githubusercontent.com/2gg76gcndx-coder/gugubasel/main/assets/Header-desktop.PNG"/></picture><input class="menu-toggle" id="menu-toggle" type="checkbox"/><label aria-label="Open navigation" class="menu-button" for="menu-toggle"></label><div aria-label="Website language" class="gugu-language-controls gugu-language-header notranslate" translate="no"><button aria-label="English" aria-pressed="true" class="gugu-lang active" data-site-language="en" type="button">🇺🇸</button><button aria-label="Deutsch" aria-pressed="false" class="gugu-lang" data-site-language="de" type="button">🇨🇭</button></div><button aria-controls="saved-events-dialog" aria-expanded="false" aria-haspopup="dialog" aria-label="Open pinned items" class="notranslate" id="saved-events-open" translate="no" type="button">📌<span id="saved-events-count">0</span></button><div class="nav-pop"><div class="notranslate" hidden="" id="gugu-translate-credit" translate="no">German translation by Google Translate</div><label for="tab-events">Activities</label><label for="tab-guides">Family Guides</label><label for="tab-deals">Offers</label><a href="#about" onclick="document.getElementById('about').open=true;document.getElementById('menu-toggle').checked=false;">About</a></div></div><input checked="checked" class="radio" id="tab-events" name="main" type="radio"/><input class="radio" id="tab-weekend-sat" name="main" type="radio"/><input class="radio" id="tab-weekend-sun" name="main" type="radio"/><input class="radio" id="tab-deals" name="main" type="radio"/><input class="radio" id="tab-deals-kids" name="main" type="radio"/><input class="radio" id="tab-deals-family" name="main" type="radio"/><input class="radio" id="tab-guides" name="main" type="radio"/><div class="panels"><section class="panel" id="events-panel"><nav aria-label="Gugu Basel sections" class="main-tabs"><div class="weekend-combo-tab"><label class="weekend-main-hit" for="tab-events"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><use href="#gv0"></use></svg></span><span class="tab-text"><span>Weekend</span><span>Plans</span></span></label><div aria-label="Choose a weekend day" class="weekend-day-split" role="group"><label aria-label="Show Saturday weekend plans" class="weekend-day-choice" data-weekend-day="sat" for="tab-weekend-sat">Saturday</label><label aria-label="Show Sunday weekend plans" class="weekend-day-choice" data-weekend-day="sun" for="tab-weekend-sun">Sunday</label></div></div><label class="tall-main-tab" for="tab-guides"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><use href="#gv1"></use></svg></span><span class="tab-text">Family Guides</span></label><div class="deals-combo-tab"><label class="deals-main-hit" for="tab-deals"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><use href="#gv2"></use></svg></span><span class="tab-text"><span>Family</span><span>Offers</span></span></label><div aria-label="Choose a deals category" class="deals-subtab-split" role="group"><label aria-label="Open Kids deals" class="deals-subtab-choice" for="tab-deals-kids">Kids</label><label aria-label="Open Family deals" class="deals-subtab-choice" for="tab-deals-family">Family</label></div></div></nav><div class="gugu-search-area notranslate" translate="no"><div class="gugu-site-search" role="search"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.8"></circle><path d="m16 16 5 5"></path></svg><input aria-label="Search Gugu Basel" autocomplete="off" class="gugu-search-input" enterkeyhint="search" placeholder="Search Gugu Basel…" type="search"/><button aria-label="Clear search" class="gugu-search-clear" hidden="" type="button">×</button></div><section aria-label="Search results" class="gugu-search-results" hidden=""><p aria-live="polite" class="gugu-search-status" role="status"></p><div class="gugu-search-list"></div></section></div><input checked="checked" class="radio" id="day-sat" name="day" type="radio"/><input class="radio" id="day-sun" name="day" type="radio"/><script>
 /* Basel-local Sunday defaults to Sunday Plans; all other days to Saturday Plans. */
 window.guguDefaultSunday=function(){
