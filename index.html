@@ -3238,7 +3238,21 @@ html body #tab-deals-family:checked ~ .panels nav.main-tabs .deals-subtab-choice
  text-decoration-thickness:1px!important;
  text-underline-offset:4px!important;
 }
-</style><script id="gugu-compact-filters-script">(function(){'use strict';function init(){var root=document.querySelector('#events-panel'),wrap=root&&root.querySelector('.gugu-filter-wrap');if(!wrap)return;var type=wrap.querySelector('#gugu-filter-type'),age=wrap.querySelector('#gugu-filter-age'),location=wrap.querySelector('#gugu-filter-location'),clear=wrap.querySelector('.gugu-filter-clear'),empty=wrap.querySelector('.gugu-filter-empty');var panels=[document.querySelector('#sat-panel'),document.querySelector('#sun-panel')].filter(Boolean);var categories=new Set();panels.forEach(function(p){p.querySelectorAll('.event-group').forEach(function(g){var h=g.querySelector('.weekend-chapter-name');if(h)categories.add(h.textContent.trim());});});Array.from(categories).forEach(function(name){var o=document.createElement('option');o.value=name;o.textContent=name.replace(/\s*&\s*/g,' & ');type.appendChild(o);});var locationOptions=new Set();panels.forEach(function(p){p.querySelectorAll('.event-row').forEach(function(row){var raw=row.textContent.toLowerCase();if(/basel.stadt|\bbasel\b/.test(raw))locationOptions.add('Basel-Stadt');if(/basel.land|baselland|\bliestal\b|\bpratteln\b|\bmuttenz\b|\breinach\b|\ballschwil\b|\boberwil\b/.test(raw))locationOptions.add('Basel-Land');});});['Basel-Stadt','Basel-Land'].filter(function(v){return locationOptions.has(v)}).forEach(function(v){location.add(new Option(v,v));});function locationEligible(row,v){if(v==='all')return true;var t=row.textContent.toLowerCase();if(v==='Basel-Land')return /basel.land|baselland|\bliestal\b|\bpratteln\b|\bmuttenz\b|\breinach\b|\ballschwil\b|\boberwil\b/.test(t);return /basel.stadt|\bbasel\b/.test(t)&&!/basel.land|baselland/.test(t);}function activeDay(){var radio=document.querySelector('#day-sun');return radio&&radio.checked?'sun':'sat';}function ageEligible(row,v){if(v==='all')return true;var notes=Array.from(row.querySelectorAll('.event-meta div')).filter(function(d){return /📝|remarks|notes/i.test(d.textContent)||d.querySelector('[aria-label="Remarks"],[aria-label="Notes"]');}).map(function(d){return d.textContent;}).join(' ');if(!notes)notes=row.querySelector('.event-meta')?.textContent||'';var t=notes.toLowerCase();var ranges=[];var re=/(?:ages?|aged|age|from|ab)\s*(\d{1,2})\s*(?:[–—-]|to|bis)\s*(\d{1,2})/gi,m;while((m=re.exec(t)))ranges.push([+m[1],+m[2]]);var min=null;re=/(?:ages?|aged|age|from|ab)\s*(\d{1,2})\s*\+/gi;while((m=re.exec(t)))min=min===null?+m[1]:Math.min(min,+m[1]);if(v==='adult')return /adult|erwachsene|grown.up/i.test(t)||(!ranges.length&&min===null);var limits=v==='10+'?[10,17]:v.split('-').map(Number);if(!ranges.length&&min===null)return true;return ranges.some(function(r){return r[0]<=limits[1]&&r[1]>=limits[0]})||(min!==null&&min<=limits[1]);}function apply(){var d=activeDay(),ty=type.value,ag=age.value,lo=location.value;var shown=0;panels.forEach(function(p){var panelDay=p.id==='sat-panel'?'sat':'sun';var permitted=panelDay===d;p.classList.toggle('gugu-filter-hidden',!permitted);p.querySelectorAll('.event-group').forEach(function(g){var h=g.querySelector('.weekend-chapter-name');var match=ty==='all'||(h&&h.textContent.trim()===ty);var count=0;g.querySelectorAll('.event-row').forEach(function(row){var visible=match&&ageEligible(row,ag)&&locationEligible(row,lo);row.classList.toggle('gugu-filter-hidden',!visible);if(visible)count++;});g.classList.toggle('gugu-filter-hidden',!count);if(permitted)shown+=count;});});if(clear)clear.hidden=ty==='all'&&ag==='all'&&lo==='all';empty.hidden=shown!==0;}
+</style><script id="gugu-compact-filters-script">(function(){'use strict';function init(){var root=document.querySelector('#events-panel'),wrap=root&&root.querySelector('.gugu-filter-wrap');if(!wrap)return;var type=wrap.querySelector('#gugu-filter-type'),age=wrap.querySelector('#gugu-filter-age'),location=wrap.querySelector('#gugu-filter-location'),clear=wrap.querySelector('.gugu-filter-clear'),empty=wrap.querySelector('.gugu-filter-empty');var panels=[document.querySelector('#sat-panel'),document.querySelector('#sun-panel')].filter(Boolean);var categories=new Set();panels.forEach(function(p){p.querySelectorAll('.event-group').forEach(function(g){var h=g.querySelector('.weekend-chapter-name');if(h)categories.add(h.textContent.trim());});});Array.from(categories).forEach(function(name){var o=document.createElement('option');o.value=name;o.textContent=name.replace(/\s*&\s*/g,' & ');type.appendChild(o);});// Classify by the actual venue field, never by unrelated event descriptions.
+var baselLandPlaces=['allschwil','arlesheim','augst','biel-benken','binningen','birsfelden','bottmingen','bubendorf','diepflingen','frenkendorf','füllinsdorf','gelterkinden','giebenach','liestal','münchenstein','muenchenstein','muttenz','oberwil','pratteln','reinach','riehen-bl','sissach','therwil','zwingen','aesch','ettingen','lausen','oberwil'];
+var baselStadtPlaces=['basel','riehen','bettingen'];
+function venueOf(row){var icon=row.querySelector('.event-meta [aria-label="Venue"]');return icon&&icon.parentElement?icon.parentElement.textContent.replace(/^\s*📍\s*/,'').trim():'';}
+function locationGroup(row){var venue=venueOf(row).toLocaleLowerCase('de-CH');if(!venue)return 'unknown';
+// Explicit foreign locations and neighbouring countries belong to Nearby.
+if(/\b(germany|deutschland|france|frankreich|weil am rhein|saint.louis|st\. louis|huningue|lörrach|loerrach|grenzach|rheinfelden \(de\))\b/i.test(venue))return 'nearby';
+// A city/municipality in the venue takes precedence over incidental "Basel" in a venue name.
+var matches=function(names){return names.some(function(n){return new RegExp('(^|[^\\p{L}])'+n.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?=$|[^\\p{L}])','iu').test(venue);});};
+if(matches(baselLandPlaces)||/\b(41(?:0[2-9]|[1-9][0-9]))\b/.test(venue))return 'basel-land';
+if(matches(baselStadtPlaces)||/\b40\d\d\b/.test(venue))return 'basel-stadt';
+return 'nearby';}
+location.innerHTML='';[['all','Location'],['basel-stadt','Basel-Stadt'],['basel-land','Basel-Land'],['nearby','Nearby']].forEach(function(pair){location.add(new Option(pair[1],pair[0]));});
+function locationEligible(row,v){return v==='all'||locationGroup(row)===v;}
+function activeDay(){var radio=document.querySelector('#day-sun');return radio&&radio.checked?'sun':'sat';}function ageEligible(row,v){if(v==='all')return true;var notes=Array.from(row.querySelectorAll('.event-meta div')).filter(function(d){return /📝|remarks|notes/i.test(d.textContent)||d.querySelector('[aria-label="Remarks"],[aria-label="Notes"]');}).map(function(d){return d.textContent;}).join(' ');if(!notes)notes=row.querySelector('.event-meta')?.textContent||'';var t=notes.toLowerCase();var ranges=[];var re=/(?:ages?|aged|age|from|ab)\s*(\d{1,2})\s*(?:[–—-]|to|bis)\s*(\d{1,2})/gi,m;while((m=re.exec(t)))ranges.push([+m[1],+m[2]]);var min=null;re=/(?:ages?|aged|age|from|ab)\s*(\d{1,2})\s*\+/gi;while((m=re.exec(t)))min=min===null?+m[1]:Math.min(min,+m[1]);if(v==='adult')return /adult|erwachsene|grown.up/i.test(t)||(!ranges.length&&min===null);var limits=v==='10+'?[10,17]:v.split('-').map(Number);if(!ranges.length&&min===null)return true;return ranges.some(function(r){return r[0]<=limits[1]&&r[1]>=limits[0]})||(min!==null&&min<=limits[1]);}function apply(){var d=activeDay(),ty=type.value,ag=age.value,lo=location.value;var shown=0;panels.forEach(function(p){var panelDay=p.id==='sat-panel'?'sat':'sun';var permitted=panelDay===d;p.classList.toggle('gugu-filter-hidden',!permitted);p.querySelectorAll('.event-group').forEach(function(g){var h=g.querySelector('.weekend-chapter-name');var match=ty==='all'||(h&&h.textContent.trim()===ty);var count=0;g.querySelectorAll('.event-row').forEach(function(row){var visible=match&&ageEligible(row,ag)&&locationEligible(row,lo);row.classList.toggle('gugu-filter-hidden',!visible);if(visible)count++;});g.classList.toggle('gugu-filter-hidden',!count);if(permitted)shown+=count;});});if(clear)clear.hidden=ty==='all'&&ag==='all'&&lo==='all';empty.hidden=shown!==0;}
 [type,location,age].forEach(function(el){el.addEventListener('change',apply)});if(clear)clear.addEventListener('click',function(){type.value='all';location.value='all';age.value='all';apply()});document.querySelectorAll('input[name="day"],#day-sat,#day-sun').forEach(function(el){el.addEventListener('change',apply)});apply();}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();})();</script><script>(function(){
 const byId=id=>document.getElementById(id);
 const guideRoot=byId('guides-panel'), offersRoot=byId('deals-panel');
@@ -3251,10 +3265,11 @@ const norm=s=>(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCas
 function options(select,values){let old=select.value;select.length=1;let seen=new Set();values.forEach(v=>{v=proper(v);if(!v||seen.has(norm(v)))return;seen.add(norm(v));select.add(new Option(v,norm(v)))});select.value=[...select.options].some(o=>o.value===old)?old:'all'}
 const guideChapters=[...guideRoot.querySelectorAll('.guide-accordion > .guide-chapter')];
 const chapterTitle=chapter=>label(chapter.querySelector(':scope > summary'));
-const guideItems=[...guideRoot.querySelectorAll('.venue-card')].map(el=>{
+// Guide content uses both .autumn-row (music schools, cafés, etc.) and .venue-card (sports).
+// Match the actual content entries, not just the sports cards.
+const guideItems=[...guideRoot.querySelectorAll('.autumn-row, .venue-card')].map(el=>{
  const chapter=el.closest('.guide-chapter');
- const nested=[...function*(node){while(node&&node!==chapter){if(node.matches('details'))yield node;node=node.parentElement}}(el)];
- const typeNode=nested.find(n=>n.classList.contains('guide-subchapter')||n.classList.contains('family-level2'));
+ const typeNode=el.closest('details.guide-subchapter, details.family-level2');
  const type=typeNode?guideTypeLabel(typeNode.querySelector(':scope > summary')):'';
  return {el,chapter,cat:chapter?chapterTitle(chapter):'',type,raw:norm(el.textContent)};
 });
@@ -3262,7 +3277,25 @@ options(gc,guideChapters.map(chapterTitle));
 function populateTypes(){let chosen=gc.value;const chapters=guideChapters.filter(ch=>chosen==='all'||norm(chapterTitle(ch))===chosen);const types=chapters.flatMap(ch=>[...ch.querySelectorAll('details.guide-subchapter > summary, details.family-level2 > summary')].map(guideTypeLabel));options(gt,types.concat(guideItems.filter(x=>chosen==='all'||norm(x.cat)===chosen).map(x=>x.type)).filter(Boolean))}
 populateTypes();
 function ageMatch(raw,age){if(age==='all')return true;const matches=[...raw.matchAll(/(?:ages?|from|ab|years?|jahre?|jahrig|jährig)\s*[: ]*([0-9]{1,2})(?:\s*[-–]\s*([0-9]{1,2}))?/g)];if(!matches.length)return true;const a=age==='10+'?10:Number(age.split('-')[0]),b=age==='10+'?99:Number(age.split('-')[1]);return matches.some(m=>Number(m[1])<=b&&(m[2]?Number(m[2]):99)>=a)}
-function locMatch(raw,v){if(v==='all')return true;if(v==='basel-stadt')return /basel|riehen|bettingen/.test(raw)&&!/basel-land|baselland|pratteln|liestal|muttenz|allschwil|birsfelden/.test(raw);if(v==='basel-land')return /basel-land|baselland|pratteln|liestal|muttenz|allschwil|birsfelden|reinach|oberwil|arlesheim|munchenstein/.test(raw);return /weil am rhein|lorrach|saint-louis|mulhouse|france|germany|deutschland|frankreich/.test(raw)}
+// Classify each guide from its venue/address fields, never from marketing copy or prices.
+function guideLocationGroup(el){
+ const text=el.innerText||el.textContent||'';
+ const postcodeLines=text.split(/\n/).filter(line=>/\b(?:postcode|postal code|address|location|venue|standort|ort)\b/i.test(line));
+ const loc=norm(postcodeLines.join(' ')+' '+(el.querySelector('[class*="address"],[class*="location"],[class*="venue"]')?.textContent||''));
+ const directPostcodes=[...loc.matchAll(/\b(\d{4})\b/g)].map(m=>Number(m[1]));
+ if(directPostcodes.some(p=>p>=4000&&p<=4099))return 'basel-stadt';
+ if(directPostcodes.some(p=>p>=4100&&p<=4299))return 'basel-land';
+ const venue=loc||norm(text.slice(0,350));
+ const bl=/\b(?:basel-land|baselland|basel-landschaft|allschwil|arlesheim|augst|biel-benken|birsfelden|bottmingen|bubendorf|ettingen|frenkendorf|gelterkinden|liestal|muenchenstein|munchenstein|muttenz|oberwil|pratteln|reinach|sissach|therwil|aesch|binningen|laeufelfingen|laufelfingen|muenchenstein)\b/i;
+ const bs=/\b(?:basel-stadt|grossbasel|kleinbasel|riehen|bettingen|basel)\b/i;
+ const near=/\b(?:weil am rhein|lorrach|loerrach|lörrach|saint-louis|st louis|mulhouse|france|germany|deutschland|frankreich|rheinfelden|rheinfelden|grenzach|wyhlen)\b/i;
+ if(bl.test(venue))return 'basel-land';
+ if(near.test(venue))return 'nearby';
+ if(bs.test(venue))return 'basel-stadt';
+ // Unknown location is not assumed to be nearby.
+ return null;
+}
+function locMatch(el,v){return v==='all'||guideLocationGroup(el)===v;}
 function updateGuides(){
  const active=[gc,gt,gl,ga].some(s=>s.value!=='all');
  guideRoot.querySelector('.gugu-guides-filters').classList.toggle('has-selection',active);
@@ -3270,14 +3303,20 @@ function updateGuides(){
   const matchesCategory=gc.value==='all'||norm(x.cat)===gc.value;
   // Type is the immediate second-level guide section, never a deeper heading or a text match.
   const matchesType=gt.value==='all'||norm(x.type)===gt.value;
-  x.el.hidden=!(matchesCategory&&matchesType&&locMatch(x.raw,gl.value)&&ageMatch(x.raw,ga.value));
+  x.el.hidden=!(matchesCategory&&matchesType&&locMatch(x.el,gl.value)&&ageMatch(x.raw,ga.value));
  });
- // Hide empty nested groups too: otherwise their headings can remain visible despite all cards being hidden.
+ // Recalculate visibility bottom-up for every guide group, using both entry formats.
  [...guideRoot.querySelectorAll('details.autumn-category, details.family-level2, details.guide-subchapter')]
   .sort((a,b)=>{let depth=n=>{let d=0;while(n.parentElement){d++;n=n.parentElement}return d};return depth(b)-depth(a)})
-  .forEach(group=>{group.hidden=active&&!([...group.querySelectorAll('.venue-card')].some(card=>!card.hidden))});
+  .forEach(group=>{
+   const hasMatch=guideItems.some(x=>group.contains(x.el)&&!x.el.hidden);
+   group.hidden=active&&!hasMatch;
+   if(active&&hasMatch)group.open=true;
+  });
  guideRoot.querySelectorAll('.guide-chapter').forEach(ch=>{
-  ch.hidden=active&&!guideItems.some(x=>x.chapter===ch&&!x.el.hidden);
+  const hasMatch=guideItems.some(x=>x.chapter===ch&&!x.el.hidden);
+  ch.hidden=active&&!hasMatch;
+  if(active&&hasMatch&&ch.tagName==='DETAILS')ch.open=true;
  });
 }
 gc.addEventListener('change',()=>{populateTypes();updateGuides()});[gt,gl,ga].forEach(el=>el.addEventListener('change',updateGuides));
