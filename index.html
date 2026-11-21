@@ -2283,6 +2283,81 @@ html body #page-content #deals-panel #family-deals-content > .deal-list.family-d
   background:transparent!important;
   box-shadow:none!important;
 }
+</style><style id="gugu-desktop-navigation-consistent-on-load-20261121">
+/* All three glossy pills have identical geometry from first paint and after tab changes. */
+@media (min-width:769px) {
+  html body #page-content .panels nav.main-tabs {
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    align-items:stretch!important;
+    gap:16px!important;
+  }
+  html body #page-content .panels nav.main-tabs > .weekend-combo-tab,
+  html body #page-content .panels nav.main-tabs > .deals-combo-tab,
+  html body #page-content .panels nav.main-tabs > .tall-main-tab {
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:84px!important;min-height:84px!important;max-height:84px!important;
+    margin:0!important;
+    transform:none!important;
+    overflow:hidden!important;
+    align-self:stretch!important;
+  }
+  html body #page-content .panels nav.main-tabs > .weekend-combo-tab,
+  html body #page-content .panels nav.main-tabs > .deals-combo-tab {
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:52px 32px!important;
+    align-content:start!important;
+  }
+  html body #page-content .panels nav.main-tabs .weekend-main-hit,
+  html body #page-content .panels nav.main-tabs .deals-main-hit {
+    box-sizing:border-box!important;
+    grid-row:1!important;
+    height:52px!important;min-height:52px!important;max-height:52px!important;
+    margin:0!important;padding:0 8px!important;
+    display:flex!important;align-items:center!important;justify-content:center!important;
+  }
+  html body #page-content .panels nav.main-tabs .weekend-day-split,
+  html body #page-content .panels nav.main-tabs .deals-subtab-split {
+    box-sizing:border-box!important;
+    grid-row:2!important;
+    display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    height:32px!important;min-height:32px!important;max-height:32px!important;
+    padding:0!important;margin:0!important;
+    align-items:stretch!important;
+  }
+  html body #page-content .panels nav.main-tabs .weekend-day-choice,
+  html body #page-content .panels nav.main-tabs .deals-subtab-choice {
+    box-sizing:border-box!important;
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    height:32px!important;min-height:32px!important;max-height:32px!important;
+    padding:0 6px!important;margin:0!important;
+    font-size:16px!important;line-height:20px!important;font-weight:800!important;
+    border-top:0!important;border-bottom:0!important;
+    transform:none!important;
+    text-decoration:none!important;
+    text-underline-offset:3px!important;
+  }
+  html body #page-content .panels nav.main-tabs .weekend-main-hit,
+  html body #page-content .panels nav.main-tabs .deals-main-hit,
+  html body #page-content .panels nav.main-tabs > .tall-main-tab {
+    font-size:16px!important;
+  }
+  /* Keep the same blue surface for both days; selection is indicated only by underline. */
+  html body #page-content .panels nav.main-tabs .weekend-day-choice,
+  html body #page-content .panels nav.main-tabs .weekend-day-choice.is-selected {
+    background:transparent!important;background-image:none!important;box-shadow:none!important;
+  }
+  html body #tab-weekend-sat:checked ~ .panels nav.main-tabs .weekend-day-choice[for="tab-weekend-sat"],
+  html body #tab-weekend-sun:checked ~ .panels nav.main-tabs .weekend-day-choice[for="tab-weekend-sun"] {
+    text-decoration-line:underline!important;
+    text-decoration-style:solid!important;
+    text-decoration-thickness:2px!important;
+    text-underline-offset:4px!important;
+    background:transparent!important;
+  }
+}
 </style></head><body><div id="gugu-translate-wrapper"><div id="google_translate_element"></div></div><div class="app" id="page-content"><div style="position:relative"><picture class="gugu-responsive-header"><source media="(max-width: 767px)" srcset="https://raw.githubusercontent.com/2gg76gcndx-coder/gugubasel/main/assets/Header-mobile.PNG"/><img alt="GUGU Basel — All about family | Plan. Save. Explore" class="hero-art" data-image-name="Header-desktop.PNG" decoding="async" fetchpriority="high" src="https://raw.githubusercontent.com/2gg76gcndx-coder/gugubasel/main/assets/Header-desktop.PNG"/></picture><input class="menu-toggle" id="menu-toggle" type="checkbox"/><label aria-label="Open navigation" class="menu-button" for="menu-toggle"></label><div aria-label="Website language" class="gugu-language-controls gugu-language-header notranslate" translate="no"><button aria-label="English" aria-pressed="true" class="gugu-lang active" data-site-language="en" type="button">🇺🇸</button><button aria-label="Deutsch" aria-pressed="false" class="gugu-lang" data-site-language="de" type="button">🇨🇭</button></div><button aria-controls="saved-events-dialog" aria-expanded="false" aria-haspopup="dialog" aria-label="Open pinned items" class="notranslate" id="saved-events-open" translate="no" type="button">📌<span id="saved-events-count">0</span></button><div class="nav-pop"><div class="notranslate" hidden="" id="gugu-translate-credit" translate="no">German translation by Google Translate</div><label for="tab-events">Activities</label><label for="tab-guides">Family Guides</label><label for="tab-deals">Offers</label><a href="#about" onclick="document.getElementById('about').open=true;document.getElementById('menu-toggle').checked=false;">About</a></div></div><input checked="checked" class="radio" id="tab-events" name="main" type="radio"/><input class="radio" id="tab-weekend-sat" name="main" type="radio"/><input class="radio" id="tab-weekend-sun" name="main" type="radio"/><input class="radio" id="tab-deals" name="main" type="radio"/><input class="radio" id="tab-deals-kids" name="main" type="radio"/><input class="radio" id="tab-deals-family" name="main" type="radio"/><input class="radio" id="tab-guides" name="main" type="radio"/><div class="panels"><section class="panel" id="events-panel"><nav aria-label="Gugu Basel sections" class="main-tabs"><div class="weekend-combo-tab"><label class="weekend-main-hit" for="tab-events"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><use href="#gv0"></use></svg></span><span class="tab-text"><span>Weekend</span><span>Plans</span></span></label><div aria-label="Choose a weekend day" class="weekend-day-split" role="group"><label aria-label="Show Saturday weekend plans" class="weekend-day-choice" data-weekend-day="sat" for="tab-weekend-sat">Saturday</label><label aria-label="Show Sunday weekend plans" class="weekend-day-choice" data-weekend-day="sun" for="tab-weekend-sun">Sunday</label></div></div><label class="tall-main-tab" for="tab-guides"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><use href="#gv1"></use></svg></span><span class="tab-text">Family Guides</span></label><div class="deals-combo-tab"><label class="deals-main-hit" for="tab-deals"><span aria-hidden="true" class="tab-icon"><svg viewbox="0 0 24 24"><use href="#gv2"></use></svg></span><span class="tab-text"><span>Family</span><span>Offers</span></span></label><div aria-label="Choose a deals category" class="deals-subtab-split" role="group"><label aria-label="Open Kids deals" class="deals-subtab-choice" for="tab-deals-kids">Kids</label><label aria-label="Open Family deals" class="deals-subtab-choice" for="tab-deals-family">Family</label></div></div></nav><div class="gugu-search-area notranslate" translate="no"><div class="gugu-site-search" role="search"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.8"></circle><path d="m16 16 5 5"></path></svg><input aria-label="Search Gugu Basel" autocomplete="off" class="gugu-search-input" enterkeyhint="search" placeholder="Search Gugu Basel…" type="search"/><button aria-label="Clear search" class="gugu-search-clear" hidden="" type="button">×</button></div><section aria-label="Search results" class="gugu-search-results" hidden=""><p aria-live="polite" class="gugu-search-status" role="status"></p><div class="gugu-search-list"></div></section></div><input checked="checked" class="radio" id="day-sat" name="day" type="radio"/><input class="radio" id="day-sun" name="day" type="radio"/><script>
 /* Basel-local Sunday defaults to Sunday Plans; all other days to Saturday Plans. */
 window.guguDefaultSunday=function(){
