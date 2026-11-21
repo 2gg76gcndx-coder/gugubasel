@@ -3286,4 +3286,36 @@ function updateOffers(){let isKids=currentOfferTab()==='kids';offersRoot.querySe
 ['tab-deals-family','tab-deals-kids','tab-deals'].forEach(id=>byId(id)?.addEventListener('change',()=>{offerCategories();updateOffers()}));
 document.querySelectorAll('[data-reset-filters]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.dataset.resetFilters==='guides'){[gc,gt,gl,ga].forEach(el=>el.selectedIndex=0);populateTypes();updateGuides()}else{[oc,op,od].forEach(el=>el.selectedIndex=0);updateOffers()}}));
 offerCategories();updateGuides();updateOffers();
-})();</script></body></html>
+})();</script><style id="gugu-filter-propercase-final">
+/* Display labels consistently in Proper Case, never all caps. */
+#events-panel .gugu-filter-pill select,
+#guides-panel .gugu-filter-pill select,
+#deals-panel .gugu-filter-pill select,
+#events-panel .gugu-filter-pill select option,
+#guides-panel .gugu-filter-pill select option,
+#deals-panel .gugu-filter-pill select option {text-transform:none!important;font-variant:normal!important;}
+</style>
+<script id="gugu-filter-propercase-final-script">
+(function(){
+  const ids=['gugu-filter-type','gugu-filter-location','gugu-filter-age','gugu-guides-category','gugu-guides-type','gugu-guides-location','gugu-guides-age','gugu-offers-category','gugu-offers-price','gugu-offers-discount'];
+  const shorten={'Activities & Attractions':'Activities','Theme Parks & Attractions':'Theme Parks','Other Clothes & Accessories':'Clothes & Accessories','Overalls & Rain Sets':'Overalls & Rain','Sports & Outdoor':'Sports & Outdoor'};
+  function format(value){
+    let t=String(value||'').replace(/\s+/g,' ').trim();
+    // Remove counts only when they appear as a suffix, not ages, prices, or percentages.
+    t=t.replace(/\s*(?:\(\s*\d+\s*\)|\[\s*\d+\s*\]|[·•]\s*\d+|\s+\d+\s*(?:items?|results?|places?|offers?|guides?)?)\s*$/i,'').trim();
+    t=t.replace(/\s+\d+$/,'').trim();
+    t=t.toLocaleLowerCase('en').replace(/(^|[\s/&–—-])([a-zà-ž])/g,(m,sep,c)=>sep+c.toLocaleUpperCase('en'))
+       .replace(/\bChf\b/g,'CHF').replace(/\bEu\b/g,'EU');
+    t=shorten[t]||t;
+    if([...t].length>20){
+      t=t.replace(/\bAnd\b/g,'&').replace(/\bActivities\b/g,'Activities').replace(/\bAccessories\b/g,'Access.').replace(/\bAttractions\b/g,'Attractions');
+      if([...t].length>20){let words=t.split(' '),out='';for(const w of words){if((out?out.length+1:0)+w.length>20)break;out+=(out?' ':'')+w;}t=out||[...t].slice(0,20).join('');}
+    }
+    return t;
+  }
+  function apply(){ids.forEach(id=>{const sel=document.getElementById(id);if(!sel)return;Array.from(sel.options).forEach(o=>{const next=format(o.textContent);if(next&&next!==o.textContent)o.textContent=next;});});}
+  function init(){apply();const observer=new MutationObserver(apply);ids.forEach(id=>{const el=document.getElementById(id);if(el)observer.observe(el,{childList:true,subtree:true,characterData:true});});}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+</script>
+</body></html>
