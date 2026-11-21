@@ -3238,7 +3238,26 @@ html body #tab-deals-family:checked ~ .panels nav.main-tabs .deals-subtab-choice
  text-decoration-thickness:1px!important;
  text-underline-offset:4px!important;
 }
-</style><style id="gugu-filter-hidden-visibility">#guides-panel [hidden],#deals-panel [hidden],#events-panel [hidden]{display:none!important}html body #page-content #events-panel #sat-panel .event-row.gugu-filter-hidden,html body #page-content #events-panel #sun-panel .event-row.gugu-filter-hidden,html body #page-content #events-panel #sat-panel .event-group.gugu-filter-hidden,html body #page-content #events-panel #sun-panel .event-group.gugu-filter-hidden,html body #page-content #events-panel #sat-panel.gugu-filter-hidden,html body #page-content #events-panel #sun-panel.gugu-filter-hidden{display:none!important}</style><script id="gugu-geographic-location-classifier">
+</style><style id="gugu-filter-hidden-visibility">
+#events-panel [hidden],#guides-panel [hidden],#deals-panel [hidden]{display:none!important}
+html body #page-content #events-panel #sat-panel .event-row.gugu-filter-hidden,
+html body #page-content #events-panel #sun-panel .event-row.gugu-filter-hidden,
+html body #page-content #events-panel #sat-panel .event-group.gugu-filter-hidden,
+html body #page-content #events-panel #sun-panel .event-group.gugu-filter-hidden,
+html body #page-content #events-panel #sat-panel.gugu-filter-hidden,
+html body #page-content #events-panel #sun-panel.gugu-filter-hidden,
+html body #page-content #guides-panel .family-guides .autumn-row[hidden],
+html body #page-content #guides-panel .family-guides #herbstmesse-2026-guide .autumn-row[hidden],
+html body #page-content #guides-panel .family-guides .venue-card[hidden],
+html body #page-content #guides-panel .family-guides .guide-chapter[hidden],
+html body #page-content #guides-panel .family-guides details[hidden],
+html body #page-content #deals-panel #kids-deals-content .deal-card[hidden],
+html body #page-content #deals-panel #family-deals-content .deal-card[hidden],
+html body #page-content #deals-panel #kids-deals-content .deal-list[hidden],
+html body #page-content #deals-panel #family-deals-content .deal-list[hidden],
+html body #page-content #deals-panel #kids-deals-content [hidden],
+html body #page-content #deals-panel #family-deals-content [hidden]{display:none!important}
+</style><script id="gugu-geographic-location-classifier">
 /* Municipality names follow the cantonal lists; evaluate only venue/address fields. */
 window.guguGeoLocation=(function(){
  const bl=`Aesch|Allschwil|Anwil|Arboldswil|Arisdorf|Arlesheim|Augst|Bennwil|Biel-Benken|Binningen|Birsfelden|Blauen|Böckten|Bottmingen|Bretzwil|Brislach|Bubendorf|Buckten|Burg im Leimental|Buus|Diegten|Diepflingen|Dittingen|Duggingen|Eptingen|Ettingen|Frenkendorf|Füllinsdorf|Gelterkinden|Giebenach|Grellingen|Häfelfingen|Hemmiken|Hersberg|Hölstein|Itingen|Känerkinden|Kilchberg|Lampenberg|Langenbruck|Laufen|Läufelfingen|Lausen|Lauwil|Liedertswil|Liesberg|Liestal|Lupsingen|Maisprach|Münchenstein|Muttenz|Nenzlingen|Niederdorf|Nusshof|Oberdorf|Oberwil|Oltingen|Ormalingen|Pfeffingen|Pratteln|Ramlinsburg|Reigoldswil|Reinach|Rickenbach|Roggenburg|Röschenz|Rothenfluh|Rümlingen|Rünenberg|Schönenbuch|Seltisberg|Sissach|Tecknau|Tenniken|Therwil|Thürnen|Titterten|Wahlen|Waldenburg|Wenslingen|Wintersingen|Wittinsburg|Zeglingen|Ziefen|Zunzgen|Zwingen`.split('|');
@@ -3273,24 +3292,31 @@ window.guguGeoLocation=(function(){
  return {classify,event,guide};
 })();
 </script><script id="gugu-shared-age-filter">
+/* Age filters use age statements only. Unspecified ages do not match a selected band. */
 window.guguAgeMatch=function(text,selected){
  if(selected==='all')return true;
- const t=(text||'').toLowerCase().replace(/[–—]/g,'-');
- let ranges=[];let re=/(?:\b(?:ages?|aged|age rating|alter|ab|from|recommended ages?)\s*:?[ ]*|\b)(\d{1,2})\s*(?:-|to|bis)\s*(\d{1,2})\s*(?:years?|yrs?|y\b|jährig|\+)?/gi,m;
- while((m=re.exec(t)))if(+m[1]<=+m[2]&&+m[2]<=18)ranges.push([+m[1],+m[2]]);
- re=/(?:\b(?:ages?|aged|age rating|alter|ab|from|recommended ages?)\s*:?[ ]*)(\d{1,2})\s*\+/gi;
- while((m=re.exec(t)))ranges.push([+m[1],17]);
- re=/\b(?:age rating|published age rating|rating)\s*:\s*(\d{1,2})(?:\s*\(\d+\))?/gi;
- while((m=re.exec(t)))ranges.push([+m[1],17]);
- re=/\b(\d{1,2})\s*(?:years?|yrs?|y\b)\b/gi;
- while((m=re.exec(t)))if(!ranges.some(r=>r[0]<=+m[1]&&r[1]>=+m[1]))ranges.push([+m[1],+m[1]]);
- re=/\b(?:age|ages|alter)\s*:\s*(\d{1,2})(?!\s*(?:-|\+|to|bis|\d))/gi;
- while((m=re.exec(t)))ranges.push([+m[1],+m[1]]);
- re=/\b(\d{1,2})\s*\+\s*y\b/gi;
- while((m=re.exec(t)))ranges.push([+m[1],17]);
- const [lo,hi]=selected==='10+'?[10,17]:selected.split('-').map(Number);
- if(!ranges.length)return !/\b(?:adults only|adult-only|18\+|over 18)\b/.test(t);
- return ranges.some(([a,b])=>a<=hi&&b>=lo);
+ const t=(text||'').toLowerCase().replace(/[–—−]/g,'-').replace(/\s+/g,' ');
+ const band=selected==='10+'?[10,17]:selected.split('-').map(Number);
+ if(!Number.isFinite(band[0])||!Number.isFinite(band[1]))return false;
+ const ranges=[];
+ const add=(a,b)=>{a=+a;b=+b;if(a>=0&&a<=17&&b>=a&&b<=20)ranges.push([a,Math.min(b,17)])};
+ const capture=(re,fn)=>{let m;while((m=re.exec(t)))fn(m)};
+ // A parent or adult accompanying a child never changes the child's eligible ages.
+ capture(/\b(?:ages?|aged|alter|ab|from|recommended (?:for )?ages?|children aged|kids aged)\s*:?\s*(\d{1,2})\s*(?:-|to|bis)\s*(\d{1,2})\b/g,m=>add(m[1],m[2]));
+ capture(/\b(\d{1,2})\s*(?:-|to|bis)\s*(\d{1,2})\s*(?:years?|yrs?|y\b|jährige|jahrige)\b/g,m=>add(m[1],m[2]));
+ capture(/\b(?:ages?|aged|alter|ab|from|recommended (?:for )?ages?)\s*:?\s*(\d{1,2})\s*\+/g,m=>add(m[1],17));
+ capture(/\b(\d{1,2})\s*\+\s*(?:years?|yrs?|y\b)/g,m=>add(m[1],17));
+ capture(/\b(?:published )?age rating\s*:\s*(\d{1,2})\b/g,m=>add(m[1],17));
+ capture(/\b(?:ages?|alter)\s*:\s*(\d{1,2})\b(?!\s*(?:-|\+|to|bis))/g,m=>add(m[1],m[1]));
+ capture(/\b(?:age|ages|alter)\s*:\s*(?:approx\.?\s*)?(\d{1,2})\s*(?:years?|yrs?|y\b)/g,m=>add(m[1],m[1]));
+ if(ranges.length)return ranges.some(([a,b])=>a<=band[1]&&b>=band[0]);
+ if(/\b(?:all ages|children of all ages|all age groups)\b/.test(t))return true;
+ if(/\b(?:from birth|newborn|babies|infants|baby)\b/.test(t))add(0,2);
+ if(/\b(?:toddlers?|krabbelkinder)\b/.test(t))add(1,3);
+ if(/\b(?:preschoolers?|kindergarten)\b/.test(t))add(3,6);
+ if(/\b(?:primary.school children|primary school|school-age|school children)\b/.test(t))add(6,12);
+ if(/\b(?:teenagers?|teens|adolescents?)\b/.test(t))add(13,17);
+ return ranges.some(([a,b])=>a<=band[1]&&b>=band[0]);
 };
 </script><script id="gugu-compact-filters-script">(function(){'use strict';function init(){var root=document.querySelector('#events-panel'),wrap=root&&root.querySelector('.gugu-filter-wrap');if(!wrap)return;var type=wrap.querySelector('#gugu-filter-type'),age=wrap.querySelector('#gugu-filter-age'),location=wrap.querySelector('#gugu-filter-location'),clear=wrap.querySelector('.gugu-filter-clear'),empty=wrap.querySelector('.gugu-filter-empty');var panels=[document.querySelector('#sat-panel'),document.querySelector('#sun-panel')].filter(Boolean);var categories=new Set();panels.forEach(function(p){p.querySelectorAll('.event-group').forEach(function(g){var h=g.querySelector('.weekend-chapter-name');if(h)categories.add(h.textContent.trim());});});Array.from(categories).forEach(function(name){var o=document.createElement('option');o.value=name;o.textContent=name.replace(/\s*&\s*/g,' & ');type.appendChild(o);});// Classify by the actual venue field, never by unrelated event descriptions.
 var baselLandPlaces=['allschwil','arlesheim','augst','biel-benken','binningen','birsfelden','bottmingen','bubendorf','diepflingen','frenkendorf','füllinsdorf','gelterkinden','giebenach','liestal','münchenstein','muenchenstein','muttenz','oberwil','pratteln','reinach','riehen-bl','sissach','therwil','zwingen','aesch','ettingen','lausen','oberwil'];
