@@ -3526,7 +3526,12 @@ offerCategories();updateGuides();updateOffers();
 #events-panel .gugu-filter-pill select option,
 #guides-panel .gugu-filter-pill select option,
 #deals-panel .gugu-filter-pill select option {text-transform:none!important;font-variant:normal!important;}
-#deals-panel .gugu-offers-filters .gugu-filter-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#deals-panel .gugu-offers-filters .gugu-filter-row{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:4px!important}
+@media(max-width:430px){
+ #deals-panel .gugu-offers-filters .gugu-filter-icon{display:none!important}
+ #deals-panel .gugu-offers-filters .gugu-filter-pill{min-width:0!important;padding:0 3px!important;gap:0!important}
+ #deals-panel .gugu-offers-filters .gugu-filter-pill select{max-width:100%!important;font-size:12px!important}
+}
 </style>
 <script id="gugu-filter-propercase-final-script">
 (function(){
