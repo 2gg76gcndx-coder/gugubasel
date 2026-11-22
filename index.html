@@ -3323,7 +3323,7 @@ window.guguAgeMatch=function(text,selected){
  capture(/\b(?:published )?age rating\s*:\s*(\d{1,2})\b/g,m=>add(m[1],17));
  capture(/\b(?:ages?|alter)\s*:\s*(\d{1,2})\b(?!\s*(?:-|\+|to|bis))/g,m=>add(m[1],m[1]));
  capture(/\b(?:age|ages|alter)\s*:\s*(?:approx\.?\s*)?(\d{1,2})\s*(?:years?|yrs?|y\b)/g,m=>add(m[1],m[1]));
- if(ranges.length)return ranges.some(([a,b])=>a<=band[1]&&b>=band[0]);
+ if(ranges.length)return ranges.some(([a,b])=>a<=band[1]&&b>=band[0]&&(a===b||b>band[0]));
  if(/\b(?:all ages|children of all ages|all age groups)\b/.test(t))return true;
  if(/\b(?:from birth|newborn|babies|infants|baby)\b/.test(t))add(0,2);
  if(/\b(?:toddlers?|krabbelkinder)\b/.test(t))add(1,3);
