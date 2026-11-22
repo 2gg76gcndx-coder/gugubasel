@@ -2502,7 +2502,8 @@ html body #tab-deals:checked ~ .panels nav.main-tabs .weekend-day-split .weekend
 </style><style>
 /* Matching Weekend Plans filters in Guides and Offers */
 .gugu-guides-filters,.gugu-offers-filters{margin-top:7px!important;margin-bottom:9px!important}
-.gugu-guides-filters .gugu-filter-row,.gugu-offers-filters .gugu-filter-row{grid-template-columns:1fr 1.3fr 1fr!important}
+.gugu-guides-filters .gugu-filter-row{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.gugu-offers-filters .gugu-filter-row{grid-template-columns:1fr 1.3fr 1fr!important}
 .gugu-guides-filters .gugu-filter-pill,.gugu-offers-filters .gugu-filter-pill{min-width:0!important}
 .gugu-filter-clear{display:none;border:0;background:transparent;color:#08669d;font-weight:800;font-size:12px;margin:3px 0 0 auto;padding:3px 7px;cursor:pointer}
 .gugu-filter-wrap.has-selection .gugu-filter-clear{display:block}
@@ -2542,6 +2543,14 @@ html body #tab-deals:checked ~ .panels nav.main-tabs .weekend-day-split .weekend
 #guides-panel .gugu-guides-filters .gugu-filter-pill select,
 #deals-panel .gugu-offers-filters .gugu-filter-pill select{width:auto!important;min-width:0!important;max-width:calc(100% - 22px)!important;flex:0 1 auto!important;text-align:center!important;text-align-last:center!important;padding-left:0!important;padding-right:13px!important;background-position:right center!important}
 @media(max-width:370px){#guides-panel .gugu-guides-filters .gugu-filter-pill,#deals-panel .gugu-offers-filters .gugu-filter-pill{gap:3px!important}#guides-panel .gugu-guides-filters .gugu-filter-icon,#deals-panel .gugu-offers-filters .gugu-filter-icon{flex-basis:14px!important;width:14px!important}#guides-panel .gugu-guides-filters .gugu-filter-icon svg,#deals-panel .gugu-offers-filters .gugu-filter-icon svg{width:14px!important;height:14px!important}}
+</style><style id="gugu-guides-single-row-mobile">
+/* Four readable filters across narrow screens; select labels remain accessible. */
+#guides-panel .gugu-guides-filters .gugu-filter-row{grid-template-columns:repeat(4,minmax(0,1fr))!important;grid-auto-flow:column!important}
+@media(max-width:430px){
+ #guides-panel .gugu-guides-filters .gugu-filter-icon{display:none!important}
+ #guides-panel .gugu-guides-filters .gugu-filter-pill{padding:0 3px!important;gap:0!important}
+ #guides-panel .gugu-guides-filters .gugu-filter-pill select{max-width:100%!important;font-size:12px!important}
+}
 </style><style id="gugu-weekend-equal-filter-width">#events-panel .gugu-filter-row{grid-template-columns:repeat(3,minmax(0,1fr))!important}</style><style id="gugu-guides-strict-filter-visibility">#guides-panel .venue-card[hidden],#guides-panel details[hidden]{display:none!important}</style><style id="gugu-christmas-market-styles">
 .christmas-market-group{margin:0 0 22px}.christmas-market-group>.niggi-canton-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:18px 0 10px;padding:10px 12px;border-radius:10px;background:#eaf8ff;color:#083b59;font-size:17px}.christmas-market-group>.niggi-canton-title>.plan-count-pill{margin-left:auto;position:static;flex-shrink:0}
 .christmas-market-row{margin-bottom:10px}.christmas-market-photo-frame,.christmas-market-photo-frame>a{display:block;width:100%;height:100%;min-height:120px;overflow:hidden;border-radius:12px}.christmas-market-photo-frame img{width:100%;height:100%;min-height:120px;object-fit:cover;display:block}
